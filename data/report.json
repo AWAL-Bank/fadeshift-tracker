@@ -1,0 +1,379 @@
+{
+  "date": "2026-03-24",
+  "run_date": "2026-03-25",
+  "num_assets": 22,
+  "num_banks": 25,
+  "num_calls": 1184,
+  "num_dates": 33,
+  "date_range": "2026-02-03 to 2026-03-24",
+  "kpi": {
+    "bullish": 5,
+    "bullish_names": "BoJ (+=Hike), Credit HY, ECB (+=Hike), Fed (+=Hike), RBA (+=Hike)",
+    "bearish": 17,
+    "deep_bear": 4,
+    "deep_bear_names": "EM Equities, EUR/USD (+=Long EUR), JPY (+=Strong JPY), USD",
+    "unanimous": 3,
+    "unanimous_names": "EM Equities \u00b7 JPY (+=Strong JPY) \u00b7 USD"
+  },
+  "scores": [
+    {
+      "score": 0.7241,
+      "num_banks": 15,
+      "num_bull": 14,
+      "num_bear": 1,
+      "label": "ECB (+=Hike)"
+    },
+    {
+      "score": 0.7071,
+      "num_banks": 14,
+      "num_bull": 13,
+      "num_bear": 1,
+      "label": "RBA (+=Hike)"
+    },
+    {
+      "score": 0.6876,
+      "num_banks": 14,
+      "num_bull": 14,
+      "num_bear": 0,
+      "label": "BoJ (+=Hike)"
+    },
+    {
+      "score": 0.4781,
+      "num_banks": 19,
+      "num_bull": 16,
+      "num_bear": 3,
+      "label": "Fed (+=Hike)"
+    },
+    {
+      "score": 0.1283,
+      "num_banks": 5,
+      "num_bull": 2,
+      "num_bear": 3,
+      "label": "Credit HY"
+    },
+    {
+      "score": -0.0809,
+      "num_banks": 14,
+      "num_bull": 6,
+      "num_bear": 8,
+      "label": "AI Infra"
+    },
+    {
+      "score": -0.1278,
+      "num_banks": 9,
+      "num_bull": 3,
+      "num_bear": 6,
+      "label": "Copper"
+    },
+    {
+      "score": -0.1866,
+      "num_banks": 23,
+      "num_bull": 7,
+      "num_bear": 16,
+      "label": "Brent"
+    },
+    {
+      "score": -0.2196,
+      "num_banks": 5,
+      "num_bull": 2,
+      "num_bear": 3,
+      "label": "Credit IG"
+    },
+    {
+      "score": -0.2738,
+      "num_banks": 14,
+      "num_bull": 4,
+      "num_bear": 10,
+      "label": "Korea"
+    },
+    {
+      "score": -0.3041,
+      "num_banks": 14,
+      "num_bull": 2,
+      "num_bear": 12,
+      "label": "US 10Y (+=Bull Bond)"
+    },
+    {
+      "score": -0.3559,
+      "num_banks": 18,
+      "num_bull": 4,
+      "num_bear": 14,
+      "label": "China"
+    },
+    {
+      "score": -0.3609,
+      "num_banks": 14,
+      "num_bull": 2,
+      "num_bear": 12,
+      "label": "India"
+    },
+    {
+      "score": -0.3774,
+      "num_banks": 8,
+      "num_bull": 1,
+      "num_bear": 7,
+      "label": "Nasdaq"
+    },
+    {
+      "score": -0.3951,
+      "num_banks": 10,
+      "num_bull": 1,
+      "num_bear": 9,
+      "label": "US 2Y (+=Bull Bond)"
+    },
+    {
+      "score": -0.4414,
+      "num_banks": 15,
+      "num_bull": 1,
+      "num_bear": 14,
+      "label": "Japan"
+    },
+    {
+      "score": -0.4464,
+      "num_banks": 14,
+      "num_bull": 2,
+      "num_bear": 12,
+      "label": "Gold"
+    },
+    {
+      "score": -0.4959,
+      "num_banks": 15,
+      "num_bull": 2,
+      "num_bear": 13,
+      "label": "S&P500"
+    },
+    {
+      "score": -0.5237,
+      "num_banks": 15,
+      "num_bull": 0,
+      "num_bear": 15,
+      "label": "JPY (+=Strong JPY)"
+    },
+    {
+      "score": -0.5563,
+      "num_banks": 17,
+      "num_bull": 2,
+      "num_bear": 15,
+      "label": "EUR/USD (+=Long EUR)"
+    },
+    {
+      "score": -0.6416,
+      "num_banks": 16,
+      "num_bull": 0,
+      "num_bear": 16,
+      "label": "USD"
+    },
+    {
+      "score": -0.8361,
+      "num_banks": 17,
+      "num_bull": 0,
+      "num_bear": 17,
+      "label": "EM Equities"
+    }
+  ],
+  "movers": [
+    {
+      "asset": "EM Equities",
+      "label": "EM Equities",
+      "peak": 0.9,
+      "peak_date": "2026-02-20",
+      "current": -0.8361,
+      "drop": -1.74
+    },
+    {
+      "asset": "USD",
+      "label": "USD",
+      "peak": 0.9,
+      "peak_date": "2026-02-24",
+      "current": -0.6416,
+      "drop": -1.54
+    },
+    {
+      "asset": "JPY",
+      "label": "JPY (+=Strong JPY)",
+      "peak": 0.8667,
+      "peak_date": "2026-03-11",
+      "current": -0.5237,
+      "drop": -1.39
+    },
+    {
+      "asset": "EUR/USD",
+      "label": "EUR/USD (+=Long EUR)",
+      "peak": 0.7875,
+      "peak_date": "2026-03-14",
+      "current": -0.5563,
+      "drop": -1.34
+    },
+    {
+      "asset": "S&P500",
+      "label": "S&P500",
+      "peak": 0.8333,
+      "peak_date": "2026-02-26",
+      "current": -0.4959,
+      "drop": -1.33
+    },
+    {
+      "asset": "Gold",
+      "label": "Gold",
+      "peak": 0.8667,
+      "peak_date": "2026-02-23",
+      "current": -0.4464,
+      "drop": -1.31
+    },
+    {
+      "asset": "Korea",
+      "label": "Korea",
+      "peak": 0.9333,
+      "peak_date": "2026-02-25",
+      "current": -0.2738,
+      "drop": -1.21
+    },
+    {
+      "asset": "Brent",
+      "label": "Brent",
+      "peak": 0.9,
+      "peak_date": "2026-03-13",
+      "current": -0.1866,
+      "drop": -1.09
+    },
+    {
+      "asset": "Japan",
+      "label": "Japan",
+      "peak": 0.6,
+      "peak_date": "2026-02-24",
+      "current": -0.4414,
+      "drop": -1.04
+    },
+    {
+      "asset": "China",
+      "label": "China",
+      "peak": 0.6413,
+      "peak_date": "2026-03-14",
+      "current": -0.3559,
+      "drop": -1.0
+    }
+  ],
+  "leadership": {
+    "leaders": [
+      {
+        "bank": "BofA",
+        "desc": "Consistently early across Oil, Gold, Rates, Equity De-risk, AI Infra"
+      },
+      {
+        "bank": "JPM",
+        "desc": "Led EM Bear (Feb 3 \u2014 3 weeks ahead of consensus)"
+      },
+      {
+        "bank": "Citi",
+        "desc": "First to call Gold \u2192 Bear (Mar 12) \u2014 key regime change signal"
+      },
+      {
+        "bank": "DB",
+        "desc": "Led EM Bear flip and early Equity De-risk"
+      }
+    ],
+    "laggards": [
+      "MS",
+      "Mizuho",
+      "Rabobank",
+      "TSLombard"
+    ]
+  },
+  "watch": [
+    {
+      "score": -0.0809,
+      "num_banks": 14,
+      "num_bull": 6,
+      "num_bear": 8,
+      "label": "AI Infra"
+    },
+    {
+      "score": -0.1278,
+      "num_banks": 9,
+      "num_bull": 3,
+      "num_bear": 6,
+      "label": "Copper"
+    },
+    {
+      "score": 0.1283,
+      "num_banks": 5,
+      "num_bull": 2,
+      "num_bear": 3,
+      "label": "Credit HY"
+    },
+    {
+      "score": -0.1866,
+      "num_banks": 23,
+      "num_bull": 7,
+      "num_bear": 16,
+      "label": "Brent"
+    },
+    {
+      "score": -0.2196,
+      "num_banks": 5,
+      "num_bull": 2,
+      "num_bear": 3,
+      "label": "Credit IG"
+    }
+  ],
+  "catalysts": [
+    {
+      "event": "Hormuz maritime traffic data",
+      "drives": "Brent"
+    },
+    {
+      "event": "Fed speaker calendar",
+      "drives": "Fed consensus"
+    },
+    {
+      "event": "China PMI preview",
+      "drives": "EM Equities, China"
+    },
+    {
+      "event": "European energy emergency meeting",
+      "drives": "EUR/USD"
+    }
+  ],
+  "fade_targets": [
+    {
+      "label": "AI Infra",
+      "score": -0.0809,
+      "bull": 6,
+      "bear": 8,
+      "type": "HIGH_DISAGREE",
+      "desc": "High disagreement \u2014 6 banks against prevailing direction"
+    },
+    {
+      "label": "Credit HY",
+      "score": 0.1283,
+      "bull": 2,
+      "bear": 3,
+      "type": "HIGH_DISAGREE",
+      "desc": "High disagreement \u2014 2 banks against prevailing direction"
+    },
+    {
+      "label": "Credit IG",
+      "score": -0.2196,
+      "bull": 2,
+      "bear": 3,
+      "type": "HIGH_DISAGREE",
+      "desc": "High disagreement \u2014 2 banks against prevailing direction"
+    },
+    {
+      "label": "EM Equities",
+      "score": -0.8361,
+      "bull": 0,
+      "bear": 17,
+      "type": "UNANIMOUS",
+      "desc": "Unanimous bearishness across 17 banks"
+    },
+    {
+      "label": "USD",
+      "score": -0.6416,
+      "bull": 0,
+      "bear": 16,
+      "type": "UNANIMOUS",
+      "desc": "Unanimous bearishness across 16 banks"
+    }
+  ]
+}

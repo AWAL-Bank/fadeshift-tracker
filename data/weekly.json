@@ -1,0 +1,834 @@
+{
+  "week": "Mar 16\u201322, 2026",
+  "num_reports": 91,
+  "stories": [
+    {
+      "title": "Strait of Hormuz Closure Triggers Severe Global Energy and Stagflation Shock",
+      "core": "An escalating Middle East conflict\u2014highlighted by direct strikes on Iran's Kharg Island and Qatar's Ras Laffan LNG facility\u2014has effectively paralyzed the Strait of Hormuz. This unprecedented geopolitical disruption is driving Brent crude well above $100/bbl and causing acute physical shortages in LNG, jet fuel, and fertilizers. Banks warn this supply-driven shock is reviving severe 1970s-style stagflation risks, disproportionately threatening energy-dependent economies in Europe and Asia with sh"
+    },
+    {
+      "title": "Central Banks Abandon Easing Plans as Energy Inflation Forces Hawkish Pivots",
+      "core": "The geopolitical energy shock has abruptly derailed the global monetary easing cycle, forcing a synchronized return to \"higher for longer\" restrictive policies. The Federal Reserve has delayed anticipated rate cuts to late 2026 or 2027 as core goods inflation remains sticky. Meanwhile, the ECB and BoE are facing hawkish market repricing as they prioritize anchoring inflation expectations over deteriorating growth. The RBA has already delivered a surprise 25bp hike to 4.10%, and the BoJ is prepar"
+    },
+    {
+      "title": "Systematic De-Risking and Negative Gamma Accelerate Equity Market Breakdowns",
+      "core": "Global equity markets are buckling under the weight of geopolitical stress and hawkish policy shifts, triggering massive mechanical selling. CTAs and trend-following funds have dumped over $80 billion in equities, pushing major indices like the S&P 500 and Nasdaq below critical 200-day moving averages. With options dealers trapped in short gamma positions and volatility (VIX) surging, the market structure is highly fragile. This dynamic is amplifying downside momentum and raising the risk of a b"
+    },
+    {
+      "title": "AI Infrastructure and Physical Compute Demand Decouple from Macroeconomic Gloom",
+      "core": "Despite broad market sell-offs and stagflation fears, the artificial intelligence secular growth story remains fiercely resilient. Catalyzed by Nvidia's GTC event and projections of $1 trillion in data center revenue visibility, institutional capital is aggressively rotating into AI enablers. The narrative has rapidly expanded beyond pure semiconductors into the physical constraints of AI, driving massive investments in power generation, grid infrastructure, cooling systems, and copper, creating"
+    },
+    {
+      "title": "Dollar Dominance Returns as Energy Shock Crushes Emerging Market Importers",
+      "core": "The dual engines of a hawkish Federal Reserve and a global energy shock have reasserted US Dollar dominance, devastating emerging market currencies and Asian FX. Heavy energy importers like the Thai Baht, Indian Rupee, and South Korean Won are facing collapsing current account buffers and massive foreign capital outflows. Concurrently, extreme currency volatility is forcing developed market central bank interventions, with Japan on high alert to defend the Yen near 160 and the SNB actively manag"
+    }
+  ],
+  "consensus": [
+    {
+      "tier": "TIER 1: Universal Consensus",
+      "num": 1,
+      "title": "Severe Energy Shock via Strait of Hormuz Closure",
+      "statement": "The escalating Middle East conflict\u2014specifically strikes on Iran's Kharg Island, Qatar's Ras Laffan LNG facility, and the effective closure of the Strait of Hormuz\u2014has triggered a historic global energy supply shock, driving Brent crude well above $100/bbl.",
+      "banks": [
+        "ANZ",
+        "BofA",
+        "CACIB",
+        "CBOE",
+        "Citi",
+        "DB",
+        "GS",
+        "HSBC",
+        "ING",
+        "Jefferies",
+        "JPM",
+        "Mizuho",
+        "MS",
+        "MUFG",
+        "Nomura",
+        "Rabobank",
+        "RBC",
+        "SocGen",
+        "StandardChartered",
+        "TME",
+        "TSLombard",
+        "UBS"
+      ],
+      "num_banks": 22,
+      "conviction": "HIGH"
+    },
+    {
+      "tier": "TIER 1: Universal Consensus",
+      "num": 2,
+      "title": "Central Banks Forced into Hawkish Pivots / Delayed Easing",
+      "statement": "The inflationary impulse from the energy shock has completely derailed the anticipated 2026 global monetary easing cycle, forcing central banks to prioritize inflation anchoring over deteriorating growth.",
+      "banks": [
+        "ANZ",
+        "BofA",
+        "CACIB",
+        "Citi",
+        "DB",
+        "GS",
+        "HSBC",
+        "ING",
+        "JPM",
+        "Mizuho",
+        "MS",
+        "MUFG",
+        "Nomura",
+        "Rabobank",
+        "RBC",
+        "SocGen",
+        "StandardChartered",
+        "TME",
+        "TSLombard",
+        "UBS"
+      ],
+      "num_banks": 20,
+      "conviction": "HIGH"
+    },
+    {
+      "tier": "TIER 1: Universal Consensus",
+      "num": 3,
+      "title": "US Dollar Dominance Resurges as EM/Asian FX Collapses",
+      "statement": "The US Dollar is experiencing a massive tactical bull run, crushing emerging market and Asian currencies as the energy shock acts as a severe terms-of-trade tax on oil importers.",
+      "banks": [
+        "BofA",
+        "CACIB",
+        "Citi",
+        "DB",
+        "GS",
+        "HSBC",
+        "ING",
+        "JPM",
+        "Mizuho",
+        "MS",
+        "MUFG",
+        "SocGen",
+        "TME",
+        "TSLombard",
+        "UBS"
+      ],
+      "num_banks": 15,
+      "conviction": "HIGH"
+    },
+    {
+      "tier": "TIER 1: Universal Consensus",
+      "num": 4,
+      "title": "Acute Vulnerability in Global LNG and Petrochemical Supply Chains",
+      "statement": "The attacks on Qatar's infrastructure and the Hormuz blockade have paralyzed ~20% of global LNG trade and critical petrochemical feedstocks, causing immediate downstream factory shutdowns.",
+      "banks": [
+        "BofA",
+        "Citi",
+        "DB",
+        "GS",
+        "HSBC",
+        "ING",
+        "JPM",
+        "Mizuho",
+        "MS",
+        "MUFG",
+        "Rabobank",
+        "RBC",
+        "SocGen",
+        "UBS"
+      ],
+      "num_banks": 14,
+      "conviction": "HIGH"
+    },
+    {
+      "tier": "TIER 1: Universal Consensus",
+      "num": 5,
+      "title": "RBA and BoJ Lead the Hawkish Charge in APAC",
+      "statement": "The Reserve Bank of Australia (RBA) and the Bank of Japan (BoJ) are diverging from global peers by actively tightening policy or preparing to hike rates in direct response to the energy shock.",
+      "banks": [
+        "ANZ",
+        "BofA",
+        "Citi",
+        "DB",
+        "GS",
+        "HSBC",
+        "ING",
+        "JPM",
+        "Mizuho",
+        "MS",
+        "MUFG",
+        "Rabobank",
+        "SocGen",
+        "UBS"
+      ],
+      "num_banks": 14,
+      "conviction": "MEDIUM"
+    },
+    {
+      "tier": "TIER 1: Universal Consensus",
+      "num": 6,
+      "title": "AI Infrastructure (\"Physical AI\") Decouples from Macro Gloom",
+      "statement": "Despite broad market de-risking, the secular AI growth narrative remains fiercely intact, with institutional capital aggressively rotating into the physical infrastructure required to power AI.",
+      "banks": [
+        "BofA",
+        "Citi",
+        "GS",
+        "Jefferies",
+        "JPM",
+        "MS",
+        "RBC",
+        "SocGen",
+        "UBS"
+      ],
+      "num_banks": 9,
+      "conviction": "HIGH"
+    },
+    {
+      "tier": "TIER 1: Universal Consensus",
+      "num": 7,
+      "title": "Systematic De-Risking and Negative Gamma Exacerbate Equity Drawdowns",
+      "statement": "The sudden geopolitical and rate shock has triggered massive mechanical selling from systematic funds, creating a fragile market structure prone to accelerated downside volatility.",
+      "banks": [
+        "BofA",
+        "CBOE",
+        "DB",
+        "GS",
+        "JPM",
+        "Nomura",
+        "SocGen",
+        "TME"
+      ],
+      "num_banks": 8,
+      "conviction": "MEDIUM"
+    },
+    {
+      "tier": "TIER 1: Universal Consensus",
+      "num": 8,
+      "title": "Gold's Traditional Safe-Haven Status is Fracturing",
+      "statement": "Gold is failing to act as a reliable geopolitical hedge in the current crisis, suffering sharp liquidations and ETF outflows despite the outbreak of war.",
+      "banks": [
+        "Citi",
+        "DB",
+        "HSBC",
+        "JPM",
+        "RBC",
+        "SocGen",
+        "TME",
+        "TSLombard"
+      ],
+      "num_banks": 8,
+      "conviction": "MEDIUM"
+    },
+    {
+      "tier": "TIER 2: Strong Consensus",
+      "num": 3,
+      "title": "US Dollar Dominance Resurges as EM/Asian FX Collapses",
+      "statement": "The US Dollar is experiencing a massive tactical bull run, crushing emerging market and Asian currencies as the energy shock acts as a severe terms-of-trade tax on oil importers.",
+      "banks": [
+        "BofA",
+        "CACIB",
+        "Citi",
+        "DB",
+        "GS",
+        "HSBC",
+        "ING",
+        "JPM",
+        "Mizuho",
+        "MS",
+        "MUFG",
+        "SocGen",
+        "TME",
+        "TSLombard",
+        "UBS"
+      ],
+      "num_banks": 15,
+      "conviction": "HIGH"
+    },
+    {
+      "tier": "TIER 2: Strong Consensus",
+      "num": 4,
+      "title": "Acute Vulnerability in Global LNG and Petrochemical Supply Chains",
+      "statement": "The attacks on Qatar's infrastructure and the Hormuz blockade have paralyzed ~20% of global LNG trade and critical petrochemical feedstocks, causing immediate downstream factory shutdowns.",
+      "banks": [
+        "BofA",
+        "Citi",
+        "DB",
+        "GS",
+        "HSBC",
+        "ING",
+        "JPM",
+        "Mizuho",
+        "MS",
+        "MUFG",
+        "Rabobank",
+        "RBC",
+        "SocGen",
+        "UBS"
+      ],
+      "num_banks": 14,
+      "conviction": "HIGH"
+    },
+    {
+      "tier": "TIER 2: Strong Consensus",
+      "num": 5,
+      "title": "RBA and BoJ Lead the Hawkish Charge in APAC",
+      "statement": "The Reserve Bank of Australia (RBA) and the Bank of Japan (BoJ) are diverging from global peers by actively tightening policy or preparing to hike rates in direct response to the energy shock.",
+      "banks": [
+        "ANZ",
+        "BofA",
+        "Citi",
+        "DB",
+        "GS",
+        "HSBC",
+        "ING",
+        "JPM",
+        "Mizuho",
+        "MS",
+        "MUFG",
+        "Rabobank",
+        "SocGen",
+        "UBS"
+      ],
+      "num_banks": 14,
+      "conviction": "MEDIUM"
+    },
+    {
+      "tier": "TIER 2: Strong Consensus",
+      "num": 6,
+      "title": "AI Infrastructure (\"Physical AI\") Decouples from Macro Gloom",
+      "statement": "Despite broad market de-risking, the secular AI growth narrative remains fiercely intact, with institutional capital aggressively rotating into the physical infrastructure required to power AI.",
+      "banks": [
+        "BofA",
+        "Citi",
+        "GS",
+        "Jefferies",
+        "JPM",
+        "MS",
+        "RBC",
+        "SocGen",
+        "UBS"
+      ],
+      "num_banks": 9,
+      "conviction": "HIGH"
+    },
+    {
+      "tier": "TIER 2: Strong Consensus",
+      "num": 7,
+      "title": "Systematic De-Risking and Negative Gamma Exacerbate Equity Drawdowns",
+      "statement": "The sudden geopolitical and rate shock has triggered massive mechanical selling from systematic funds, creating a fragile market structure prone to accelerated downside volatility.",
+      "banks": [
+        "BofA",
+        "CBOE",
+        "DB",
+        "GS",
+        "JPM",
+        "Nomura",
+        "SocGen",
+        "TME"
+      ],
+      "num_banks": 8,
+      "conviction": "MEDIUM"
+    },
+    {
+      "tier": "TIER 2: Strong Consensus",
+      "num": 8,
+      "title": "Gold's Traditional Safe-Haven Status is Fracturing",
+      "statement": "Gold is failing to act as a reliable geopolitical hedge in the current crisis, suffering sharp liquidations and ETF outflows despite the outbreak of war.",
+      "banks": [
+        "Citi",
+        "DB",
+        "HSBC",
+        "JPM",
+        "RBC",
+        "SocGen",
+        "TME",
+        "TSLombard"
+      ],
+      "num_banks": 8,
+      "conviction": "MEDIUM"
+    },
+    {
+      "tier": "TIER 3: Emerging Consensus",
+      "num": 6,
+      "title": "AI Infrastructure (\"Physical AI\") Decouples from Macro Gloom",
+      "statement": "Despite broad market de-risking, the secular AI growth narrative remains fiercely intact, with institutional capital aggressively rotating into the physical infrastructure required to power AI.",
+      "banks": [
+        "BofA",
+        "Citi",
+        "GS",
+        "Jefferies",
+        "JPM",
+        "MS",
+        "RBC",
+        "SocGen",
+        "UBS"
+      ],
+      "num_banks": 9,
+      "conviction": "HIGH"
+    },
+    {
+      "tier": "TIER 3: Emerging Consensus",
+      "num": 7,
+      "title": "Systematic De-Risking and Negative Gamma Exacerbate Equity Drawdowns",
+      "statement": "The sudden geopolitical and rate shock has triggered massive mechanical selling from systematic funds, creating a fragile market structure prone to accelerated downside volatility.",
+      "banks": [
+        "BofA",
+        "CBOE",
+        "DB",
+        "GS",
+        "JPM",
+        "Nomura",
+        "SocGen",
+        "TME"
+      ],
+      "num_banks": 8,
+      "conviction": "MEDIUM"
+    },
+    {
+      "tier": "TIER 3: Emerging Consensus",
+      "num": 8,
+      "title": "Gold's Traditional Safe-Haven Status is Fracturing",
+      "statement": "Gold is failing to act as a reliable geopolitical hedge in the current crisis, suffering sharp liquidations and ETF outflows despite the outbreak of war.",
+      "banks": [
+        "Citi",
+        "DB",
+        "HSBC",
+        "JPM",
+        "RBC",
+        "SocGen",
+        "TME",
+        "TSLombard"
+      ],
+      "num_banks": 8,
+      "conviction": "MEDIUM"
+    }
+  ],
+  "divergences": [
+    {
+      "num": 1,
+      "title": "The Fed's Reaction Function to the Energy Shock - Cuts vs. Hold/Hike",
+      "side_a": "The Fed will \"look through\" the oil shock and cut rates - MS, UBS, Citi (Conviction: HIGH)",
+      "side_b": "The Fed will abandon easing due to sticky inflation - DB, Nomura, ING, BofA (Conviction: HIGH)"
+    },
+    {
+      "num": 2,
+      "title": "Gold's Viability as a Geopolitical Safe Haven - Sell/Underweight vs. Structural Buy",
+      "side_a": "Gold is a crowded trade unwinding amid high real yields - DB, HSBC, TME (Conviction: HIGH)",
+      "side_b": "Gold's long-term fundamentals remain intact - UBS, GS, SocGen (Conviction: HIGH)"
+    },
+    {
+      "num": 3,
+      "title": "Emerging Market (EM) Equities - Capitulation vs. Tactical Opportunity",
+      "side_a": "EM faces a toxic cocktail of capital flight and terms-of-trade shocks - JPM, TME, BofA (Conviction: HIGH)",
+      "side_b": "Extreme valuation discounts and specific sector decoupling offer upside - GS, MS, UBS (Conviction: MEDIUM)"
+    },
+    {
+      "num": 4,
+      "title": "Duration and Severity of the Oil Supply Shock - Transitory vs. Prolonged Structural Deficit",
+      "side_a": "Logistical hurdles will be bridged by alternative supplies - UBS, Jefferies (IMPLIED) (Conviction: MEDIUM)",
+      "side_b": "Physical infrastructure destruction creates an unbridgeable gap - MS, GS, BofA, Rabobank (Conviction: HIGH)"
+    },
+    {
+      "num": 5,
+      "title": "European Equities - Stagflation Trap vs. Alpha Generation",
+      "side_a": "Europe is the primary victim of the geopolitical energy crisis - TME, JPM, BofA (Conviction: HIGH)",
+      "side_b": "Cyclicals have priced in the gloom and offer deep discounts - UBS, GS, SocGen (Conviction: MEDIUM)"
+    }
+  ],
+  "model_scores": [
+    {
+      "category": "Fixed Income",
+      "asset": "US HY Bond",
+      "score": 0.9379989746557912,
+      "consensus": "\u2022 Spreads widening amid geopolitical risks, but strong fundamentals support resilience.<br>\u2022 Outflows accelerating due to AI and software exposure risks.<br>\u2022 Yields attractive (6-7%) but neutral stan"
+    },
+    {
+      "category": "Fixed Income",
+      "asset": "EM IG Bond",
+      "score": 0.6471176086561664,
+      "consensus": "\u2022 EM bonds resilient; high-quality issuers like Saudi and Oman favored.<br>\u2022 Yields attractive vs DM, but geopolitical and oil shocks pose risks."
+    },
+    {
+      "category": "Fixed Income",
+      "asset": "Tips Bond",
+      "score": 0.5231262374872502,
+      "consensus": "\u2022 Favored as an inflation hedge amid energy price spikes.<br>\u2022 Strong private client inflows noted as core PCE remains sticky."
+    },
+    {
+      "category": "Fixed Income",
+      "asset": "Global IG Bond",
+      "score": 0.3592110440239563,
+      "consensus": "\u2022 Strong investor appetite and record issuance despite market volatility.<br>\u2022 Medium-duration (4-7y) bonds preferred for mid-single-digit returns."
+    },
+    {
+      "category": "Fixed Income",
+      "asset": "US Treasury 1-3y",
+      "score": 0.2898138802408553,
+      "consensus": "\u2022 Front-end duration favored as Fed delays rate cuts.<br>\u2022 2Y yields tracking oil prices closely; attractive yields near 3.8-4.0%."
+    },
+    {
+      "category": "Fixed Income",
+      "asset": "US IG Bond",
+      "score": 0.2490633620171557,
+      "consensus": "\u2022 Solid credit fundamentals limit deterioration despite slight spread widening.<br>\u2022 Dealer inventories surging, with strong demand for high-quality credit."
+    },
+    {
+      "category": "Fixed Income",
+      "asset": "US Treasury 7-10y",
+      "score": -0.0620010253442087,
+      "consensus": "\u2022 10Y yields volatile, pressured by heavy supply and inflation fears.<br>\u2022 Asset managers net short, signaling bearish long-term sentiment."
+    },
+    {
+      "category": "Currency",
+      "asset": "SGD NEER",
+      "score": 0.3328464602537341,
+      "consensus": "\u2022 MAS tightening policy due to Iran conflict inflation risks.<br>\u2022 SGD remains resilient to oil shocks, acting as regional safe haven."
+    },
+    {
+      "category": "Currency",
+      "asset": "Long AUD",
+      "score": 0.2488423540464039,
+      "consensus": "\u2022 Supported by RBA's hawkish rate hikes and commodity exposure.<br>\u2022 Vulnerable to China trade dynamics and global risk-off sentiment."
+    },
+    {
+      "category": "Currency",
+      "asset": "CNY NEER",
+      "score": 0.1043161294663653,
+      "consensus": "\u2022 Acts as a regional safe haven amid Middle East conflict.<br>\u2022 Supported by strong trade surplus and PBOC stability preference."
+    },
+    {
+      "category": "Currency",
+      "asset": "Long INR",
+      "score": -0.0047524280254509,
+      "consensus": "\u2022 Undervalued but pressured by oil price spikes and trade deficits.<br>\u2022 RBI intervention limits short-term volatility amid geopolitical tensions."
+    },
+    {
+      "category": "Currency",
+      "asset": "Long KRW",
+      "score": -0.0637936727132331,
+      "consensus": "\u2022 Pressured by energy import dependency and foreign equity outflows.<br>\u2022 Supported by WGBI inclusion inflows and tax incentives."
+    },
+    {
+      "category": "Currency",
+      "asset": "Long CNY",
+      "score": -0.099134736603782,
+      "consensus": "\u2022 Stable vs USD despite geopolitical shocks and structural de-rating.<br>\u2022 Export growth and PBOC fixing curb currency volatility."
+    },
+    {
+      "category": "Currency",
+      "asset": "Long EUR",
+      "score": -0.1300219262118168,
+      "consensus": "\u2022 Weakened by energy dependency and ECB's delayed rate cuts.<br>\u2022 Forecasts revised lower amid stagflation risks and geopolitical pressures."
+    },
+    {
+      "category": "Currency",
+      "asset": "Long JPY",
+      "score": -0.6671535397462659,
+      "consensus": "\u2022 Pressured near 160 by BoJ's cautious stance and energy costs.<br>\u2022 High intervention risk from MoF if weakness persists."
+    },
+    {
+      "category": "Commodities",
+      "asset": "Brent",
+      "score": 2.611814921648247,
+      "consensus": "\u2022 Severe supply disruptions driving prices toward $100-$120/bbl.<br>\u2022 Prolonged conflict risks sustained inflation and demand destruction."
+    },
+    {
+      "category": "Commodities",
+      "asset": "Copper",
+      "score": 1.773679055111589,
+      "consensus": "\u2022 Structural demand from AI and electrification outpaces supply.<br>\u2022 Prices targeted at $14,500-$15,000/mt amid geopolitical constraints."
+    },
+    {
+      "category": "Commodities",
+      "asset": "Gold",
+      "score": 1.611814921648247,
+      "consensus": "\u2022 Safe-haven demand driven by central bank buying and geopolitical risks.<br>\u2022 Forecasts raised to $6,000-$6,200/oz despite recent ETF outflows."
+    },
+    {
+      "category": "Index",
+      "asset": "Nasdaq",
+      "score": 1.5683636947852242,
+      "consensus": "\u2022 Tech dominance continues but faces AI capex scrutiny.<br>\u2022 NDX futures pressured below 200-dma amid macro stress."
+    },
+    {
+      "category": "Index",
+      "asset": "S&P 500",
+      "score": 0.8104840179114975,
+      "consensus": "\u2022 Resilient near all-time highs but vulnerable to oil shocks.<br>\u2022 Year-end targets range from 7,200 to 7,700 amid delayed Fed cuts."
+    },
+    {
+      "category": "Index",
+      "asset": "MSCI ACWI EX-US",
+      "score": 0.5683636947852241,
+      "consensus": "\u2022 Global diversification recommended over US concentration.<br>\u2022 Europe and Japan offer cyclical upside despite geopolitical headwinds."
+    },
+    {
+      "category": "US Style",
+      "asset": "Quality",
+      "score": 1.0576625545868628,
+      "consensus": "\u2022 Quality factor eroding due to AI-driven margin compression.<br>\u2022 Still preferred for defensive positioning amid stagflation fears."
+    },
+    {
+      "category": "US Style",
+      "asset": "Small Cap",
+      "score": 0.4282510064179724,
+      "consensus": "\u2022 Undervalued vs large caps but vulnerable to high rates.<br>\u2022 Russell 2000 earnings quality improving despite fading fiscal stimulus."
+    },
+    {
+      "category": "US Style",
+      "asset": "Value",
+      "score": 0.2748998161198979,
+      "consensus": "\u2022 Undervalued and neglected by active funds.<br>\u2022 Better positioned for higher rates and stagflation than growth."
+    },
+    {
+      "category": "US Style",
+      "asset": "Dividend",
+      "score": 0.2001784980109313,
+      "consensus": "\u2022 High-dividend yield stocks neglected but offer portfolio stability.<br>\u2022 Rotation toward quality income expected amid market volatility."
+    },
+    {
+      "category": "US Style",
+      "asset": "Growth",
+      "score": 0.0576625545868625,
+      "consensus": "\u2022 Strong earnings momentum but crowded positioning poses risks.<br>\u2022 Valuation premiums shrinking as AI enthusiasm faces reality checks."
+    },
+    {
+      "category": "US Sector",
+      "asset": "Consumer Staples",
+      "score": 1.1382862380992222,
+      "consensus": "\u2022 Undervalued and defensive, but exposed to freight cost inflation.<br>\u2022 Pricing power tested by lower-income consumer weakness."
+    },
+    {
+      "category": "US Sector",
+      "asset": "Industrials",
+      "score": 1.1196016921166403,
+      "consensus": "\u2022 Record inflows and strong earnings growth outperforming peers.<br>\u2022 Benefiting from reshoring, defense, and electrification secular trends."
+    },
+    {
+      "category": "US Sector",
+      "asset": "Energy",
+      "score": 0.9050975801606824,
+      "consensus": "\u2022 Top performing sector globally, driven by oil supply shocks.<br>\u2022 Decoupling from oil prices due to buybacks and AI correlation."
+    },
+    {
+      "category": "US Sector",
+      "asset": "Information Technology",
+      "score": 0.8890078134604037,
+      "consensus": "\u2022 AI infrastructure demand remains robust and drives growth.<br>\u2022 High valuations and capex sustainability concerns pose concentration risks."
+    },
+    {
+      "category": "US Sector",
+      "asset": "Communication Services",
+      "score": 0.8741891902044537,
+      "consensus": "\u2022 Strong ad revenue growth but faces AI infrastructure cost pressures."
+    },
+    {
+      "category": "US Sector",
+      "asset": "Materials",
+      "score": 0.6564999020423248,
+      "consensus": "\u2022 Upgraded to overweight due to climate and data center demand.<br>\u2022 Vulnerable to energy cost pass-through and supply chain shocks."
+    },
+    {
+      "category": "US Sector",
+      "asset": "Financials",
+      "score": 0.584405245238165,
+      "consensus": "\u2022 Undervalued and under-owned, benefiting from deregulation and capital relief.<br>\u2022 Commercial real estate risks and credit cycle concerns linger."
+    },
+    {
+      "category": "US Sector",
+      "asset": "Consumer Discretionary",
+      "score": 0.5794610514361924,
+      "consensus": "\u2022 Underweight due to tax policy risks and margin compression.<br>\u2022 Travel and leisure segments show resilience despite macro headwinds."
+    },
+    {
+      "category": "US Sector",
+      "asset": "Real Estate",
+      "score": 0.3181868829735433,
+      "consensus": "\u2022 Subdued outlook due to elevated costs and high rates.<br>\u2022 Data center REITs remain a bright spot for growth."
+    },
+    {
+      "category": "US Sector",
+      "asset": "Utilities",
+      "score": 0.2632999789890213,
+      "consensus": "\u2022 Overweight due to AI data center power demand.<br>\u2022 Vulnerable to rate sensitivity but supported by grid investments."
+    },
+    {
+      "category": "US Sector",
+      "asset": "Health Care",
+      "score": 0.1382862380992222,
+      "consensus": "\u2022 Defensive resilience with policy clarity post-midterms.<br>\u2022 GLP-1 drugs and oncology pipelines drive sector growth."
+    },
+    {
+      "category": "Non-US Equity",
+      "asset": "MSCI Canada",
+      "score": 0.7255349012771622,
+      "consensus": "\u2022 Supported by oil prices but faces USMCA trade risks.<br>\u2022 BoC's dovish stance and weak labor data weigh on outlook."
+    },
+    {
+      "category": "Non-US Equity",
+      "asset": "MSCI Brazil",
+      "score": 0.5807615728462907,
+      "consensus": "\u2022 Resilient due to oil exporter status and rate cuts.<br>\u2022 High carry and strong fundamentals attract EM inflows."
+    },
+    {
+      "category": "Non-US Equity",
+      "asset": "MSCI Australia",
+      "score": 0.5483829542943487,
+      "consensus": "\u2022 Supported by RBA hawkishness and commodity exposure.<br>\u2022 Vulnerable to China slowdown and global risk-off sentiment."
+    },
+    {
+      "category": "Non-US Equity",
+      "asset": "MSCI South Korea",
+      "score": 0.524181061388975,
+      "consensus": "\u2022 High EPS growth forecasts driven by AI and semiconductors.<br>\u2022 Vulnerable to energy import costs and foreign outflows."
+    },
+    {
+      "category": "Non-US Equity",
+      "asset": "MSCI India",
+      "score": 0.5228151601255178,
+      "consensus": "\u2022 Strong domestic liquidity buffers foreign outflows.<br>\u2022 High valuations and oil price sensitivity pose near-term risks."
+    },
+    {
+      "category": "Non-US Equity",
+      "asset": "MSCI UK",
+      "score": 0.3956027016550228,
+      "consensus": "\u2022 FTSE 100 offers stagflation resilience via commodity exposure.<br>\u2022 Discounted valuations and BoE rate cuts support upside."
+    },
+    {
+      "category": "Non-US Equity",
+      "asset": "MSCI Taiwan",
+      "score": 0.3940315484842858,
+      "consensus": "\u2022 Dominated by TSMC and AI hardware demand.<br>\u2022 High geopolitical risk and extreme foreign ownership concentration."
+    },
+    {
+      "category": "Non-US Equity",
+      "asset": "Germany",
+      "score": 0.3294620704309054,
+      "consensus": "\u2022 Fiscal stimulus offsets cyclical weakness.<br>\u2022 Highly exposed to energy shocks and China trade."
+    },
+    {
+      "category": "Non-US Equity",
+      "asset": "Netherlands",
+      "score": 0.3084836460526249,
+      "consensus": "\u2022 Supported by European tech leaders like ASML.<br>\u2022 Pension fund flows driving local curve dynamics."
+    },
+    {
+      "category": "Non-US Equity",
+      "asset": "France",
+      "score": 0.288879158053661,
+      "consensus": "\u2022 Luxury sector faces Chinese demand slowdown.<br>\u2022 Fiscal constraints and political fragmentation pose macro risks."
+    },
+    {
+      "category": "Non-US Equity",
+      "asset": "Mexico",
+      "score": 0.2845618392579551,
+      "consensus": "\u2022 Undervalued but faces US tariff risks and slowing growth.<br>\u2022 Near-shoring trends provide long-term structural support."
+    },
+    {
+      "category": "Non-US Equity",
+      "asset": "Switzerland",
+      "score": 0.2301923945581819,
+      "consensus": "\u2022 Defensive market with high-dividend stocks.<br>\u2022 SNB intervention limits CHF appreciation, supporting exporters."
+    },
+    {
+      "category": "Non-US Equity",
+      "asset": "MSCI Japan",
+      "score": 0.0684234589949321,
+      "consensus": "\u2022 Strong corporate reforms and wage growth support equities.<br>\u2022 Vulnerable to yen volatility and energy import costs."
+    },
+    {
+      "category": "Non-US Equity",
+      "asset": "HK Tracker Fund",
+      "score": -0.0464714673729522,
+      "consensus": "\u2022 Pressured by China property weakness and geopolitical tensions.<br>\u2022 Population inflows support long-term property demand."
+    },
+    {
+      "category": "Non-US Equity",
+      "asset": "China A-Shares",
+      "score": -0.2744650987228377,
+      "consensus": "\u2022 Supported by state buying, dividend yields, and tech policies.<br>\u2022 Property sector drag remains a persistent headwind."
+    }
+  ],
+  "categorization": [
+    {
+      "part": "PART 1: ECONOMICS",
+      "category": "ECONOMICS",
+      "theme": "Prolonged Middle East Conflict / Strait of Hormuz Disruption"
+    },
+    {
+      "part": "PART 1: ECONOMICS",
+      "category": "ECONOMICS",
+      "theme": "Stagflation Risk Rising (Higher Inflation + Lower Growth)"
+    },
+    {
+      "part": "PART 1: ECONOMICS",
+      "category": "ECONOMICS",
+      "theme": "Fed Delays Rate Cuts / \"Higher for Longer\""
+    },
+    {
+      "part": "PART 1: ECONOMICS",
+      "category": "ECONOMICS",
+      "theme": "ECB Hawkish Shift / Rate Hikes Imminent"
+    },
+    {
+      "part": "PART 1: ECONOMICS",
+      "category": "ECONOMICS",
+      "theme": "China Macro Stabilization / Resilience"
+    },
+    {
+      "part": "PART 1: ECONOMICS",
+      "category": "ECONOMICS",
+      "theme": "BoJ Rate Hike (April/June)"
+    },
+    {
+      "part": "PART 2: ASSET MACRO",
+      "category": "ASSET MACRO",
+      "theme": "Long AI Enablers / Tech Hardware"
+    },
+    {
+      "part": "PART 2: ASSET MACRO",
+      "category": "ASSET MACRO",
+      "theme": "Long Energy / Oil Equities"
+    },
+    {
+      "part": "PART 2: ASSET MACRO",
+      "category": "ASSET MACRO",
+      "theme": "Long USD (Tactical Bullishness)"
+    },
+    {
+      "part": "PART 2: ASSET MACRO",
+      "category": "ASSET MACRO",
+      "theme": "Short Cyclicals / Long Defensives"
+    },
+    {
+      "part": "PART 2: ASSET MACRO",
+      "category": "ASSET MACRO",
+      "theme": "Short EUR/USD"
+    },
+    {
+      "part": "PART 2: ASSET MACRO",
+      "category": "ASSET MACRO",
+      "theme": "Long Gold (as Geopolitical/Inflation Hedge)"
+    },
+    {
+      "part": "PART 3: ASSET POSITIONING",
+      "category": "ASSET POSITIONING",
+      "theme": "CTA / Systematic Equity Selling Surge"
+    },
+    {
+      "part": "PART 3: ASSET POSITIONING",
+      "category": "ASSET POSITIONING",
+      "theme": "Extreme Long Positioning in AI / Tech"
+    },
+    {
+      "part": "PART 3: ASSET POSITIONING",
+      "category": "ASSET POSITIONING",
+      "theme": "EM Equity Outflows"
+    },
+    {
+      "part": "PART 3: ASSET POSITIONING",
+      "category": "ASSET POSITIONING",
+      "theme": "Elevated Short Gamma / Options Volatility Risk"
+    },
+    {
+      "part": "PART 3: ASSET POSITIONING",
+      "category": "ASSET POSITIONING",
+      "theme": "Hedge Fund De-grossing and Shorting"
+    }
+  ]
+}
