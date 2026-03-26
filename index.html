@@ -1,0 +1,2816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consensus Shift Tracker — Fade Report · Mar 25, 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0d1117;
+      --bg-card:     #161b22;
+      --bg-secondary:#1c2230;
+      --border:      #2a3347;
+      --fg:          #e6edf3;
+      --fg-muted:    #7d8fa8;
+      --gold:        #c9a84c;
+      --bull:        #3fb950;
+      --bear:        #e05252;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .display { font-family: 'Space Grotesk', sans-serif; font-weight: 700; }
+
+    /* ── Layout ── */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ── Header ── */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,17,23,0.96);
+      backdrop-filter: blur(8px);
+    }
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 56px;
+    }
+    .header-brand { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 13px; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; }
+    .header-sub { color: var(--fg-muted); font-size: 13px; margin-left: 10px; }
+    .header-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-muted); display: flex; gap: 16px; }
+
+    /* ── Tab Bar ── */
+    .tab-bar { border-top: 1px solid var(--border); display: flex; }
+    .tab-btn {
+      padding: 10px 20px; font-size: 13px; font-family: 'Space Grotesk', sans-serif; font-weight: 600;
+      color: var(--fg-muted); border: none; background: none; cursor: pointer;
+      border-bottom: 2px solid transparent; transition: color 0.15s;
+    }
+    .tab-btn:hover { color: var(--fg); }
+    .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+    /* ── Page panels ── */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ── Body layout ── */
+    .body-layout { display: flex; gap: 40px; padding: 40px 0; }
+
+    /* ── Left Nav ── */
+    .left-nav { width: 192px; flex-shrink: 0; position: sticky; top: 80px; align-self: flex-start; }
+    .left-nav-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--fg-muted); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 12px; padding: 0 12px; }
+    .nav-btn {
+      display: block; width: 100%; text-align: left; padding: 8px 12px;
+      font-size: 13px; font-weight: 500; color: var(--fg-muted);
+      background: none; border: none; border-left: 2px solid transparent;
+      cursor: pointer; transition: color 0.15s, border-color 0.15s;
+    }
+    .nav-btn:hover { color: var(--fg); border-left-color: var(--border); }
+    .nav-btn.active { color: var(--gold); border-left-color: var(--gold); background: var(--bg-secondary); }
+
+    /* ── Main ── */
+    main { flex: 1; min-width: 0; }
+    .section { margin-bottom: 56px; }
+
+    /* ── Section Heading ── */
+    .section-heading {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: 14px; color: var(--fg); text-transform: uppercase;
+      letter-spacing: 0.12em; border-bottom: 1px solid var(--border);
+      padding-bottom: 12px; margin-bottom: 20px;
+    }
+
+    /* ── Stats Grid ── */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); margin-bottom: 20px; }
+    .stat-card { background: var(--bg-card); padding: 16px 20px; }
+    .stat-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--fg-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+    .stat-value { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 36px; }
+    .stat-sub { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-muted); margin-top: 4px; }
+    .text-bull { color: var(--bull); }
+    .text-bear { color: var(--bear); }
+    .text-gold { color: var(--gold); }
+    .text-muted { color: var(--fg-muted); }
+
+    /* ── Regime Acts ── */
+    .acts { border: 1px solid var(--border); overflow: hidden; }
+    .act-row { display: flex; border-bottom: 1px solid var(--border); border-left: 4px solid transparent; }
+    .act-row:last-child { border-bottom: none; }
+    .act-row.bull-border { border-left-color: var(--bull); }
+    .act-row.gold-border { border-left-color: var(--gold); }
+    .act-row.bear-border { border-left-color: var(--bear); }
+    .act-meta { width: 144px; flex-shrink: 0; padding: 20px; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px; }
+    .act-badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; padding: 2px 8px; align-self: flex-start; }
+    .act-badge.bull-badge { background: var(--bull); color: var(--bg); }
+    .act-badge.gold-badge { background: var(--gold); color: var(--bg); }
+    .act-badge.bear-badge { background: var(--bear); color: var(--bg); }
+    .act-dates { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--fg-muted); margin-top: 4px; }
+    .act-body { padding: 20px; }
+    .act-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; color: var(--fg); margin-bottom: 8px; }
+    .act-text { font-size: 13px; color: var(--fg-muted); line-height: 1.65; }
+
+    /* ── Tables ── */
+    .table-wrap { border: 1px solid var(--border); overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    thead tr { background: var(--bg-secondary); border-bottom: 1px solid var(--border); }
+    th { text-align: left; padding: 12px 16px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--fg-muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; }
+    th.right { text-align: right; }
+    tbody tr { border-bottom: 1px solid var(--border); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr.even { background: var(--bg-card); }
+    tbody tr.odd { background: var(--bg); }
+    tbody tr.unani { background: rgba(224,82,82,0.07); }
+    td { padding: 12px 16px; }
+    td.right { text-align: right; }
+    td.mono-sm { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-muted); }
+    .unani-badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: var(--bear); border: 1px solid var(--bear); padding: 1px 4px; margin-left: 8px; }
+
+    /* ── Score Bar ── */
+    .score-bar-wrap { display: flex; align-items: center; gap: 8px; }
+    .score-bar-track { width: 80px; height: 6px; background: var(--bg-secondary); overflow: hidden; }
+    .score-bar-fill { height: 100%; }
+    .score-bar-fill.bull { background: var(--bull); }
+    .score-bar-fill.bear { background: var(--bear); }
+
+    /* ── Bank Leadership ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); margin-bottom: 16px; }
+    .panel { background: var(--bg-card); padding: 20px; }
+    .panel-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
+    .bank-row { display: flex; gap: 16px; margin-bottom: 16px; }
+    .bank-row:last-child { margin-bottom: 0; }
+    .bank-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 13px; width: 40px; flex-shrink: 0; }
+    .bank-note { font-size: 13px; color: var(--fg-muted); line-height: 1.55; }
+    .late-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+    .late-tag { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 13px; color: var(--fg); border: 1px solid var(--border); padding: 8px 16px; }
+
+    /* ── Fade Signals ── */
+    .signal-card { border: 1px solid var(--border); padding: 20px; display: flex; gap: 20px; margin-bottom: 12px; background: var(--bg-card); }
+    .signal-card.unanimous { border-color: var(--bear); background: rgba(224,82,82,0.05); }
+    .signal-n { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 13px; color: var(--fg-muted); width: 24px; flex-shrink: 0; padding-top: 2px; }
+    .signal-body { flex: 1; }
+    .signal-header { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+    .signal-asset { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; color: var(--fg); }
+    .signal-score { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13px; }
+    .signal-bb { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-muted); }
+    .badge-unani { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: var(--bear); border: 1px solid var(--bear); padding: 2px 6px; }
+    .badge-disagree { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: var(--gold); border: 1px solid var(--gold); padding: 2px 6px; }
+    .signal-note { font-size: 13px; color: var(--fg-muted); line-height: 1.6; }
+
+    /* ── Watch List ── */
+    .watch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .watch-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--fg-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
+    .catalyst-row { display: flex; align-items: flex-start; gap: 16px; padding: 16px; border-bottom: 1px solid var(--border); }
+    .catalyst-row:last-child { border-bottom: none; }
+    .catalyst-arrow { color: var(--gold); font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+    .catalyst-trigger { font-size: 13px; font-weight: 600; color: var(--fg); }
+    .catalyst-target { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-muted); margin-top: 2px; }
+
+    /* ── Data Quality ── */
+    .dq-box { border: 1px solid var(--border); background: var(--bg-card); padding: 24px; }
+    .dq-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--fg-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
+    .dq-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; font-size: 13px; color: var(--fg-muted); }
+    .dq-key { color: var(--fg); font-weight: 600; }
+
+    /* ── Consensus Summary (charts) ── */
+    .chart-section { margin-bottom: 48px; }
+    .chart-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; color: var(--fg); margin-bottom: 4px; }
+    .chart-subtitle { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-muted); margin-bottom: 16px; }
+    .chart-img { width: 100%; border: 1px solid var(--border); display: block; }
+    .chart-caption { font-size: 12px; color: var(--fg-muted); line-height: 1.65; margin-top: 12px; padding: 12px 16px; border-left: 3px solid var(--border); background: var(--bg-card); }
+
+    /* ── Weekly Summary sub-tabs ── */
+    .sub-tab-bar { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 24px; flex-wrap: wrap; }
+    .sub-tab-btn {
+      padding: 8px 18px; font-size: 12px; font-family: 'Space Grotesk', sans-serif; font-weight: 600;
+      color: var(--fg-muted); background: none; border: none; cursor: pointer;
+      border-bottom: 2px solid transparent; transition: color 0.15s;
+    }
+    .sub-tab-btn:hover { color: var(--fg); }
+    .sub-tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .sub-panel { display: none; }
+    .sub-panel.active { display: block; }
+
+    /* ── Story cards ── */
+    .story-card { border: 1px solid var(--border); margin-bottom: 12px; background: var(--bg-card); overflow: hidden; }
+    .story-header { display: flex; align-items: flex-start; gap: 16px; padding: 16px 20px; cursor: pointer; }
+    .story-header:hover { background: var(--bg-secondary); }
+    .story-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-muted); flex-shrink: 0; margin-top: 2px; }
+    .story-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 14px; color: var(--fg); flex: 1; }
+    .story-chevron { font-size: 12px; color: var(--fg-muted); flex-shrink: 0; transition: transform 0.2s; }
+    .story-body { padding: 0 20px 16px 52px; font-size: 13px; color: var(--fg-muted); line-height: 1.65; display: none; }
+    .story-body.open { display: block; }
+    .story-themes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .theme-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); border: 1px solid var(--gold); padding: 2px 8px; }
+
+    /* ── Consensus tiers ── */
+    .tier-section { margin-bottom: 28px; }
+    .tier-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; padding: 6px 12px; }
+    .tier-label.t1 { background: rgba(63,185,80,0.12); color: var(--bull); }
+    .tier-label.t2 { background: rgba(201,168,76,0.12); color: var(--gold); }
+    .tier-label.t3 { background: rgba(224,82,82,0.12); color: var(--bear); }
+    .consensus-item { border: 1px solid var(--border); margin-bottom: 8px; background: var(--bg-card); overflow: hidden; }
+    .consensus-item-header { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; cursor: pointer; }
+    .consensus-item-header:hover { background: var(--bg-secondary); }
+    .ci-title { font-weight: 600; font-size: 13px; color: var(--fg); flex: 1; }
+    .ci-banks { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--fg-muted); flex-shrink: 0; }
+    .ci-body { padding: 0 16px 14px; font-size: 12px; color: var(--fg-muted); line-height: 1.65; display: none; }
+    .ci-body.open { display: block; }
+
+    /* ── Divergence ── */
+    .div-card { border: 1px solid var(--border); margin-bottom: 16px; background: var(--bg-card); overflow: hidden; }
+    .div-header { display: flex; align-items: flex-start; gap: 12px; padding: 16px 20px; cursor: pointer; }
+    .div-header:hover { background: var(--bg-secondary); }
+    .div-title { font-weight: 700; font-size: 14px; color: var(--fg); flex: 1; }
+    .div-body { padding: 0 20px 16px; display: none; }
+    .div-body.open { display: block; }
+    .div-sides { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 12px; }
+    .div-side { padding: 14px; border: 1px solid var(--border); }
+    .div-side-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+    .div-side-label.bull { color: var(--bull); }
+    .div-side-label.bear { color: var(--bear); }
+    .div-side-banks { font-size: 12px; color: var(--fg-muted); }
+    .div-bar-wrap { display: flex; align-items: center; gap: 8px; margin-top: 12px; }
+    .div-bar { flex: 1; height: 8px; background: var(--bg-secondary); overflow: hidden; display: flex; }
+    .div-bar-bull { background: var(--bull); height: 100%; }
+    .div-bar-bear { background: var(--bear); height: 100%; }
+
+    /* ── Model Scores ── */
+    .model-category { margin-bottom: 32px; }
+    .model-cat-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+
+    /* ── Categorization ── */
+    .cat-theme { margin-bottom: 28px; }
+    .cat-theme-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 14px; color: var(--fg); margin-bottom: 12px; padding: 8px 12px; background: var(--bg-secondary); border-left: 3px solid var(--gold); }
+    .cat-row { display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 12px; cursor: pointer; }
+    .cat-row:hover { background: var(--bg-secondary); }
+    .cat-row:last-child { border-bottom: none; }
+    .cat-bank { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--gold); width: 56px; flex-shrink: 0; }
+    .cat-quote { color: var(--fg-muted); flex: 1; line-height: 1.55; }
+    .cat-quote-full { display: none; }
+    .cat-quote-full.open { display: block; }
+
+    /* ── Footer ── */
+    footer { border-top: 1px solid var(--border); padding: 24px 0; margin-top: 32px; }
+    .footer-inner { display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-muted); flex-wrap: wrap; gap: 8px; }
+
+    @media (max-width: 900px) {
+      .left-nav { display: none; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .two-col { grid-template-columns: 1fr; }
+      .watch-grid { grid-template-columns: 1fr; }
+      .dq-grid { grid-template-columns: 1fr 1fr; }
+      .div-sides { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .header-meta span:last-child { display: none; }
+    }
+
+    /* ── Main Stories Card (reference design) ── */
+    .ms-card-top { display: flex; padding: 20px; cursor: pointer; }
+    .ms-card-top:hover { background: var(--bg-secondary); }
+
+    /* ── Consensus Card (reference design) ── */
+    .consensus-item { border: 1px solid var(--border); margin-bottom: 8px; background: var(--bg-card); overflow: hidden; }
+    .ci-card-header { padding: 16px 20px; cursor: pointer; }
+    .ci-card-header:hover { background: var(--bg-secondary); }
+    .ci-top-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .ci-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; color: var(--fg); margin-bottom: 8px; }
+    .ci-banks { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-muted); }
+    .ci-toggle { font-family: 'JetBrains Mono', monospace; font-size: 16px; color: var(--fg-muted); margin-left: auto; flex-shrink: 0; }
+    .ci-statement { font-size: 14px; color: var(--fg-muted); line-height: 1.65; }
+    .ci-body { padding: 0 20px 20px; display: none; }
+    .ci-body.open { display: block; }
+    .ci-mech-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; margin-top: 8px; }
+    .ci-mech-text { font-size: 14px; color: var(--fg-muted); line-height: 1.65; margin-bottom: 20px; }
+    .ci-support-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; color: var(--fg-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+    .ci-support-banks { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--fg-muted); line-height: 1.6; }
+
+    /* -- Divergence reference design -- */
+    .div-card { border: 1px solid var(--border); margin-bottom: 20px; background: var(--bg-card); overflow: hidden; }
+    .div-card-top { padding: 20px; cursor: pointer; }
+    .div-card-top:hover { background: var(--bg-secondary); }
+    .div-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--fg-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+    .div-title { font-weight: 700; font-size: 15px; color: var(--fg); flex: 1; }
+    .div-body { padding: 0 20px 20px; display: none; }
+    .div-body.open { display: block; }
+    .bank-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .bank-pill { font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 4px 10px; border: 1px solid; }
+    .bank-pill.bull { color: var(--bull); border-color: var(--bull); }
+    .bank-pill.bear { color: var(--bear); border-color: var(--bear); }
+
+    /* -- Categorization reference design -- */
+    .cat-theme-card { border: 1px solid var(--border); margin-bottom: 8px; background: var(--bg-card); overflow: hidden; }
+    .cat-theme-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; }
+    .cat-theme-header:hover { background: var(--bg-secondary); }
+    .cat-count-badge { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-muted); background: var(--bg-secondary); border: 1px solid var(--border); padding: 2px 8px; min-width: 28px; text-align: center; flex-shrink: 0; }
+    .cat-theme-name { font-weight: 600; font-size: 13px; color: var(--fg); }
+    .cat-theme-body { display: none; border-top: 1px solid var(--border); }
+    .cat-theme-body.open { display: block; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span class="header-brand">Consensus Shift Tracker</span>
+        <span class="header-sub">— Fade Report</span>
+      </div>
+      <div class="header-meta">
+        <span>Mar 25, 2026</span>
+        <span>22 Assets · 25 Banks · 1,269 Calls · 34 Dates</span>
+      </div>
+    </div>
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('report',this)">Report</button>
+      <button class="tab-btn" onclick="switchTab('consensus',this)">Consensus Summary</button>
+      <button class="tab-btn" onclick="switchTab('weekly',this)">Weekly Summary</button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════ REPORT TAB -->
+<div id="page-report" class="page active">
+  <div class="container">
+    <div class="body-layout">
+
+      <!-- Left Nav -->
+      <nav class="left-nav">
+        <p class="left-nav-label">Contents</p>
+        <button class="nav-btn active" onclick="scrollTo('executive',this)">Executive Summary</button>
+        <button class="nav-btn" onclick="scrollTo('regime',this)">Regime Narrative</button>
+        <button class="nav-btn" onclick="scrollTo('leaderboard',this)">Consensus Leaderboard</button>
+        <button class="nav-btn" onclick="scrollTo('movers',this)">Biggest Movers</button>
+        <button class="nav-btn" onclick="scrollTo('banks',this)">Bank Leadership</button>
+        <button class="nav-btn" onclick="scrollTo('signals',this)">Fade Signals</button>
+        <button class="nav-btn" onclick="scrollTo('watchlist',this)">Watch List</button>
+      </nav>
+
+      <main>
+
+        <!-- 1. Executive Summary -->
+        <section class="section">
+          <div id="executive" style="scroll-margin-top:72px;"></div>
+          <h2 class="section-heading">1. Executive Summary</h2>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <p class="stat-label">Bullish Assets</p>
+              <p class="stat-value text-bull">7</p>
+              <p class="stat-sub">AI Infra, BoJ (+=Hike), Brent, Credit HY, ECB (+=Hike), Fed (+=Hike), RBA (+=Hike)</p>
+            </div>
+            <div class="stat-card">
+              <p class="stat-label">Bearish Assets</p>
+              <p class="stat-value text-bear">15</p>
+              <p class="stat-sub">of 22 tracked</p>
+            </div>
+            <div class="stat-card">
+              <p class="stat-label">Deeply Bearish</p>
+              <p class="stat-value text-bear">2</p>
+              <p class="stat-sub">score below −0.50</p>
+            </div>
+            <div class="stat-card">
+              <p class="stat-label">Unanimous Bear</p>
+              <p class="stat-value text-bear">1</p>
+              <p class="stat-sub">US 2Y (+=Bull Bond)</p>
+            </div>
+          </div>
+          <p style="font-size:13px;color:var(--fg-muted);line-height:1.65;">
+            Of 22 canonical assets tracked across 25 banks and 1,269 directional calls over 34 trading dates (2026-02-03 – 2026-03-25), the consensus has turned overwhelmingly bearish. 7 assets remain positive — AI Infra, BoJ (+=Hike), Brent, Credit HY, ECB (+=Hike), Fed (+=Hike), RBA (+=Hike). 2 assets sit below −0.50, and 1 — US 2Y (+=Bull Bond) — have reached unanimous bearishness with zero bullish voices remaining.
+          </p>
+        </section>
+
+        <!-- 2. Regime Narrative -->
+        <section class="section">
+          <div id="regime" style="scroll-margin-top:72px;"></div>
+          <h2 class="section-heading">2. Regime Narrative — 3-Act Structure</h2>
+          <div class="acts">
+            <div class="act-row bull-border">
+              <div class="act-meta">
+                <span class="act-badge bull-badge">Act 1</span>
+                <span class="act-dates">Feb 3 – Feb 22</span>
+              </div>
+              <div class="act-body">
+                <p class="act-title">The Bullish Consensus</p>
+                <p class="act-text">Most assets started the period in bullish territory as the Oil Shock consensus formed and banks piled into commodities, equities, and EM. Gold and EM Equities both hit +0.90. The Fed consensus started dovish before flipping hawkish as the PCE/inflation narrative took hold.</p>
+              </div>
+            </div>
+            <div class="act-row gold-border">
+              <div class="act-meta">
+                <span class="act-badge gold-badge">Act 2</span>
+                <span class="act-dates">Feb 23 – Mar 14</span>
+              </div>
+              <div class="act-body">
+                <p class="act-title">The Hormuz Shock &amp; First Fracture</p>
+                <p class="act-text">The Strait of Hormuz disruption triggered the first wave of de-risking. EM Equities and S&amp;P 500 collapsed while commodities initially held up. The critical fracture appeared in Gold as surging real yields undermined the safe-haven thesis. Citi was the first bank to flip Gold bearish (Mar 12) — the leading signal that the traditional playbook was breaking.</p>
+              </div>
+            </div>
+            <div class="act-row bear-border">
+              <div class="act-meta">
+                <span class="act-badge bear-badge">Act 3</span>
+                <span class="act-dates">Mar 15 – Mar 23</span>
+              </div>
+              <div class="act-body">
+                <p class="act-title">The Everything Sell-Off</p>
+                <p class="act-text">The stagflationary regime triggered a broad liquidation across equities, credit, FX, and commodities simultaneously. Brent reversed −0.92 from peak. Credit IG reversed −0.92. EUR/USD and Gold each reversed −0.58. The ECB hike consensus weakened −0.50 from its perfect +1.00 starting point.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. Consensus Leaderboard -->
+        <section class="section">
+          <div id="leaderboard" style="scroll-margin-top:72px;"></div>
+          <h2 class="section-heading">3. Consensus Scores — Current State (Mar 24, 2026)</h2>
+          <div class="table-wrap">
+            <table id="consensus-table">
+              <thead>
+                <tr>
+                  <th>Asset</th>
+                  <th class="right">Score</th>
+                  <th class="right">Bull / Bear</th>
+                  <th>Signal</th>
+                  <th style="width:140px;"></th>
+                </tr>
+              </thead>
+              <tbody id="consensus-tbody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. Biggest Movers -->
+        <section class="section">
+          <div id="movers" style="scroll-margin-top:72px;"></div>
+          <h2 class="section-heading">4. Biggest Movers — Peak to Current</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Asset</th><th>Peak</th><th>Peak Date</th><th>Current</th><th>Drop</th><th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="movers-tbody"></tbody>
+            </table>
+          </div>
+          <p style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--fg-muted);margin-top:12px;">
+            EM Equities suffered the largest reversal at −1.74 (from +0.90 to −0.84). All ten biggest movers are complete reversals — no partial weakening remains.
+          </p>
+        </section>
+
+        <!-- 5. Bank Leadership -->
+        <section class="section">
+          <div id="banks" style="scroll-margin-top:72px;"></div>
+          <h2 class="section-heading">5. Bank Leadership Summary</h2>
+          <div class="two-col">
+            <div class="panel">
+              <p class="panel-label text-bull">Thought Leaders — First to Call Emerging Themes</p>
+              <div class="bank-row"><span class="bank-name text-bull">BofA</span><span class="bank-note">Consistently early across Oil, Gold, Rates, Equity De-risk, and AI Infra.</span></div>
+              <div class="bank-row"><span class="bank-name text-bull">JPM</span><span class="bank-note">Led EM Bear call on Feb 3 — 3 weeks ahead of consensus.</span></div>
+              <div class="bank-row"><span class="bank-name text-bull">Citi</span><span class="bank-note">First to flip Gold bearish on Mar 12 — the pivotal regime-change signal.</span></div>
+              <div class="bank-row"><span class="bank-name text-bull">DB</span><span class="bank-note">Led EM Bear flip and early Equity De-risk.</span></div>
+            </div>
+            <div class="panel">
+              <p class="panel-label text-bear">Late Arrivals — 2–4 Weeks Behind on Every Theme</p>
+              <div class="late-tags">
+                <span class="late-tag">MS</span>
+                <span class="late-tag">Mizuho</span>
+                <span class="late-tag">Rabobank</span>
+                <span class="late-tag">TSLombard</span>
+              </div>
+              <p style="font-size:13px;color:var(--fg-muted);line-height:1.6;">
+                Tracking thought-leader banks in real time provides a <strong style="color:var(--fg);">2–3 week alpha window</strong> before the broader consensus catches up.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. Fade Signals -->
+        <section class="section">
+          <div id="signals" style="scroll-margin-top:72px;"></div>
+          <h2 class="section-heading">6. Fade Targets &amp; Actionable Signals</h2>
+          <div id="fade-signals-container"></div>
+        </section>
+
+        <!-- 7. Watch List -->
+        <section class="section">
+          <div id="watchlist" style="scroll-margin-top:72px;"></div>
+          <h2 class="section-heading">7. Watch for Tomorrow</h2>
+          <div class="watch-grid">
+            <div>
+              <p class="watch-label">Assets at Inflection Points</p>
+              <div class="table-wrap">
+                <table>
+                  <thead><tr><th>Asset</th><th class="right">Score</th><th class="right">B/Be</th></tr></thead>
+                  <tbody id="inflection-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+            <div>
+              <p class="watch-label">Key Catalysts</p>
+              <div class="table-wrap" id="catalysts-container"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Data Quality -->
+        <section class="section">
+          <div class="dq-box">
+            <p class="dq-label">Data Quality &amp; Methodology</p>
+            <div class="dq-grid">
+              <div><span class="dq-key">Source: </span>bank_conviction.csv — 1,269 directional calls from 25 banks</div>
+              <div><span class="dq-key">Consensus: </span>consensus_timeseries.csv — 497 rows</div>
+              <div><span class="dq-key">Method: </span>Per-date average of each bank's latest score (14-day lookback, min 2 banks)</div>
+              <div><span class="dq-key">Coverage: </span>34 dates × 22 assets</div>
+              <div><span class="dq-key">Stale fill rows: </span>193</div>
+              <div><span class="dq-key">Dedup rule: </span>Marketdesk data always preferred over summary categorization</div>
+              <div style="grid-column:1/-1;"><span class="dq-key">Thin coverage: </span>Credit HY (5 banks), Credit IG (5 banks) — treat signals with caution</div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ CONSENSUS SUMMARY TAB -->
+<div id="page-consensus" class="page">
+  <div class="container" style="padding-top:40px;padding-bottom:40px;">
+    <div class="chart-section">
+      <p class="chart-title">Consensus Shift Tracker — 30-Day Zoom</p>
+      <p class="chart-subtitle">Feb 22 – Mar 24, 2026 · 8 Key Assets</p>
+      <img class="chart-img" src="img/chart_30d_zoom.png" alt="30-Day Zoom chart" />
+      <p class="chart-caption">Tracks the consensus score trajectory for 8 key assets over the final 30 trading days. Four distinct regimes are annotated: Geopolitical Risk (Feb 22–25), Hormuz Disruption (Feb 26 – Mar 4), Consensus Fracture (Mar 5–15), and Stagflationary (Mar 16–24). EM Equities ended at −0.84, the sharpest decline. Fed (+=Hike) at +0.48 and AI Infra at −0.08 are closest to positive territory.</p>
+    </div>
+    <div class="chart-section">
+      <p class="chart-title">Bank Leadership by Macro Theme</p>
+      <p class="chart-subtitle">★ = first to call/flip · ✓ = followed later · dates = first publication</p>
+      <img class="chart-img" src="img/chart_bank_leadership.png" alt="Bank Leadership chart" />
+      <p class="chart-caption">Maps which banks led versus followed across 11 macro themes. Gold cells indicate leading calls (★); blue cells indicate supporting calls (✓); dark cells indicate absence. JPM, UBS, and DB show the densest leading coverage. BofA led Oil Bull, Gold Bull, and the 10Y Bond Bear call. Citi was the sole leader on the Gold → Bear flip (Mar 12). Late arrivals — MS, Mizuho, Rabobank, TSLombard — are concentrated in the bottom rows.</p>
+    </div>
+    <div class="chart-section">
+      <p class="chart-title">Bank × Asset Conviction Map</p>
+      <p class="chart-subtitle">Green = Bull · Red = Bear · Gold border = contrarian · ▲Bull ▼Bear · No data = dark</p>
+      <img class="chart-img" src="img/chart_bank_asset_heatmap.png" alt="Bank Asset Conviction Heatmap" />
+      <p class="chart-caption">Shows each bank's current directional conviction score (−1.0 to +1.0) for every tracked asset. Gold borders highlight contrarian positions — banks holding the minority view against consensus. The bottom CONSENSUS row summarises the aggregate score per asset. S&amp;P 500 consensus: −0.50. Nasdaq: −0.38. EM Equities: −0.84. Fed (+=Hike) at +0.48 is the strongest positive. USD at −0.64 and EM Equities at −0.84 are unanimous bearish.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ WEEKLY SUMMARY TAB -->
+<div id="page-weekly" class="page">
+  <div class="container" style="padding-top:32px;padding-bottom:40px;">
+    <div style="margin-bottom:8px;">
+      <p style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;color:var(--fg);">Weekly Summary</p>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--fg-muted);margin-top:4px;">Mar 16 – Mar 22, 2026</p>
+    </div>
+    <div class="sub-tab-bar">
+      <button class="sub-tab-btn active" onclick="switchSubTab('stories',this)">Main Stories</button>
+      <button class="sub-tab-btn" onclick="switchSubTab('wconsensus',this)">Consensus</button>
+      <button class="sub-tab-btn" onclick="switchSubTab('divergence',this)">Divergence</button>
+      <button class="sub-tab-btn" onclick="switchSubTab('model',this)">Model Scores</button>
+      <button class="sub-tab-btn" onclick="switchSubTab('categorization',this)">Categorization</button>
+    </div>
+
+    <!-- Stories -->
+    <div id="sub-stories" class="sub-panel active" id="sub-stories"></div>
+
+    <!-- Consensus -->
+    <div id="sub-wconsensus" class="sub-panel"></div>
+
+    <!-- Divergence -->
+    <div id="sub-divergence" class="sub-panel"></div>
+
+    <!-- Model Scores -->
+    <div id="sub-model" class="sub-panel"></div>
+
+    <!-- Categorization -->
+    <div id="sub-categorization" class="sub-panel"></div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <span>Consensus Shift Tracker — Fade Report · Mar 25, 2026</span>
+      <span>Coverage: Feb 3 – Mar 24, 2026 · 33 trading dates · 22 assets · 25 banks</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Data ──────────────────────────────────────────────────────────────────────
+
+const CONSENSUS = [
+  {
+    "asset": "BoJ (+=Hike)",
+    "score": 0.75,
+    "bull": 14,
+    "bear": 0,
+    "signal": "Unanimous bullish (14 banks)"
+  },
+  {
+    "asset": "RBA (+=Hike)",
+    "score": 0.69,
+    "bull": 13,
+    "bear": 1,
+    "signal": ""
+  },
+  {
+    "asset": "ECB (+=Hike)",
+    "score": 0.65,
+    "bull": 14,
+    "bear": 2,
+    "signal": ""
+  },
+  {
+    "asset": "Fed (+=Hike)",
+    "score": 0.62,
+    "bull": 17,
+    "bear": 2,
+    "signal": ""
+  },
+  {
+    "asset": "Credit HY",
+    "score": 0.13,
+    "bull": 2,
+    "bear": 3,
+    "signal": "Split — high disagreement"
+  },
+  {
+    "asset": "AI Infra",
+    "score": 0.11,
+    "bull": 9,
+    "bear": 6,
+    "signal": "Split — high disagreement"
+  },
+  {
+    "asset": "Brent",
+    "score": 0.06,
+    "bull": 10,
+    "bear": 13,
+    "signal": "Split — high disagreement"
+  },
+  {
+    "asset": "Copper",
+    "score": -0.15,
+    "bull": 3,
+    "bear": 7,
+    "signal": "Split — high disagreement"
+  },
+  {
+    "asset": "Credit IG",
+    "score": -0.22,
+    "bull": 2,
+    "bear": 3,
+    "signal": "Split — high disagreement"
+  },
+  {
+    "asset": "Gold",
+    "score": -0.26,
+    "bull": 5,
+    "bear": 10,
+    "signal": "Split — high disagreement"
+  },
+  {
+    "asset": "Korea",
+    "score": -0.27,
+    "bull": 3,
+    "bear": 11,
+    "signal": ""
+  },
+  {
+    "asset": "US 10Y (+=Bull Bond)",
+    "score": -0.3,
+    "bull": 2,
+    "bear": 12,
+    "signal": ""
+  },
+  {
+    "asset": "India",
+    "score": -0.35,
+    "bull": 2,
+    "bear": 13,
+    "signal": ""
+  },
+  {
+    "asset": "S&P500",
+    "score": -0.36,
+    "bull": 4,
+    "bear": 11,
+    "signal": "Split — high disagreement"
+  },
+  {
+    "asset": "Nasdaq",
+    "score": -0.38,
+    "bull": 1,
+    "bear": 7,
+    "signal": ""
+  },
+  {
+    "asset": "Japan",
+    "score": -0.39,
+    "bull": 1,
+    "bear": 14,
+    "signal": ""
+  },
+  {
+    "asset": "USD",
+    "score": -0.4,
+    "bull": 5,
+    "bear": 10,
+    "signal": "Split — high disagreement"
+  },
+  {
+    "asset": "EUR/USD (+=Long EUR)",
+    "score": -0.43,
+    "bull": 3,
+    "bear": 15,
+    "signal": ""
+  },
+  {
+    "asset": "China",
+    "score": -0.47,
+    "bull": 3,
+    "bear": 15,
+    "signal": ""
+  },
+  {
+    "asset": "US 2Y (+=Bull Bond)",
+    "score": -0.5,
+    "bull": 0,
+    "bear": 10,
+    "signal": "Unanimous bearish (10 banks)"
+  },
+  {
+    "asset": "EM Equities",
+    "score": -0.56,
+    "bull": 2,
+    "bear": 16,
+    "signal": ""
+  },
+  {
+    "asset": "JPY (+=Strong JPY)",
+    "score": -0.64,
+    "bull": 1,
+    "bear": 10,
+    "signal": ""
+  }
+];
+
+const MOVERS = [
+  {
+    "asset": "JPY (+=Strong JPY)",
+    "peak": 0.87,
+    "peakDate": "2026-03-11",
+    "current": -0.64,
+    "drop": -1.51,
+    "status": "Complete reversal"
+  },
+  {
+    "asset": "EM Equities",
+    "peak": 0.9,
+    "peakDate": "2026-02-20",
+    "current": -0.56,
+    "drop": -1.46,
+    "status": "Complete reversal"
+  },
+  {
+    "asset": "USD",
+    "peak": 0.9,
+    "peakDate": "2026-02-24",
+    "current": -0.4,
+    "drop": -1.3,
+    "status": "Complete reversal"
+  },
+  {
+    "asset": "EUR/USD (+=Long EUR)",
+    "peak": 0.83,
+    "peakDate": "2026-03-14",
+    "current": -0.43,
+    "drop": -1.26,
+    "status": "Complete reversal"
+  },
+  {
+    "asset": "Korea",
+    "peak": 0.93,
+    "peakDate": "2026-02-25",
+    "current": -0.27,
+    "drop": -1.21,
+    "status": "Complete reversal"
+  },
+  {
+    "asset": "S&P500",
+    "peak": 0.83,
+    "peakDate": "2026-02-26",
+    "current": -0.36,
+    "drop": -1.19,
+    "status": "Complete reversal"
+  },
+  {
+    "asset": "Gold",
+    "peak": 0.87,
+    "peakDate": "2026-02-23",
+    "current": -0.26,
+    "drop": -1.13,
+    "status": "Complete reversal"
+  },
+  {
+    "asset": "China",
+    "peak": 0.64,
+    "peakDate": "2026-03-14",
+    "current": -0.47,
+    "drop": -1.12,
+    "status": "Complete reversal"
+  },
+  {
+    "asset": "Japan",
+    "peak": 0.6,
+    "peakDate": "2026-02-24",
+    "current": -0.39,
+    "drop": -0.99,
+    "status": "Complete reversal"
+  },
+  {
+    "asset": "US 10Y (+=Bull Bond)",
+    "peak": 0.68,
+    "peakDate": "2026-02-24",
+    "current": -0.3,
+    "drop": -0.98,
+    "status": "Complete reversal"
+  }
+];
+
+const FADE_SIGNALS = [
+  {
+    "n": 1,
+    "asset": "Brent",
+    "score": 0.06,
+    "bb": "10B vs 13Be",
+    "type": "disagreement",
+    "note": "High disagreement — 10 banks going against the prevailing direction. Watch for the minority to either capitulate or convert others."
+  },
+  {
+    "n": 2,
+    "asset": "AI Infra",
+    "score": 0.11,
+    "bb": "9B vs 6Be",
+    "type": "disagreement",
+    "note": "High disagreement — 6 banks going against the prevailing direction. Watch for the minority to either capitulate or convert others."
+  },
+  {
+    "n": 3,
+    "asset": "Credit HY",
+    "score": 0.13,
+    "bb": "2B vs 3Be",
+    "type": "disagreement",
+    "note": "High disagreement — 2 banks going against the prevailing direction. Watch for the minority to either capitulate or convert others."
+  },
+  {
+    "n": 4,
+    "asset": "US 2Y (+=Bull Bond)",
+    "score": -0.5,
+    "bb": "0B / 10Be",
+    "type": "unanimous",
+    "note": "Unanimous bearishness across 10 banks. Extreme readings historically precede reversals or capitulation. Watch for the first bank to flip bullish — that becomes the new thought leader."
+  }
+];
+
+const INFLECTION = [
+  {
+    "asset": "Brent",
+    "score": 0.06,
+    "bb": "10B / 13Be",
+    "note": "Near inflection — a single bank flip changes direction"
+  },
+  {
+    "asset": "AI Infra",
+    "score": 0.11,
+    "bb": "9B / 6Be",
+    "note": "Near inflection — a single bank flip changes direction"
+  },
+  {
+    "asset": "Credit HY",
+    "score": 0.13,
+    "bb": "2B / 3Be",
+    "note": "Near inflection — a single bank flip changes direction"
+  },
+  {
+    "asset": "Copper",
+    "score": -0.15,
+    "bb": "3B / 7Be",
+    "note": "Near inflection — a single bank flip changes direction"
+  },
+  {
+    "asset": "Credit IG",
+    "score": -0.22,
+    "bb": "2B / 3Be",
+    "note": "Near inflection — a single bank flip changes direction"
+  }
+];
+
+const CATALYSTS = [
+  {
+    "trigger": "Hormuz maritime traffic data",
+    "target": "Brent direction"
+  },
+  {
+    "trigger": "Fed speaker calendar",
+    "target": "Fed consensus"
+  },
+  {
+    "trigger": "China PMI preview",
+    "target": "EM Equities, China"
+  },
+  {
+    "trigger": "European energy emergency meeting",
+    "target": "EUR/USD"
+  }
+];
+
+const WEEKLY_STORIES = [
+  {
+    "n": 1,
+    "title": "Strait of Hormuz Closure Triggers Severe Global Energy and Stagflation Shock",
+    "summary": "An escalating Middle East conflict—highlighted by direct strikes on Iran's Kharg Island and Qatar's Ras Laffan LNG facility—has effectively paralyzed the Strait of Hormuz. This unprecedented geopolitical disruption is driving Brent crude well above $100/bbl and causing acute physical shortages in LNG, jet fuel, and fertilizers. Banks warn this supply-driven shock is reviving severe 1970s-style stagflation risks, disproportionately threatening energy-dependent economies in Europe and Asia with sharp growth contractions, margin compression, and persistent cost-push inflation.",
+    "themes": [
+      {
+        "name": "Physical Supply Deficits",
+        "desc": "Disruption of 20% of global LNG and massive crude flows is causing immediate downstream shortages in petrochemicals and refined products."
+      },
+      {
+        "name": "Asymmetric Regional Pain",
+        "desc": "The US is relatively insulated due to energy independence, while Asia and Europe face severe terms-of-trade deterioration and current account deficits."
+      },
+      {
+        "name": "Non-Energy Contagion",
+        "desc": "The blockade is spilling over into broader supply chains, spiking global freight rates and threatening critical materials like helium and agricultural fertilizers."
+      }
+    ]
+  },
+  {
+    "n": 2,
+    "title": "Central Banks Abandon Easing Plans as Energy Inflation Forces Hawkish Pivots",
+    "summary": "The geopolitical energy shock has abruptly derailed the global monetary easing cycle, forcing a synchronized return to \"higher for longer\" restrictive policies. The Federal Reserve has delayed anticipated rate cuts to late 2026 or 2027 as core goods inflation remains sticky. Meanwhile, the ECB and BoE are facing hawkish market repricing as they prioritize anchoring inflation expectations over deteriorating growth. The RBA has already delivered a surprise 25bp hike to 4.10%, and the BoJ is preparing further tightening to combat imported inflation.",
+    "themes": [
+      {
+        "name": "Fed's Dual Mandate Tension",
+        "desc": "Powell's \"wait-and-see\" stance highlights a reluctance to cut rates amid oil-driven inflation, despite emerging cracks in the US labor market."
+      },
+      {
+        "name": "European Stagflation Trap",
+        "desc": "The ECB and BoE are forced to maintain or hike rates to fight energy inflation, even as leading economic indicators and consumer confidence plummet."
+      },
+      {
+        "name": "Yield Curve Restructuring",
+        "desc": "Global bond markets are experiencing aggressive front-end sell-offs and curve flattening as traders price out rate cuts and price in geopolitical risk premiums."
+      }
+    ]
+  },
+  {
+    "n": 3,
+    "title": "Systematic De-Risking and Negative Gamma Accelerate Equity Market Breakdowns",
+    "summary": "Global equity markets are buckling under the weight of geopolitical stress and hawkish policy shifts, triggering massive mechanical selling. CTAs and trend-following funds have dumped over $80 billion in equities, pushing major indices like the S&P 500 and Nasdaq below critical 200-day moving averages. With options dealers trapped in short gamma positions and volatility (VIX) surging, the market structure is highly fragile. This dynamic is amplifying downside momentum and raising the risk of a broader capitulation event if key support levels fail.",
+    "themes": [
+      {
+        "name": "Record Systematic Liquidations",
+        "desc": "Trend-followers and risk-parity funds are aggressively unwinding long positions as historical momentum signals break down."
+      },
+      {
+        "name": "Volatility Feedback Loop",
+        "desc": "Surging cross-asset volatility is forcing institutional de-grossing, with short-dated options trading exacerbating intraday market swings."
+      },
+      {
+        "name": "Cyclical Underperformance",
+        "desc": "Rate-sensitive and consumer-facing sectors (Financials, Discretionary, Real Estate) are bearing the brunt of the sell-off as recession fears mount."
+      }
+    ]
+  },
+  {
+    "n": 4,
+    "title": "AI Infrastructure and Physical Compute Demand Decouple from Macroeconomic Gloom",
+    "summary": "Despite broad market sell-offs and stagflation fears, the artificial intelligence secular growth story remains fiercely resilient. Catalyzed by Nvidia's GTC event and projections of $1 trillion in data center revenue visibility, institutional capital is aggressively rotating into AI enablers. The narrative has rapidly expanded beyond pure semiconductors into the physical constraints of AI, driving massive investments in power generation, grid infrastructure, cooling systems, and copper, creating a highly concentrated pocket of structural growth immune to the energy shock.",
+    "themes": [
+      {
+        "name": "Hyperscaler Capex Surge",
+        "desc": "Unprecedented capital expenditures by tech giants are locking in multi-year demand for next-generation chips and server architectures."
+      },
+      {
+        "name": "The \"Physical AI\" Trade",
+        "desc": "Investors are pivoting to utilities, electrical equipment (800VDC systems), and industrial metals required to power energy-intensive AI data centers."
+      },
+      {
+        "name": "Tech Sector Bifurcation",
+        "desc": "While hardware and semiconductor stocks command premium valuations, software and IT services face downgrades due to AI-driven disruption and pricing pressures."
+      }
+    ]
+  },
+  {
+    "n": 5,
+    "title": "Dollar Dominance Returns as Energy Shock Crushes Emerging Market Importers",
+    "summary": "The dual engines of a hawkish Federal Reserve and a global energy shock have reasserted US Dollar dominance, devastating emerging market currencies and Asian FX. Heavy energy importers like the Thai Baht, Indian Rupee, and South Korean Won are facing collapsing current account buffers and massive foreign capital outflows. Concurrently, extreme currency volatility is forcing developed market central bank interventions, with Japan on high alert to defend the Yen near 160 and the SNB actively managing Swiss Franc safe-haven inflows.",
+    "themes": [
+      {
+        "name": "Terms-of-Trade Divergence",
+        "desc": "Commodity exporters (LatAm, parts of CEEMEA) are outperforming, while Asian manufacturing hubs suffer from soaring energy import bills."
+      },
+      {
+        "name": "EM Capital Flight",
+        "desc": "Emerging market equities and local debt are experiencing multi-billion-dollar weekly outflows as investors retreat to US safe-haven assets."
+      },
+      {
+        "name": "Intervention Watch",
+        "desc": "The BoJ and SNB are explicitly tying their FX intervention strategies to the inflationary and deflationary impacts of the Middle East conflict."
+      }
+    ]
+  }
+];
+
+const WEEKLY_CONSENSUS = {
+  "tier1": [
+    {
+      "title": "Severe Energy Shock via Strait of Hormuz Closure",
+      "statement": "The escalating Middle East conflict—specifically strikes on Iran's Kharg Island, Qatar's Ras Laffan LNG facility, and the effective closure of the Strait of Hormuz—has triggered a historic global energy supply shock, driving Brent crude well above $100/bbl.",
+      "mechanism": "The physical disruption of up to 20% of global oil and LNG supply cannot be offset by strategic reserves or bypass pipelines. Banks view this not as a temporary shipping delay, but as a structural supply deficit that is sparking 1970s-style stagflation fears. If the disruption is prolonged (60+ days), banks model Brent crude reaching $130–$150/bbl, causing severe global demand destruction and margin compression across consumer and industrial sectors.",
+      "banks": "ANZ, BofA, CACIB, CBOE, Citi, DB, GS, HSBC, ING, Jefferies, JPM, Mizuho, MS, MUFG, Nomura, Rabobank, RBC, SocGen, StandardChartered, TME, TSLombard, UBS",
+      "conviction": "HIGH"
+    },
+    {
+      "title": "Central Banks Forced into Hawkish Pivots / Delayed Easing",
+      "statement": "The inflationary impulse from the energy shock has completely derailed the anticipated 2026 global monetary easing cycle, forcing central banks to prioritize inflation anchoring over deteriorating growth.",
+      "mechanism": "Central banks are trapped by supply-driven inflation. The Federal Reserve has shifted to a \"higher for longer\" stance, with markets pricing out cuts until late 2026 or 2027 due to sticky core goods inflation. Meanwhile, the ECB and BoE are facing market repricing for actual rate *hikes* (up to 50-75bps) because European economies are highly sensitive to energy-to-wage inflation transmission. This is driving aggressive front-end bond sell-offs and yield curve flattening globally.",
+      "banks": "ANZ, BofA, CACIB, Citi, DB, GS, HSBC, ING, JPM, Mizuho, MS, MUFG, Nomura, Rabobank, RBC, SocGen, StandardChartered, TME, TSLombard, UBS",
+      "conviction": "HIGH"
+    }
+  ],
+  "tier2": [
+    {
+      "title": "US Dollar Dominance Resurges as EM/Asian FX Collapses",
+      "statement": "The US Dollar is experiencing a massive tactical bull run, crushing emerging market and Asian currencies as the energy shock acts as a severe terms-of-trade tax on oil importers.",
+      "mechanism": "The US is relatively insulated due to its energy independence, while heavy energy importers (like the Eurozone, Japan, India, Thailand, and South Korea) face collapsing current account buffers and massive foreign capital outflows (e.g., $44bn exiting EM Asia). Combined with a hawkish Fed keeping US rates elevated, capital is fleeing to the USD. Consequently, the BoJ and SNB are being forced to signal urgent FX interventions to defend the Yen (near 160) and the Swiss Franc.",
+      "banks": "BofA, CACIB, Citi, DB, GS, HSBC, ING, JPM, Mizuho, MS, MUFG, SocGen, TME, TSLombard, UBS",
+      "conviction": "HIGH"
+    },
+    {
+      "title": "Acute Vulnerability in Global LNG and Petrochemical Supply Chains",
+      "statement": "The attacks on Qatar's infrastructure and the Hormuz blockade have paralyzed ~20% of global LNG trade and critical petrochemical feedstocks, causing immediate downstream factory shutdowns.",
+      "mechanism": "Beyond crude oil, the market is facing acute physical shortages of LNG, naphtha, helium, and agricultural fertilizers (urea). Because Asian and European steam crackers and power grids are heavily reliant on Persian Gulf exports, this is causing extreme price spikes in European natural gas (TTF) and Asian spot LNG (JKM), forcing immediate demand rationing and threatening global tech/semiconductor manufacturing.",
+      "banks": "BofA, Citi, DB, GS, HSBC, ING, JPM, Mizuho, MS, MUFG, Rabobank, RBC, SocGen, UBS",
+      "conviction": "HIGH"
+    },
+    {
+      "title": "RBA and BoJ Lead the Hawkish Charge in APAC",
+      "statement": "The Reserve Bank of Australia (RBA) and the Bank of Japan (BoJ) are diverging from global peers by actively tightening policy or preparing to hike rates in direct response to the energy shock.",
+      "mechanism": "The RBA has already delivered a surprise 25bp hike to 4.10% (with a 5-4 split vote) to combat energy-driven inflation and a tight labor market. Concurrently, despite holding rates at 0.75% recently, the BoJ is maintaining a hawkish bias, leaving the door open for an April or June rate hike as soaring energy import costs and a weak Yen threaten to unanchor domestic inflation expectations.",
+      "banks": "ANZ, BofA, Citi, DB, GS, HSBC, ING, JPM, Mizuho, MS, MUFG, Rabobank, SocGen, UBS",
+      "conviction": "MEDIUM"
+    }
+  ],
+  "tier3": [
+    {
+      "title": "AI Infrastructure (\"Physical AI\") Decouples from Macro Gloom",
+      "statement": "Despite broad market de-risking, the secular AI growth narrative remains fiercely intact, with institutional capital aggressively rotating into the physical infrastructure required to power AI.",
+      "mechanism": "Catalyzed by Nvidia's GTC event and projections of $1 trillion in data center revenue visibility, the AI trade has expanded beyond pure semiconductors. Banks highlight massive hyperscaler capex flowing into power generation, 800VDC electrical equipment, cooling systems, and copper. This \"Physical AI\" theme is viewed as a highly resilient growth pocket that is largely immune to the current stagflationary energy shock.",
+      "banks": "BofA, Citi, GS, Jefferies, JPM, MS, RBC, SocGen, UBS",
+      "conviction": "HIGH"
+    },
+    {
+      "title": "Systematic De-Risking and Negative Gamma Exacerbate Equity Drawdowns",
+      "statement": "The sudden geopolitical and rate shock has triggered massive mechanical selling from systematic funds, creating a fragile market structure prone to accelerated downside volatility.",
+      "mechanism": "CTAs, risk-parity, and volatility-control funds have dumped an estimated $80bn+ in global equities as historical momentum signals break down. With options dealers pushed into \"short gamma\" territory and major indices (S&P 500, Nasdaq) breaking below critical 200-day moving averages, intraday volatility is being amplified. Banks warn this dynamic raises the risk of a broader capitulation event if key technical support levels fail.",
+      "banks": "BofA, CBOE, DB, GS, JPM, Nomura, SocGen, TME",
+      "conviction": "MEDIUM"
+    },
+    {
+      "title": "Gold's Traditional Safe-Haven Status is Fracturing",
+      "statement": "Gold is failing to act as a reliable geopolitical hedge in the current crisis, suffering sharp liquidations and ETF outflows despite the outbreak of war.",
+      "mechanism": "While some banks still project long-term upside for gold via central bank buying, a growing contingent notes a breakdown in its traditional correlations. Gold has underperformed oil and the USD during this conflict, dropping below key technical moving averages. Analysts attribute this to surging real yields, Fed hawkishness, and the unwinding of a highly crowded \"long gold\" trade, which are overpowering traditional safe-haven flows. *(Note: UBS and GS remain structurally bullish, highlighting an internal divergence on timing vs. fundamentals).*",
+      "banks": "Citi, DB, HSBC, JPM, RBC, SocGen, TME, TSLombard",
+      "conviction": "MEDIUM"
+    }
+  ]
+};
+
+const WEEKLY_DIVERGENCES = [
+  {
+    "title": "The Fed's Reaction Function to the Energy Shock - Cuts vs. Hold/Hike",
+    "summary": "This is the most critical macro disagreement regarding the central bank policy path in response to the geopolitical crisis.",
+    "sideALabel": "Cuts in 2026",
+    "sideAHeadline": "The Fed will \"look through\" the oil shock and cut rates - MS, UBS, Citi (Conviction: HIGH)",
+    "sideADetail": "The Fed is prioritizing the labor market, which is showing structural cracks (e.g., hiring rates at 2019 lows). They expect demand destruction from high energy prices to do the Fed's job for it, allowing for 25bp cuts in Q3/Q4 2026.",
+    "sideBLabel": "Hold until 2027, or forced to hike",
+    "sideBHeadline": "The Fed will abandon easing due to sticky inflation - DB, Nomura, ING, BofA (Conviction: HIGH)",
+    "sideBDetail": "Sticky core goods inflation, exacerbated by the energy shock and tariffs, will force the Fed to abandon easing. They note that markets are already pricing in a rising probability of rate *hikes*, as the Fed cannot risk a 1970s-style unanchoring of inflation expectations, regardless of labor market softness.",
+    "clash": "Whether the deflationary impact of demand destruction will outweigh the inflationary impact of the physical energy supply shock.",
+    "bullBanks": "MS, UBS, Citi",
+    "bearBanks": "DB, Nomura, ING, BofA",
+    "bullCount": 3,
+    "bearCount": 4
+  },
+  {
+    "title": "Gold's Viability as a Geopolitical Safe Haven - Sell/Underweight vs. Structural Buy",
+    "summary": "The fundamental disagreement centers on whether gold's recent price action invalidates its historical safe-haven status.",
+    "sideALabel": "Gold is failing as a hedge; sell/underweight",
+    "sideAHeadline": "Gold is a crowded trade unwinding amid high real yields - DB, HSBC, TME (Conviction: HIGH)",
+    "sideADetail": "Recent market mechanics and correlations show gold has actually *declined* during the Middle East escalation, breaking key technical moving averages and suffering massive ETF outflows (-$6.3bn). They argue gold is a crowded trade that is unwinding as surging real yields and a strong USD overpower geopolitical fears.",
+    "sideBLabel": "Gold is a structural buy; $6,000+ targets",
+    "sideBHeadline": "Gold's long-term fundamentals remain intact - UBS, GS, SocGen (Conviction: HIGH)",
+    "sideBDetail": "Long-term structural fundamentals remain the true driver. They maintain $6,000–$6,200/oz targets, arguing that short-term volatility is noise. They believe gold's true drivers are central bank de-dollarization, massive sovereign debt issuance, and fiat debasement, making it an essential portfolio allocation regardless of near-term rate fluctuations.",
+    "clash": "Whether short-term rate and USD dynamics (Side A) or long-term structural fiat debasement and central bank buying (Side B) will dictate gold's ultimate trajectory.",
+    "bullBanks": "DB, HSBC, TME",
+    "bearBanks": "UBS, GS, SocGen",
+    "bullCount": 3,
+    "bearCount": 3
+  },
+  {
+    "title": "Emerging Market (EM) Equities - Capitulation vs. Tactical Opportunity",
+    "summary": "The debate hinges on whether the current macro environment represents a structural breakdown for EM or a tactical mispricing.",
+    "sideALabel": "EM is highly vulnerable; massive downside risk",
+    "sideAHeadline": "EM faces a toxic cocktail of capital flight and terms-of-trade shocks - JPM, TME, BofA (Conviction: HIGH)",
+    "sideADetail": "The current environment is a toxic cocktail for EM. They highlight massive foreign capital flight (up to $44bn exiting EM Asia) driven by a severe terms-of-trade shock for energy importers, compounded by a resurgent US Dollar and tightening global financial conditions. They see parallels to the 2022 collapse.",
+    "sideBLabel": "EM offers tactical buying opportunities",
+    "sideBHeadline": "Extreme valuation discounts and specific sector decoupling offer upside - GS, MS, UBS (Conviction: MEDIUM)",
+    "sideBDetail": "The sell-off has created a \"baby thrown out with the bathwater\" scenario with extreme valuation discounts (e.g., PEG ratios of 0.6 in Tech Hardware). They advocate buying commodity exporters (LatAm, South Africa) that benefit from the oil shock, as well as North Asian markets (Korea, Taiwan) where structural AI earnings growth will ultimately overpower geopolitical noise.",
+    "clash": "Whether the terms-of-trade shock and USD strength will uniformly crush EM assets, or if specific sector/country fundamentals (AI, commodity exports) can decouple.",
+    "bullBanks": "JPM, TME, BofA",
+    "bearBanks": "GS, MS, UBS",
+    "bullCount": 3,
+    "bearCount": 3
+  },
+  {
+    "title": "Duration and Severity of the Oil Supply Shock - Transitory vs. Prolonged Structural Deficit",
+    "summary": "The core disagreement lies in the physical reality and geopolitical duration of the Strait of Hormuz blockade.",
+    "sideALabel": "Transitory disruption; prices normalize by H2",
+    "sideAHeadline": "Logistical hurdles will be bridged by alternative supplies - UBS, Jefferies (IMPLIED) (Conviction: MEDIUM)",
+    "sideADetail": "The Strait of Hormuz disruption is a temporary logistical hurdle. They forecast Brent returning to $85-$90/bbl by year-end, assuming geopolitical off-ramps, US strategic petroleum reserve (SPR) releases, and bypass pipelines will sufficiently bridge the gap.",
+    "sideBLabel": "Prolonged structural deficit; prices to $130-$150",
+    "sideBHeadline": "Physical infrastructure destruction creates an unbridgeable gap - MS, GS, BofA, Rabobank (Conviction: HIGH)",
+    "sideBDetail": "The market is severely underpricing physical reality. They point to actual infrastructure destruction (Qatar LNG, Kharg Island) and Iran's existential incentive to prolong the conflict. They calculate an unbridgeable 11-15 mb/d \"air pocket\" in global supply that cannot be fixed by SPRs or naval escorts, requiring massive demand destruction at $130-$150/bbl to rebalance the market.",
+    "clash": "The physical capacity of alternative supply routes and SPRs to offset the loss of Persian Gulf flows versus the structural destruction of infrastructure.",
+    "bullBanks": "UBS, Jefferies (IMPLIED)",
+    "bearBanks": "MS, GS, BofA, Rabobank",
+    "bullCount": 2,
+    "bearCount": 4
+  },
+  {
+    "title": "European Equities - Stagflation Trap vs. Alpha Generation",
+    "summary": "The divide centers on whether Europe's macro stagflation will uniformly drag down its equity markets or if specific sectors can decouple.",
+    "sideALabel": "Underweight Europe due to stagflation",
+    "sideAHeadline": "Europe is the primary victim of the geopolitical energy crisis - TME, JPM, BofA (Conviction: HIGH)",
+    "sideADetail": "Europe is heavily reliant on imported LNG and oil, entering a severe stagflationary trap. With the ECB forced to hike rates to fight energy inflation while industrial production contracts, they see inevitable margin compression and structural breakdowns in the DAX and STOXX 600.",
+    "sideBLabel": "Overweight specific European themes/cyclicals",
+    "sideBHeadline": "Cyclicals have priced in the gloom and offer deep discounts - UBS, GS, SocGen (Conviction: MEDIUM)",
+    "sideBDetail": "European cyclicals have already priced in the gloom and decoupled from PMIs. They advocate buying \"European Leaders\" and \"Sovereignty Baskets\" (Defense, Grid Infrastructure, Industrials), arguing that massive fiscal stimulus (e.g., Germany's €25bn High-Tech Agenda) and deep valuation discounts vs. the US offer superior risk-adjusted alpha.",
+    "clash": "Whether top-down macro stagflation will overwhelm bottom-up corporate fundamentals and fiscal stimulus initiatives in Europe.",
+    "bullBanks": "TME, JPM, BofA",
+    "bearBanks": "UBS, GS, SocGen",
+    "bullCount": 3,
+    "bearCount": 3
+  }
+];
+
+const WEEKLY_MODEL = [
+  {
+    "category": "Fixed Income",
+    "assets": [
+      {
+        "asset": "US HY Bond",
+        "score": 0.94,
+        "view": [
+          "Spreads widening amid geopolitical risks, but strong fundamentals support resilience.",
+          "Outflows accelerating due to AI and software exposure risks.",
+          "Yields attractive (6-7%) but neutral stance advised due to tight spreads."
+        ]
+      },
+      {
+        "asset": "EM IG Bond",
+        "score": 0.65,
+        "view": [
+          "EM bonds resilient; high-quality issuers like Saudi and Oman favored.",
+          "Yields attractive vs DM, but geopolitical and oil shocks pose risks."
+        ]
+      },
+      {
+        "asset": "Tips Bond",
+        "score": 0.52,
+        "view": [
+          "Favored as an inflation hedge amid energy price spikes.",
+          "Strong private client inflows noted as core PCE remains sticky."
+        ]
+      },
+      {
+        "asset": "Global IG Bond",
+        "score": 0.36,
+        "view": [
+          "Strong investor appetite and record issuance despite market volatility.",
+          "Medium-duration (4-7y) bonds preferred for mid-single-digit returns."
+        ]
+      },
+      {
+        "asset": "US Treasury 1-3y",
+        "score": 0.29,
+        "view": [
+          "Front-end duration favored as Fed delays rate cuts.",
+          "2Y yields tracking oil prices closely; attractive yields near 3.8-4.0%."
+        ]
+      },
+      {
+        "asset": "US IG Bond",
+        "score": 0.25,
+        "view": [
+          "Solid credit fundamentals limit deterioration despite slight spread widening.",
+          "Dealer inventories surging, with strong demand for high-quality credit."
+        ]
+      },
+      {
+        "asset": "US Treasury 7-10y",
+        "score": -0.06,
+        "view": [
+          "10Y yields volatile, pressured by heavy supply and inflation fears.",
+          "Asset managers net short, signaling bearish long-term sentiment."
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Currency",
+    "assets": [
+      {
+        "asset": "SGD NEER",
+        "score": 0.33,
+        "view": [
+          "MAS tightening policy due to Iran conflict inflation risks.",
+          "SGD remains resilient to oil shocks, acting as regional safe haven."
+        ]
+      },
+      {
+        "asset": "Long AUD",
+        "score": 0.25,
+        "view": [
+          "Supported by RBA's hawkish rate hikes and commodity exposure.",
+          "Vulnerable to China trade dynamics and global risk-off sentiment."
+        ]
+      },
+      {
+        "asset": "CNY NEER",
+        "score": 0.1,
+        "view": [
+          "Acts as a regional safe haven amid Middle East conflict.",
+          "Supported by strong trade surplus and PBOC stability preference."
+        ]
+      },
+      {
+        "asset": "Long INR",
+        "score": -0.0,
+        "view": [
+          "Undervalued but pressured by oil price spikes and trade deficits.",
+          "RBI intervention limits short-term volatility amid geopolitical tensions."
+        ]
+      },
+      {
+        "asset": "Long KRW",
+        "score": -0.06,
+        "view": [
+          "Pressured by energy import dependency and foreign equity outflows.",
+          "Supported by WGBI inclusion inflows and tax incentives."
+        ]
+      },
+      {
+        "asset": "Long CNY",
+        "score": -0.1,
+        "view": [
+          "Stable vs USD despite geopolitical shocks and structural de-rating.",
+          "Export growth and PBOC fixing curb currency volatility."
+        ]
+      },
+      {
+        "asset": "Long EUR",
+        "score": -0.13,
+        "view": [
+          "Weakened by energy dependency and ECB's delayed rate cuts.",
+          "Forecasts revised lower amid stagflation risks and geopolitical pressures."
+        ]
+      },
+      {
+        "asset": "Long JPY",
+        "score": -0.67,
+        "view": [
+          "Pressured near 160 by BoJ's cautious stance and energy costs.",
+          "High intervention risk from MoF if weakness persists."
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Commodities",
+    "assets": [
+      {
+        "asset": "Brent",
+        "score": 2.61,
+        "view": [
+          "Severe supply disruptions driving prices toward $100-$120/bbl.",
+          "Prolonged conflict risks sustained inflation and demand destruction."
+        ]
+      },
+      {
+        "asset": "Copper",
+        "score": 1.77,
+        "view": [
+          "Structural demand from AI and electrification outpaces supply.",
+          "Prices targeted at $14,500-$15,000/mt amid geopolitical constraints."
+        ]
+      },
+      {
+        "asset": "Gold",
+        "score": 1.61,
+        "view": [
+          "Safe-haven demand driven by central bank buying and geopolitical risks.",
+          "Forecasts raised to $6,000-$6,200/oz despite recent ETF outflows."
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Index",
+    "assets": [
+      {
+        "asset": "Nasdaq",
+        "score": 1.57,
+        "view": [
+          "Tech dominance continues but faces AI capex scrutiny.",
+          "NDX futures pressured below 200-dma amid macro stress."
+        ]
+      },
+      {
+        "asset": "S&P 500",
+        "score": 0.81,
+        "view": [
+          "Resilient near all-time highs but vulnerable to oil shocks.",
+          "Year-end targets range from 7,200 to 7,700 amid delayed Fed cuts."
+        ]
+      },
+      {
+        "asset": "MSCI ACWI EX-US",
+        "score": 0.57,
+        "view": [
+          "Global diversification recommended over US concentration.",
+          "Europe and Japan offer cyclical upside despite geopolitical headwinds."
+        ]
+      }
+    ]
+  },
+  {
+    "category": "US Style",
+    "assets": [
+      {
+        "asset": "Quality",
+        "score": 1.06,
+        "view": [
+          "Quality factor eroding due to AI-driven margin compression.",
+          "Still preferred for defensive positioning amid stagflation fears."
+        ]
+      },
+      {
+        "asset": "Small Cap",
+        "score": 0.43,
+        "view": [
+          "Undervalued vs large caps but vulnerable to high rates.",
+          "Russell 2000 earnings quality improving despite fading fiscal stimulus."
+        ]
+      },
+      {
+        "asset": "Value",
+        "score": 0.27,
+        "view": [
+          "Undervalued and neglected by active funds.",
+          "Better positioned for higher rates and stagflation than growth."
+        ]
+      },
+      {
+        "asset": "Dividend",
+        "score": 0.2,
+        "view": [
+          "High-dividend yield stocks neglected but offer portfolio stability.",
+          "Rotation toward quality income expected amid market volatility."
+        ]
+      },
+      {
+        "asset": "Growth",
+        "score": 0.06,
+        "view": [
+          "Strong earnings momentum but crowded positioning poses risks.",
+          "Valuation premiums shrinking as AI enthusiasm faces reality checks."
+        ]
+      }
+    ]
+  },
+  {
+    "category": "US Sector",
+    "assets": [
+      {
+        "asset": "Consumer Staples",
+        "score": 1.14,
+        "view": [
+          "Undervalued and defensive, but exposed to freight cost inflation.",
+          "Pricing power tested by lower-income consumer weakness."
+        ]
+      },
+      {
+        "asset": "Industrials",
+        "score": 1.12,
+        "view": [
+          "Record inflows and strong earnings growth outperforming peers.",
+          "Benefiting from reshoring, defense, and electrification secular trends."
+        ]
+      },
+      {
+        "asset": "Energy",
+        "score": 0.91,
+        "view": [
+          "Top performing sector globally, driven by oil supply shocks.",
+          "Decoupling from oil prices due to buybacks and AI correlation."
+        ]
+      },
+      {
+        "asset": "Information Technology",
+        "score": 0.89,
+        "view": [
+          "AI infrastructure demand remains robust and drives growth.",
+          "High valuations and capex sustainability concerns pose concentration risks."
+        ]
+      },
+      {
+        "asset": "Communication Services",
+        "score": 0.87,
+        "view": [
+          "Strong ad revenue growth but faces AI infrastructure cost pressures."
+        ]
+      },
+      {
+        "asset": "Materials",
+        "score": 0.66,
+        "view": [
+          "Upgraded to overweight due to climate and data center demand.",
+          "Vulnerable to energy cost pass-through and supply chain shocks."
+        ]
+      },
+      {
+        "asset": "Financials",
+        "score": 0.58,
+        "view": [
+          "Undervalued and under-owned, benefiting from deregulation and capital relief.",
+          "Commercial real estate risks and credit cycle concerns linger."
+        ]
+      },
+      {
+        "asset": "Consumer Discretionary",
+        "score": 0.58,
+        "view": [
+          "Underweight due to tax policy risks and margin compression.",
+          "Travel and leisure segments show resilience despite macro headwinds."
+        ]
+      },
+      {
+        "asset": "Real Estate",
+        "score": 0.32,
+        "view": [
+          "Subdued outlook due to elevated costs and high rates.",
+          "Data center REITs remain a bright spot for growth."
+        ]
+      },
+      {
+        "asset": "Utilities",
+        "score": 0.26,
+        "view": [
+          "Overweight due to AI data center power demand.",
+          "Vulnerable to rate sensitivity but supported by grid investments."
+        ]
+      },
+      {
+        "asset": "Health Care",
+        "score": 0.14,
+        "view": [
+          "Defensive resilience with policy clarity post-midterms.",
+          "GLP-1 drugs and oncology pipelines drive sector growth."
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Non-US Equity",
+    "assets": [
+      {
+        "asset": "MSCI Canada",
+        "score": 0.73,
+        "view": [
+          "Supported by oil prices but faces USMCA trade risks.",
+          "BoC's dovish stance and weak labor data weigh on outlook."
+        ]
+      },
+      {
+        "asset": "MSCI Brazil",
+        "score": 0.58,
+        "view": [
+          "Resilient due to oil exporter status and rate cuts.",
+          "High carry and strong fundamentals attract EM inflows."
+        ]
+      },
+      {
+        "asset": "MSCI Australia",
+        "score": 0.55,
+        "view": [
+          "Supported by RBA hawkishness and commodity exposure.",
+          "Vulnerable to China slowdown and global risk-off sentiment."
+        ]
+      },
+      {
+        "asset": "MSCI South Korea",
+        "score": 0.52,
+        "view": [
+          "High EPS growth forecasts driven by AI and semiconductors.",
+          "Vulnerable to energy import costs and foreign outflows."
+        ]
+      },
+      {
+        "asset": "MSCI India",
+        "score": 0.52,
+        "view": [
+          "Strong domestic liquidity buffers foreign outflows.",
+          "High valuations and oil price sensitivity pose near-term risks."
+        ]
+      },
+      {
+        "asset": "MSCI UK",
+        "score": 0.4,
+        "view": [
+          "FTSE 100 offers stagflation resilience via commodity exposure.",
+          "Discounted valuations and BoE rate cuts support upside."
+        ]
+      },
+      {
+        "asset": "MSCI Taiwan",
+        "score": 0.39,
+        "view": [
+          "Dominated by TSMC and AI hardware demand.",
+          "High geopolitical risk and extreme foreign ownership concentration."
+        ]
+      },
+      {
+        "asset": "Germany",
+        "score": 0.33,
+        "view": [
+          "Fiscal stimulus offsets cyclical weakness.",
+          "Highly exposed to energy shocks and China trade."
+        ]
+      },
+      {
+        "asset": "Netherlands",
+        "score": 0.31,
+        "view": [
+          "Supported by European tech leaders like ASML.",
+          "Pension fund flows driving local curve dynamics."
+        ]
+      },
+      {
+        "asset": "France",
+        "score": 0.29,
+        "view": [
+          "Luxury sector faces Chinese demand slowdown.",
+          "Fiscal constraints and political fragmentation pose macro risks."
+        ]
+      },
+      {
+        "asset": "Mexico",
+        "score": 0.28,
+        "view": [
+          "Undervalued but faces US tariff risks and slowing growth.",
+          "Near-shoring trends provide long-term structural support."
+        ]
+      },
+      {
+        "asset": "Switzerland",
+        "score": 0.23,
+        "view": [
+          "Defensive market with high-dividend stocks.",
+          "SNB intervention limits CHF appreciation, supporting exporters."
+        ]
+      },
+      {
+        "asset": "MSCI Japan",
+        "score": 0.07,
+        "view": [
+          "Strong corporate reforms and wage growth support equities.",
+          "Vulnerable to yen volatility and energy import costs."
+        ]
+      },
+      {
+        "asset": "HK Tracker Fund",
+        "score": -0.05,
+        "view": [
+          "Pressured by China property weakness and geopolitical tensions.",
+          "Population inflows support long-term property demand."
+        ]
+      },
+      {
+        "asset": "China A-Shares",
+        "score": -0.27,
+        "view": [
+          "Supported by state buying, dividend yields, and tech policies.",
+          "Property sector drag remains a persistent headwind."
+        ]
+      }
+    ]
+  }
+];
+
+const WEEKLY_CATEGORIZATION = [
+  {
+    "part": "ECONOMICS",
+    "themes": [
+      {
+        "theme": "Prolonged Middle East Conflict / Strait of Hormuz Disruption",
+        "count": 15,
+        "avgScore": 4.7,
+        "entries": [
+          {
+            "bank": "CACIB",
+            "date": "2026-03-16",
+            "score": 4,
+            "quote": "Geopolitical conflict drives oil/gas price volatility, creating inflation/GDP uncertainty"
+          },
+          {
+            "bank": "ANZ",
+            "date": "2026-03-20",
+            "score": 5,
+            "quote": "Middle East conflict threatens energy production... Brent +54%"
+          },
+          {
+            "bank": "BofA",
+            "date": "2026-03-20",
+            "score": 5,
+            "quote": "Protracted conflict risks Brent crude to $100/bbl to $240/bbl"
+          },
+          {
+            "bank": "Citi",
+            "date": "2026-03-20",
+            "score": 5,
+            "quote": "Hormuz disruptions (11-16mbpd) project Brent at $110 (base), $130 (bull)"
+          },
+          {
+            "bank": "DB",
+            "date": "2026-03-21",
+            "score": 5,
+            "quote": "5th largest geopolitical shock in 40 years... urgent Asian physical oil demand"
+          },
+          {
+            "bank": "GS",
+            "date": "2026-03-22",
+            "score": 5,
+            "quote": "60-day Strait of Hormuz disruption... lifts Brent 2027Q4 prices by $42/bbl"
+          },
+          {
+            "bank": "HSBC",
+            "date": "2026-03-18",
+            "score": 5,
+            "quote": "Iran conflict closed critical oil/gas transit route... triggering immediate supply shock"
+          },
+          {
+            "bank": "ING",
+            "date": "2026-03-19",
+            "score": 4,
+            "quote": "Strait of Hormuz blockade forcing oil tanker reroutes... invalidating initial assumptions"
+          },
+          {
+            "bank": "JPM",
+            "date": "2026-03-20",
+            "score": 5,
+            "quote": "17.6mb/d Persian Gulf flow reduction... largest in history"
+          },
+          {
+            "bank": "Mizuho",
+            "date": "2026-03-20",
+            "score": 5,
+            "quote": "Japan relies on Middle East for 95.1% oil imports... blockade causes supply drop"
+          },
+          {
+            "bank": "MS",
+            "date": "2026-03-22",
+            "score": 5,
+            "quote": "Hormuz closure causes true global supply loss... 20 mb/d disruption"
+          },
+          {
+            "bank": "Rabobank",
+            "date": "2026-03-20",
+            "score": 5,
+            "quote": "US allies forming coalition to secure Strait amid Iranian attacks"
+          },
+          {
+            "bank": "SocGen",
+            "date": "2026-03-20",
+            "score": 4,
+            "quote": "Hormuz closure risks oil peaking at $125/bbl... threatening eurozone GDP"
+          },
+          {
+            "bank": "UBS",
+            "date": "2026-03-21",
+            "score": 4,
+            "quote": "Strait of Hormuz closure threatens oil flows; Brent forecast at USD 90/barrel"
+          },
+          {
+            "bank": "Academy",
+            "date": "2026-03-22",
+            "score": 5,
+            "quote": "27% traffic drop... Iran refusal to negotiate transit escalates conflict risk"
+          }
+        ]
+      },
+      {
+        "theme": "Stagflation Risk Rising (Higher Inflation + Lower Growth)",
+        "count": 9,
+        "avgScore": 4.3,
+        "entries": [
+          {
+            "bank": "CACIB",
+            "date": "2026-03-16",
+            "score": 4,
+            "quote": "Escalating stagflation forces ECB to frontload hikes"
+          },
+          {
+            "bank": "DB",
+            "date": "2026-03-16",
+            "score": 4,
+            "quote": "Strikes driving stagflationary pressures... no market relief expected"
+          },
+          {
+            "bank": "BofA",
+            "date": "2026-03-17",
+            "score": 4,
+            "quote": "51% expect stagflation (growth < trend + inflation > trend)"
+          },
+          {
+            "bank": "JPM",
+            "date": "2026-03-20",
+            "score": 5,
+            "quote": "EU stagflation proxy divergence shows sharp EU-US/Asia divergence"
+          },
+          {
+            "bank": "Rabobank",
+            "date": "2026-03-20",
+            "score": 5,
+            "quote": "ECB forecasts show upward-inflation vs. subdued growth... heightened stagflation risk"
+          },
+          {
+            "bank": "SocGen",
+            "date": "2026-03-20",
+            "score": 5,
+            "quote": "Hormuz closure risks oil peaking at $125/bbl... threatening eurozone GDP... lifting inflation"
+          },
+          {
+            "bank": "TME",
+            "date": "2026-03-20",
+            "score": 4,
+            "quote": "Stagflation risk rising: Elevated inflation expectations... threaten growth asset allocation"
+          },
+          {
+            "bank": "MS",
+            "date": "2026-03-22",
+            "score": 4,
+            "quote": "Stagflation scenarios trigger 7-8% equity correction vs 3-5% for growth shocks"
+          },
+          {
+            "bank": "UBS",
+            "date": "2026-03-21",
+            "score": 4,
+            "quote": "Rising stagflation risks favor defensive UK bonds... and short-term euro bonds"
+          }
+        ]
+      },
+      {
+        "theme": "Fed Delays Rate Cuts / \"Higher for Longer\"",
+        "count": 13,
+        "avgScore": 4.2,
+        "entries": [
+          {
+            "bank": "StandardChartered",
+            "date": "2026-03-16",
+            "score": 4,
+            "quote": "Expect two cuts in SEP; removing a cut would be hawkish surprise"
+          },
+          {
+            "bank": "Citi",
+            "date": "2026-03-19",
+            "score": 3,
+            "quote": "Powell signals 25bp cuts in June, July, September"
+          },
+          {
+            "bank": "ING",
+            "date": "2026-03-19",
+            "score": 4,
+            "quote": "High risk of Fed delaying next rate cut to 2027 via median Dot Plot"
+          },
+          {
+            "bank": "Rabobank",
+            "date": "2026-03-19",
+            "score": 5,
+            "quote": "One cut expected in 2026 (Sep/Dec), down from three due to Middle East war"
+          },
+          {
+            "bank": "MUFG",
+            "date": "2026-03-19",
+            "score": 4,
+            "quote": "Energy shock scales back rate cut expectations; 11bps of cuts priced in"
+          },
+          {
+            "bank": "ANZ",
+            "date": "2026-03-20",
+            "score": 5,
+            "quote": "75bp cuts delayed to Q3/Q4 2026... driven by Middle East conflict"
+          },
+          {
+            "bank": "BofA",
+            "date": "2026-03-20",
+            "score": 4,
+            "quote": "Markets priced out Fed cuts... sweet spot for hikes at $80-100 WTI"
+          },
+          {
+            "bank": "GS",
+            "date": "2026-03-20",
+            "score": 4,
+            "quote": "Two 25bp cuts in 2026 (Sep/Dec to 3-3.25%)"
+          },
+          {
+            "bank": "HSBC",
+            "date": "2026-03-18",
+            "score": 4,
+            "quote": "Fed cut expectations pushed to 2026-2027... pricing 3.50-3.75% rates"
+          },
+          {
+            "bank": "JPM",
+            "date": "2026-03-20",
+            "score": 5,
+            "quote": "Fed holds rates, signals one cut in FY26/27 with Powell emphasizing macro uncertainty"
+          },
+          {
+            "bank": "DB",
+            "date": "2026-03-21",
+            "score": 5,
+            "quote": "Fed likely cuts only once in 2026 (Sept); labor market stability delays cuts"
+          },
+          {
+            "bank": "UBS",
+            "date": "2026-03-21",
+            "score": 3,
+            "quote": "Median dot plot implies two 2026 cuts but longer-run rate raised"
+          },
+          {
+            "bank": "MS",
+            "date": "2026-03-22",
+            "score": 4,
+            "quote": "Revised Fed cut timeline to September/December 2024 [2026]... contradicting market pricing"
+          }
+        ]
+      },
+      {
+        "theme": "ECB Hawkish Shift / Rate Hikes Imminent",
+        "count": 8,
+        "avgScore": 4.2,
+        "entries": [
+          {
+            "bank": "CACIB",
+            "date": "2026-03-18",
+            "score": 3,
+            "quote": "Behind-the-curve ECB with upside risk to inflation swaps/breakevens"
+          },
+          {
+            "bank": "JPM",
+            "date": "2026-03-19",
+            "score": 5,
+            "quote": "Two hikes (April, July) anticipated with partial reversal in H2 2027"
+          },
+          {
+            "bank": "Citi",
+            "date": "2026-03-20",
+            "score": 4,
+            "quote": "ECB 79bps by 2026... triggers 79bps ECB hikes"
+          },
+          {
+            "bank": "ING",
+            "date": "2026-03-20",
+            "score": 4,
+            "quote": "ECB officials considering April rate hike... hawkish tone from Lagarde"
+          },
+          {
+            "bank": "Rabobank",
+            "date": "2026-03-20",
+            "score": 5,
+            "quote": "ECB hints at April hike (vs. June) due to Middle East risks"
+          },
+          {
+            "bank": "SocGen",
+            "date": "2026-03-20",
+            "score": 4,
+            "quote": "ECB hints at April hike (ESTR +16bp)... Euro gains"
+          },
+          {
+            "bank": "UBS",
+            "date": "2026-03-21",
+            "score": 5,
+            "quote": "ECB rate expectations flip to hike (June) amid Europe’s higher energy exposure"
+          },
+          {
+            "bank": "MS",
+            "date": "2026-03-22",
+            "score": 4,
+            "quote": "ECB hikes in June 2026 (not April) and September 2026"
+          }
+        ]
+      },
+      {
+        "theme": "China Macro Stabilization / Resilience",
+        "count": 6,
+        "avgScore": 4.0,
+        "entries": [
+          {
+            "bank": "Citi",
+            "date": "2026-03-16",
+            "score": 4,
+            "quote": "Jan-Feb industrial production +6.3%... retail sales +2.8%"
+          },
+          {
+            "bank": "DB",
+            "date": "2026-03-16",
+            "score": 4,
+            "quote": "Industrial production +6.3%... retail sales +2.8%"
+          },
+          {
+            "bank": "GS",
+            "date": "2026-03-16",
+            "score": 4,
+            "quote": "Factory output (+6.3%) and retail sales (+2.8%) rebound above forecasts"
+          },
+          {
+            "bank": "JPM",
+            "date": "2026-03-17",
+            "score": 4,
+            "quote": "FAI growth positive, retail/IP accelerating... Q1 GDP revised up"
+          },
+          {
+            "bank": "UBS",
+            "date": "2026-03-21",
+            "score": 4,
+            "quote": "Exports surged 21.8% yoy... retail sales rebounded to 2.8% yoy"
+          },
+          {
+            "bank": "MS",
+            "date": "2026-03-22",
+            "score": 4,
+            "quote": "January-February industrial production grew 6.3% yoy... indicating activity is beating expectations"
+          }
+        ]
+      },
+      {
+        "theme": "BoJ Rate Hike (April/June)",
+        "count": 7,
+        "avgScore": 3.6,
+        "entries": [
+          {
+            "bank": "ANZ",
+            "date": "2026-03-17",
+            "score": 4,
+            "quote": "April rate hike to 1.0% driven by energy costs"
+          },
+          {
+            "bank": "Citi",
+            "date": "2026-03-19",
+            "score": 3,
+            "quote": "BoJ holds at 0.75% with hawkish tone"
+          },
+          {
+            "bank": "DB",
+            "date": "2026-03-19",
+            "score": 3,
+            "quote": "Door remains open for a rate hike, April hike to 1.0%"
+          },
+          {
+            "bank": "JPM",
+            "date": "2026-03-20",
+            "score": 4,
+            "quote": "Maintains April rate hike possibility"
+          },
+          {
+            "bank": "SocGen",
+            "date": "2026-03-19",
+            "score": 4,
+            "quote": "Still expect the next rate hike in April"
+          },
+          {
+            "bank": "UBS",
+            "date": "2026-03-21",
+            "score": 4,
+            "quote": "Projected increase to 1.25% by Mar 2027"
+          },
+          {
+            "bank": "MS",
+            "date": "2026-03-22",
+            "score": 3,
+            "quote": "June base case for 1.0% hike, April deemed premature"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "part": "ASSET MACRO",
+    "themes": [
+      {
+        "theme": "Long AI Enablers / Tech Hardware",
+        "count": 4,
+        "avgScore": 4.5,
+        "entries": [
+          {
+            "bank": "Citi",
+            "date": "2026-03-20",
+            "score": 4,
+            "quote": "AEIS and MKSI Buy-rated; AI data center growth... drive early-cycle demand"
+          },
+          {
+            "bank": "GS",
+            "date": "2026-03-20",
+            "score": 5,
+            "quote": "Buying of AI Enablers... memory stocks and Nvidia’s $5tn valuation offer margin of safety"
+          },
+          {
+            "bank": "UBS",
+            "date": "2026-03-21",
+            "score": 4,
+            "quote": "AI, Power & Resources, Longevity rated Attractive for transformational opportunities"
+          },
+          {
+            "bank": "MS",
+            "date": "2026-03-22",
+            "score": 5,
+            "quote": "Maintain an Overweight on Tech Hardware & Semis... 103.3% 2026E EPS growth"
+          }
+        ]
+      },
+      {
+        "theme": "Long Energy / Oil Equities",
+        "count": 6,
+        "avgScore": 4.2,
+        "entries": [
+          {
+            "bank": "BofA",
+            "date": "2026-03-16",
+            "score": 5,
+            "quote": "Buy Energy/Staples/LCV, not the index... S&P 500 Energy trades at 1.8x WTI"
+          },
+          {
+            "bank": "SocGen",
+            "date": "2026-03-16",
+            "score": 4,
+            "quote": "Energy leads in relative performance (24% percentile, +6.3% ytd)"
+          },
+          {
+            "bank": "Citi",
+            "date": "2026-03-19",
+            "score": 4,
+            "quote": "Energy equities priced at +0.5% p.a. growth vs 1.4% global oil demand trend"
+          },
+          {
+            "bank": "GS",
+            "date": "2026-03-20",
+            "score": 4,
+            "quote": "Upstream commodities (Energy, Metals & Mining) and GARP pockets favored"
+          },
+          {
+            "bank": "JPM",
+            "date": "2026-03-20",
+            "score": 4,
+            "quote": "Long crude/nats/energy equities; short Expensive Cyclicals"
+          },
+          {
+            "bank": "MS",
+            "date": "2026-03-22",
+            "score": 4,
+            "quote": "Buy OVV, PR, VNOM, and FANG... refining structural shift"
+          }
+        ]
+      },
+      {
+        "theme": "Long USD (Tactical Bullishness)",
+        "count": 6,
+        "avgScore": 4.0,
+        "entries": [
+          {
+            "bank": "HSBC",
+            "date": "2026-03-18",
+            "score": 4,
+            "quote": "Middle East conflict strengthens USD... pressures EUR/GBP/NOK/SEK"
+          },
+          {
+            "bank": "Citi",
+            "date": "2026-03-19",
+            "score": 3,
+            "quote": "USD/CNH expected to outperform to 106... impacting FX positioning"
+          },
+          {
+            "bank": "JPM",
+            "date": "2026-03-19",
+            "score": 5,
+            "quote": "Turning tactically bullish on the dollar, driven by energy shocks"
+          },
+          {
+            "bank": "BofA",
+            "date": "2026-03-20",
+            "score": 4,
+            "quote": "DXY Target 100.36; US-German 2Y yield spread >120bp drives opportunities"
+          },
+          {
+            "bank": "SocGen",
+            "date": "2026-03-20",
+            "score": 4,
+            "quote": "Renewed pressure on EURUSD from energy prices... USD gains via safe-haven flows"
+          },
+          {
+            "bank": "UBS",
+            "date": "2026-03-21",
+            "score": 4,
+            "quote": "US-Iran tensions and soaring oil prices drive USD strength"
+          }
+        ]
+      },
+      {
+        "theme": "Short Cyclicals / Long Defensives",
+        "count": 4,
+        "avgScore": 4.0,
+        "entries": [
+          {
+            "bank": "GS",
+            "date": "2026-03-16",
+            "score": 4,
+            "quote": "Rotate to acyclical growth (Health Care, Materials...); exit middle-income consumer"
+          },
+          {
+            "bank": "JPM",
+            "date": "2026-03-20",
+            "score": 4,
+            "quote": "Short Expensive Cyclicals/EM Equities/Materials/Staples"
+          },
+          {
+            "bank": "SocGen",
+            "date": "2026-03-20",
+            "score": 4,
+            "quote": "Financials, Health Care, Utilities overweights; Consumer Discretionary largest underweight"
+          },
+          {
+            "bank": "UBS",
+            "date": "2026-03-21",
+            "score": 4,
+            "quote": "Reduce cyclical exposure (consumer, industrials)... diversify into fixed income"
+          }
+        ]
+      },
+      {
+        "theme": "Short EUR/USD",
+        "count": 6,
+        "avgScore": 3.8,
+        "entries": [
+          {
+            "bank": "CACIB",
+            "date": "2026-03-16",
+            "score": 4,
+            "quote": "Forecast to reach 1.10 by Q4 2026 due to Iran war"
+          },
+          {
+            "bank": "BofA",
+            "date": "2026-03-18",
+            "score": 4,
+            "quote": "Natural gas-driven EUR weakness... directly links to EUR-G10 FX weakness"
+          },
+          {
+            "bank": "ING",
+            "date": "2026-03-18",
+            "score": 3,
+            "quote": "Fed Dot Plot revision... and weak ZEW survey drive EUR/USD toward 1.150"
+          },
+          {
+            "bank": "GS",
+            "date": "2026-03-19",
+            "score": 4,
+            "quote": "Short EUR/USD, EUR/CHF, USD/JPY effective for energy shocks"
+          },
+          {
+            "bank": "SocGen",
+            "date": "2026-03-19",
+            "score": 4,
+            "quote": "EUR/USD aligns with implied 2y rates, converging post-gap closure"
+          },
+          {
+            "bank": "MS",
+            "date": "2026-03-22",
+            "score": 4,
+            "quote": "Utilize short EUR/USD as a preferred tactical expression for a prolonged energy crisis"
+          }
+        ]
+      },
+      {
+        "theme": "Long Gold (as Geopolitical/Inflation Hedge)",
+        "count": 5,
+        "avgScore": 1.0,
+        "entries": [
+          {
+            "bank": "SocGen",
+            "date": "2026-03-17",
+            "score": 4,
+            "quote": "Gold to $6,000/oz by late 2026 (ETF inflows, geopolitical risk)"
+          },
+          {
+            "bank": "HSBC",
+            "date": "2026-03-18",
+            "score": 4,
+            "quote": "Record highs... fueled by Iran war, Ukraine conflict... central bank net buying"
+          },
+          {
+            "bank": "DB",
+            "date": "2026-03-19",
+            "score": -3,
+            "quote": "Gold underperformed vs Brent oil... contradicting traditional safe-haven role"
+          },
+          {
+            "bank": "TME",
+            "date": "2026-03-20",
+            "score": -5,
+            "quote": "Gold is not a hedge, it's a crowded trade... inverse correlation with VIX"
+          },
+          {
+            "bank": "UBS",
+            "date": "2026-03-21",
+            "score": 5,
+            "quote": "Gold expected at $6,200/oz midyear driven by central bank demand"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "part": "ASSET POSITIONING",
+    "themes": [
+      {
+        "theme": "CTA / Systematic Equity Selling Surge",
+        "count": 5,
+        "avgScore": 4.6,
+        "entries": [
+          {
+            "bank": "JPM",
+            "date": "2026-03-17",
+            "score": 4,
+            "quote": "Systematic investors may push indices down on energy shock positioning"
+          },
+          {
+            "bank": "Nomura",
+            "date": "2026-03-18",
+            "score": 4,
+            "quote": "CTA Sector Drawdowns: Bonds (-31.6%), STR (-38.7%), FX Dollar (-44%)"
+          },
+          {
+            "bank": "BofA",
+            "date": "2026-03-20",
+            "score": 5,
+            "quote": "CTAs add equity shorts... systematic strategies could sell $73bn in down markets"
+          },
+          {
+            "bank": "GS",
+            "date": "2026-03-20",
+            "score": 5,
+            "quote": "$80bn global equities sold by systematic strategies last month; $70bn expected next week"
+          },
+          {
+            "bank": "TME",
+            "date": "2026-03-20",
+            "score": 5,
+            "quote": "$80bn global equity selling by CTAs/trend followers over past month"
+          }
+        ]
+      },
+      {
+        "theme": "Extreme Long Positioning in AI / Tech",
+        "count": 4,
+        "avgScore": 4.5,
+        "entries": [
+          {
+            "bank": "BofA",
+            "date": "2026-03-19",
+            "score": 4,
+            "quote": "'AI Big Ten' at 40% market cap (mirroring Nifty Fifty 1970s peak)"
+          },
+          {
+            "bank": "GS",
+            "date": "2026-03-20",
+            "score": 5,
+            "quote": "AI positioning remains robust (record Mag7 exposure, GSTMTAIP/SPXXAI near ATH)"
+          },
+          {
+            "bank": "TME",
+            "date": "2026-03-20",
+            "score": 4,
+            "quote": "Record US TMT AI exposure... persists despite market 5% below all-time highs"
+          },
+          {
+            "bank": "MS",
+            "date": "2026-03-21",
+            "score": 5,
+            "quote": "Info Tech at 99% %tile (Axi), 100% exposure (Materials) – severe concentration risk"
+          }
+        ]
+      },
+      {
+        "theme": "EM Equity Outflows",
+        "count": 4,
+        "avgScore": 4.5,
+        "entries": [
+          {
+            "bank": "MUFG",
+            "date": "2026-03-20",
+            "score": 4,
+            "quote": "$9bn weekly outflows (tech-heavy: Korea $3bn, Taiwan $4.3bn)"
+          },
+          {
+            "bank": "BofA",
+            "date": "2026-03-20",
+            "score": 5,
+            "quote": "$3bn outflows in one week (vs. $48bn YTD)... driving capital flight"
+          },
+          {
+            "bank": "JPM",
+            "date": "2026-03-20",
+            "score": 4,
+            "quote": "EM funds outflows ~$3bn/week (YTD +$83bn), EM equities -27%"
+          },
+          {
+            "bank": "MS",
+            "date": "2026-03-22",
+            "score": 5,
+            "quote": "Massive US$44bn cumulative foreign exit from EM equities (ex-China) since Feb 27"
+          }
+        ]
+      },
+      {
+        "theme": "Elevated Short Gamma / Options Volatility Risk",
+        "count": 4,
+        "avgScore": 4.5,
+        "entries": [
+          {
+            "bank": "Nomura",
+            "date": "2026-03-18",
+            "score": 5,
+            "quote": "Total dealer gamma imbalance at -3.6bln... critical spike in 2026"
+          },
+          {
+            "bank": "JPM",
+            "date": "2026-03-19",
+            "score": 5,
+            "quote": "Massive gamma sold in SPY ($44.6B)... indicating extreme volatility risk"
+          },
+          {
+            "bank": "GS",
+            "date": "2026-03-22",
+            "score": 4,
+            "quote": "S&P dealer net short gamma (-1.1b) signals positioning for lower volatility"
+          },
+          {
+            "bank": "TME",
+            "date": "2026-03-22",
+            "score": 4,
+            "quote": "Dealers short gamma; 1.5% drop could trigger $5bn shorts"
+          }
+        ]
+      },
+      {
+        "theme": "Hedge Fund De-grossing and Shorting",
+        "count": 5,
+        "avgScore": 4.4,
+        "entries": [
+          {
+            "bank": "BofA",
+            "date": "2026-03-17",
+            "score": 4,
+            "quote": "Hedge fund selling dominance: Net sellers for 12 consecutive months"
+          },
+          {
+            "bank": "SocGen",
+            "date": "2026-03-17",
+            "score": 4,
+            "quote": "Asset Managers net short 10Y Treasury... reversal from pre-crisis longs"
+          },
+          {
+            "bank": "MS",
+            "date": "2026-03-21",
+            "score": 4,
+            "quote": "US equities at 15-yr lows in HF global portfolio... EU equities de-grossing"
+          },
+          {
+            "bank": "GS",
+            "date": "2026-03-22",
+            "score": 5,
+            "quote": "Gross leverage fell to 214% (de-risking)... net exposure rose to 53.7%... institutional unwinding"
+          },
+          {
+            "bank": "TME",
+            "date": "2026-03-22",
+            "score": 5,
+            "quote": "HF net leverage drawdown from highs extreme (45th %ile 5yrs)"
+          }
+        ]
+      }
+    ]
+  }
+];
+
+// ── Render Functions ──────────────────────────────────────────────────────────
+
+function fmt(n) {
+  return (n > 0 ? "+" : "") + n.toFixed(2);
+}
+
+function scoreBarHTML(score) {
+  const pct = Math.min(Math.abs(score) * 100, 100);
+  const cls = score >= 0 ? "bull" : "bear";
+  return `<div class="score-bar-wrap">
+    <div class="score-bar-track"><div class="score-bar-fill ${cls}" style="width:${pct}%"></div></div>
+    <span class="mono ${score>=0?'text-bull':'text-bear'}" style="font-size:12px;font-weight:700;width:44px;text-align:right;">${fmt(score)}</span>
+  </div>`;
+}
+
+function renderConsensusTable() {
+  const tbody = document.getElementById("consensus-tbody");
+  tbody.innerHTML = CONSENSUS.map((r, i) => {
+    const unani = r.signal.toLowerCase().includes("unanimous");
+    const scoreClass = r.score >= 0 ? "text-bull" : "text-bear";
+    return `<tr class="${unani ? "unani" : i%2===0 ? "even" : "odd"}">
+      <td style="font-weight:600;">${r.asset}${unani ? `<span class="unani-badge">UNANI</span>` : ""}</td>
+      <td class="right mono ${scoreClass}" style="font-weight:700;">${fmt(r.score)}</td>
+      <td class="right mono-sm">${r.bull}B / ${r.bear}Be</td>
+      <td style="font-size:12px;color:var(--fg-muted);">${r.signal}</td>
+      <td>${scoreBarHTML(r.score)}</td>
+    </tr>`;
+  }).join("");
+}
+
+function renderMoversTable() {
+  const tbody = document.getElementById("movers-tbody");
+  tbody.innerHTML = MOVERS.map((r, i) => `
+    <tr class="${i%2===0?"even":"odd"}">
+      <td style="font-weight:600;">${r.asset}</td>
+      <td class="mono text-bull">${fmt(r.peak)}</td>
+      <td class="mono-sm">${r.peakDate}</td>
+      <td class="mono ${r.current>=0?"text-bull":"text-bear"}">${fmt(r.current)}</td>
+      <td class="mono text-bear" style="font-weight:700;">${fmt(r.drop)}</td>
+      <td style="font-size:12px;color:var(--fg-muted);">${r.status}</td>
+    </tr>`).join("");
+}
+
+function renderFadeSignals() {
+  const c = document.getElementById("fade-signals-container");
+  c.innerHTML = FADE_SIGNALS.map(s => `
+    <div class="signal-card ${s.type==="unanimous"?"unanimous":""}">
+      <div class="signal-n">#${s.n}</div>
+      <div class="signal-body">
+        <div class="signal-header">
+          <span class="signal-asset">${s.asset}</span>
+          <span class="signal-score ${s.score>=0?"text-bull":"text-bear"}">${fmt(s.score)}</span>
+          <span class="signal-bb">${s.bb}</span>
+          ${s.type==="unanimous" ? `<span class="badge-unani">UNANIMOUS</span>` : `<span class="badge-disagree">HIGH DISAGREE</span>`}
+        </div>
+        <p class="signal-note">${s.note}</p>
+      </div>
+    </div>`).join("");
+}
+
+function renderInflection() {
+  const tbody = document.getElementById("inflection-tbody");
+  tbody.innerHTML = INFLECTION.map((r, i) => `
+    <tr class="${i%2===0?"even":"odd"}">
+      <td>
+        <p style="font-weight:600;color:var(--fg);">${r.asset}</p>
+        <p style="font-size:11px;color:var(--fg-muted);margin-top:2px;">${r.note}</p>
+      </td>
+      <td class="right mono text-bear" style="font-weight:700;">${fmt(r.score)}</td>
+      <td class="right mono-sm">${r.bb}</td>
+    </tr>`).join("");
+}
+
+function renderCatalysts() {
+  const c = document.getElementById("catalysts-container");
+  c.innerHTML = `<div style="border:1px solid var(--border);">` +
+    CATALYSTS.map((r, i) => `
+    <div class="catalyst-row ${i%2===0?"":""}">
+      <span class="catalyst-arrow">→</span>
+      <div>
+        <p class="catalyst-trigger">${r.trigger}</p>
+        <p class="catalyst-target">Drives: ${r.target}</p>
+      </div>
+    </div>`).join("") + `</div>`;
+}
+
+function renderWeeklyStories() {
+  const c = document.getElementById("sub-stories");
+  c.innerHTML = WEEKLY_STORIES.map(s => {
+    const themesHtml = s.themes.map(t => {
+      if (typeof t === 'string') return `<span class="theme-tag">${t}</span>`;
+      return `<div style="margin-top:10px;padding:10px 12px;border:1px solid var(--border);background:var(--bg-secondary);">
+        <p style="font-size:12px;font-weight:700;color:var(--gold);margin-bottom:4px;">${t.name}</p>
+        <p style="font-size:12px;color:var(--fg-muted);line-height:1.55;">${t.desc}</p>
+      </div>`;
+    }).join("");
+    return `
+    <div class="story-card">
+      <div class="ms-card-top" onclick="toggleStoryItem(this)">
+        <div style="flex:1;">
+          <p style="font-family:'JetBrains Mono',monospace;font-size:10px;margin-bottom:6px;"><span style="color:var(--gold);">#${s.n}</span> <span style="color:var(--fg-muted);text-transform:uppercase;letter-spacing:0.1em;">Main Story</span></p>
+          <p style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--fg);margin-bottom:8px;">${s.title}</p>
+          <p style="font-size:13px;color:var(--fg-muted);line-height:1.65;">${s.summary}</p>
+        </div>
+        <span class="ci-toggle" style="flex-shrink:0;margin-left:16px;align-self:flex-start;margin-top:4px;">+</span>
+      </div>
+      <div class="story-body">
+        <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--fg-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">Supporting Themes</p>
+        ${themesHtml}
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function toggleStoryItem(header) {
+  const card = header.closest(".story-card");
+  const body = card.querySelector(".story-body");
+  const toggle = card.querySelector(".ci-toggle");
+  const isOpen = body.classList.contains("open");
+  body.classList.toggle("open", !isOpen);
+  if(toggle) toggle.textContent = isOpen ? "+" : "–";
+}
+
+function renderWeeklyConsensus() {
+  const c = document.getElementById("sub-wconsensus");
+  const tierNames = {t1: "Universal", t2: "Strong", t3: "Emerging"};
+  const renderTier = (label, cls, items, tierKey) => `
+    <div class="tier-section">
+      <div class="tier-label ${cls}">${label}<span style="font-weight:400;color:var(--fg-muted);margin-left:12px;font-size:10px;">${items.length} items</span></div>
+      ${items.map(item => {
+        const bankCount = item.banks.split(",").length;
+        const convColor = item.conviction === "HIGH" ? "var(--bull)" : "var(--gold)";
+        return `
+        <div class="consensus-item">
+          <div class="ci-card-header" onclick="toggleConsensusItem(this)">
+            <div class="ci-top-row">
+              ${item.conviction ? `<span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--bg);background:${convColor};padding:2px 8px;letter-spacing:0.05em;">${item.conviction}</span>` : ""}
+              <span class="ci-banks">${bankCount} banks</span>
+              <span class="ci-toggle">+</span>
+            </div>
+            <p class="ci-title">${item.title}</p>
+            ${item.statement ? `<p class="ci-statement">${item.statement}</p>` : ""}
+          </div>
+          <div class="ci-body">
+            <p class="ci-mech-label">MECHANISM</p>
+            <p class="ci-mech-text">${item.mechanism}</p>
+            <p class="ci-support-label">SUPPORTING BANKS</p>
+            <p class="ci-support-banks">${item.banks}</p>
+          </div>
+        </div>`;
+      }).join("")}
+    </div>`;
+  c.innerHTML =
+    renderTier("Tier 1: Universal", "t1", WEEKLY_CONSENSUS.tier1, "t1") +
+    renderTier("Tier 2: Strong", "t2", WEEKLY_CONSENSUS.tier2, "t2") +
+    renderTier("Tier 3: Emerging / Contested", "t3", WEEKLY_CONSENSUS.tier3, "t3");
+}
+
+function toggleConsensusItem(header) {
+  const card = header.closest(".consensus-item");
+  const body = card.querySelector(".ci-body");
+  const toggle = card.querySelector(".ci-toggle");
+  const isOpen = body.classList.contains("open");
+  body.classList.toggle("open", !isOpen);
+  toggle.textContent = isOpen ? "+" : "–";
+}
+
+function renderWeeklyDivergences() {
+  const c = document.getElementById("sub-divergence");
+  c.innerHTML = WEEKLY_DIVERGENCES.map((d, idx) => {
+    const total = d.bullCount + d.bearCount;
+    const bullPct = total > 0 ? Math.round(d.bullCount / total * 100) : 50;
+    const bearPct = 100 - bullPct;
+    const aLabel = d.sideALabel || "Side A";
+    const bLabel = d.sideBLabel || "Side B";
+    const aHeadline = d.sideAHeadline || "";
+    const bHeadline = d.sideBHeadline || "";
+    const aDetail = d.sideADetail || d.bullArg || "";
+    const bDetail = d.sideBDetail || d.bearArg || "";
+    const clash = d.clash || "";
+    const aBankPills = d.bullBanks ? d.bullBanks.split(",").map(b => b.trim()).filter(b=>b).map(b => `<span class="bank-pill bull">${b}</span>`).join("") : "";
+    const bBankPills = d.bearBanks ? d.bearBanks.split(",").map(b => b.trim()).filter(b=>b).map(b => `<span class="bank-pill bear">${b}</span>`).join("") : "";
+    return `
+    <div class="div-card">
+      <div class="div-card-top" onclick="toggleDivItem(this)">
+        <p class="div-num">DIVERGENCE #${idx+1}</p>
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;">
+          <p class="div-title">${d.title}</p>
+          <span class="ci-toggle">+</span>
+        </div>
+        <div class="div-bar-wrap">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--bull);">${d.bullCount} banks</span>
+          <div class="div-bar">
+            <div class="div-bar-bull" style="width:${bullPct}%"></div>
+            <div class="div-bar-bear" style="width:${bearPct}%"></div>
+          </div>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--bear);">${d.bearCount} banks</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:4px;">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--bull);">${aLabel.split(";")[0].split("-")[0].trim()}</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--bear);">${bLabel.split(";")[0].split("-")[0].trim()}</span>
+        </div>
+      </div>
+      <div class="div-body">
+        <div class="div-sides">
+          <div class="div-side">
+            <p class="div-side-label bull">SIDE A \u2014 ${aLabel.toUpperCase()}</p>
+            ${aHeadline ? `<p style="font-style:italic;font-size:13px;color:var(--fg-muted);margin-bottom:10px;">"${aHeadline.replace(/"/g,'').split(' - ')[0].trim()}"</p>` : ""}
+            <p style="font-size:13px;color:var(--fg-muted);margin-bottom:12px;line-height:1.65;">${aDetail}</p>
+            <div class="bank-pills">${aBankPills}</div>
+          </div>
+          <div class="div-side">
+            <p class="div-side-label bear">SIDE B \u2014 ${bLabel.toUpperCase()}</p>
+            ${bHeadline ? `<p style="font-style:italic;font-size:13px;color:var(--fg-muted);margin-bottom:10px;">"${bHeadline.replace(/"/g,'').split(' - ')[0].trim()}"</p>` : ""}
+            <p style="font-size:13px;color:var(--fg-muted);margin-bottom:12px;line-height:1.65;">${bDetail}</p>
+            <div class="bank-pills">${bBankPills}</div>
+          </div>
+        </div>
+        ${clash ? `<div style="margin-top:16px;padding:14px 16px;border:1px solid var(--border);background:var(--bg-secondary);"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--gold);letter-spacing:0.05em;">CRITICAL ASSUMPTION CLASH:</span> <span style="font-size:13px;color:var(--fg-muted);line-height:1.6;">${clash}</span></div>` : ""}
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function toggleDivItem(header) {
+  const card = header.closest(".div-card");
+  const body = card.querySelector(".div-body");
+  const toggle = card.querySelector(".ci-toggle");
+  const isOpen = body.classList.contains("open");
+  body.classList.toggle("open", !isOpen);
+  if(toggle) toggle.textContent = isOpen ? "+" : "\u2013";
+}
+
+function renderWeeklyModel() {
+  const c = document.getElementById("sub-model");
+  c.innerHTML = WEEKLY_MODEL.map(cat => `
+    <div class="model-category">
+      <p class="model-cat-label">${cat.category}<span style="font-weight:400;color:var(--fg-muted);margin-left:12px;font-size:10px;">${cat.assets.length} assets</span></p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th style="width:200px;">Asset</th><th class="right" style="width:100px;">Score</th><th>Consensus View</th>
+          </tr></thead>
+          <tbody>
+            ${cat.assets.map((a, i) => `
+            <tr class="${i%2===0?"even":"odd"}">
+              <td style="font-weight:600;">${a.asset}</td>
+              <td class="right"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:${a.score>=0?'var(--bull)':'var(--bear)'};border:1px solid ${a.score>=0?'var(--bull)':'var(--bear)'};padding:3px 10px;">${a.score>0?'+':''}${a.score.toFixed(2)}</span></td>
+              <td style="font-size:12px;color:var(--fg-muted);line-height:1.6;">${(a.view||[]).map(v => '<span style="color:var(--fg-muted);">\u00b7 </span>' + v).join('<br>')}</td>
+            </tr>`).join("")}
+          </tbody>
+        </table>
+      </div>
+    </div>`).join("");
+}
+
+function renderWeeklyCategorization() {
+  const c = document.getElementById("sub-categorization");
+  c.innerHTML = WEEKLY_CATEGORIZATION.map(part => {
+    return `
+    <div style="margin-bottom:36px;">
+      <p class="model-cat-label">${part.part}<span style="font-weight:400;color:var(--fg-muted);margin-left:12px;font-size:10px;">${part.themes.length} themes</span></p>
+      ${part.themes.map(theme => {
+        const rows = theme.entries.map((e, i) => {
+          const bg = i%2===0 ? "var(--bg-card)" : "var(--bg)";
+          const sc = e.score||0;
+          const scColor = sc>=0 ? "var(--bull)" : "var(--bear)";
+          const scSign = sc>0 ? "+" : "";
+          return '<tr style="border-bottom:1px solid var(--border);background:'+bg+'">'+
+            '<td style="padding:12px 16px;font-family:\'JetBrains Mono\',monospace;font-size:12px;font-weight:700;color:var(--gold);">'+e.bank+'</td>'+
+            '<td style="padding:12px 16px;font-family:\'JetBrains Mono\',monospace;font-size:11px;color:var(--fg-muted);">'+(e.date||'')+'</td>'+
+            '<td style="padding:12px 16px;"><span style="font-family:\'JetBrains Mono\',monospace;font-size:11px;font-weight:700;color:'+scColor+';border:1px solid '+scColor+';padding:2px 8px;">'+scSign+sc+'</span></td>'+
+            '<td style="padding:12px 16px;font-size:12px;color:var(--fg-muted);line-height:1.5;">\"'+e.quote+'\"</td>'+
+          '</tr>';
+        }).join("");
+        return `
+        <div class="cat-theme-card">
+          <div class="cat-theme-header" onclick="toggleCatTheme(this)">
+            <span class="cat-count-badge">${theme.count}</span>
+            <span class="cat-theme-name">${theme.theme}</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--fg-muted);margin-left:auto;">avg <span style="color:${theme.avgScore>=0?'var(--bull)':'var(--bear)'};">${theme.avgScore>0?'+':''}${theme.avgScore}</span></span>
+            <span class="ci-toggle" style="margin-left:12px;">+</span>
+          </div>
+          <div class="cat-theme-body">
+            <table style="width:100%;border-collapse:collapse;font-size:13px;">
+              <thead><tr style="background:var(--bg-secondary);border-bottom:1px solid var(--border);">
+                <th style="text-align:left;padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--fg-muted);text-transform:uppercase;letter-spacing:0.1em;font-weight:500;width:90px;">Bank</th>
+                <th style="text-align:left;padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--fg-muted);text-transform:uppercase;letter-spacing:0.1em;font-weight:500;width:110px;">Date</th>
+                <th style="text-align:left;padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--fg-muted);text-transform:uppercase;letter-spacing:0.1em;font-weight:500;width:60px;">Score</th>
+                <th style="text-align:left;padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--fg-muted);text-transform:uppercase;letter-spacing:0.1em;font-weight:500;">View</th>
+              </tr></thead>
+              <tbody>${rows}</tbody>
+            </table>
+          </div>
+        </div>`;
+      }).join("")}
+    </div>`;
+  }).join("");
+}
+
+function toggleCatTheme(header) {
+  const card = header.closest(".cat-theme-card");
+  const body = card.querySelector(".cat-theme-body");
+  const toggle = card.querySelector(".ci-toggle");
+  const isOpen = body.classList.contains("open");
+  body.classList.toggle("open", !isOpen);
+  if(toggle) toggle.textContent = isOpen ? "\u2013" : "+";
+}
+
+// ── Interaction ───────────────────────────────────────────────────────────────
+
+function switchTab(tab, btn) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+  document.getElementById("page-" + tab).classList.add("active");
+  btn.classList.add("active");
+}
+
+function switchSubTab(tab, btn) {
+  document.querySelectorAll(".sub-panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".sub-tab-btn").forEach(b => b.classList.remove("active"));
+  document.getElementById("sub-" + tab).classList.add("active");
+  btn.classList.add("active");
+}
+
+function scrollTo(id, btn) {
+  document.getElementById(id).scrollIntoView({ behavior:"smooth" });
+  document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+function toggleExpand(header) {
+  const body = header.nextElementSibling;
+  const chevron = header.querySelector(".story-chevron");
+  const isOpen = body.classList.contains("open");
+  body.classList.toggle("open", !isOpen);
+  if (chevron) chevron.style.transform = isOpen ? "" : "rotate(180deg)";
+}
+
+function toggleCatQuote(id, btn) {
+  const el = document.getElementById(id);
+  const isOpen = el.classList.contains("open");
+  el.classList.toggle("open", !isOpen);
+  btn.textContent = isOpen ? "▼" : "▲";
+}
+
+// Scroll spy for left nav
+window.addEventListener("scroll", () => {
+  const sections = ["executive","regime","leaderboard","movers","banks","signals","watchlist"];
+  let current = sections[0];
+  for (const id of sections) {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 120) current = id;
+  }
+  document.querySelectorAll(".nav-btn").forEach(b => {
+    b.classList.toggle("active", b.textContent.trim().toLowerCase().replace(/\s/g,"") ===
+      sections.find(s => s === current || document.getElementById(s)?.offsetTop > 0 ? current : "")?.replace(/\s/g,""));
+  });
+});
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+renderConsensusTable();
+renderMoversTable();
+renderFadeSignals();
+renderInflection();
+renderCatalysts();
+renderWeeklyStories();
+renderWeeklyConsensus();
+renderWeeklyDivergences();
+renderWeeklyModel();
+renderWeeklyCategorization();
+</script>
+</body>
+</html>
