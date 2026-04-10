@@ -111,11 +111,13 @@
     .act-row.bull-border { border-left-color: var(--bull); }
     .act-row.gold-border { border-left-color: var(--gold); }
     .act-row.bear-border { border-left-color: var(--bear); }
+    .act-row.relief-border { border-left-color: #4FC3F7; }
     .act-meta { width: 144px; flex-shrink: 0; padding: 20px; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px; }
     .act-badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; padding: 2px 8px; align-self: flex-start; }
     .act-badge.bull-badge { background: var(--bull); color: var(--bg); }
     .act-badge.gold-badge { background: var(--gold); color: var(--bg); }
     .act-badge.bear-badge { background: var(--bear); color: var(--bg); }
+    .act-badge.relief-badge { background: #4FC3F7; color: var(--bg); }
     .act-dates { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--fg-muted); margin-top: 4px; }
     .act-body { padding: 20px; }
     .act-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; color: var(--fg); margin-bottom: 8px; }
@@ -429,11 +431,21 @@
             <div class="act-row bear-border">
               <div class="act-meta">
                 <span class="act-badge bear-badge">Phase 3</span>
-                <span class="act-dates">2026-04-03 – 2026-04-09</span>
+                <span class="act-dates">2026-04-03 – 2026-04-07</span>
               </div>
               <div class="act-body">
                 <p class="act-title">Broad Sell-Off</p>
-                <p class="act-text">Average consensus moved from -0.11 to -0.08. 7 assets positive, 14 negative at phase end. Key moves: BoJ (+=Hike) -0.44, Credit HY -0.18, Gold -0.16, USD +0.24.</p>
+                <p class="act-text">Average consensus moved from -0.11 to -0.14. 4 assets positive, 18 negative at phase end. Key moves: China -0.30, US 10Y (+=Bull Bond) -0.30, Gold -0.28, Credit HY -0.17.</p>
+              </div>
+            </div>
+            <div class="act-row relief-border">
+              <div class="act-meta">
+                <span class="act-badge relief-badge">Phase 4</span>
+                <span class="act-dates">2026-04-08 – 2026-04-09</span>
+              </div>
+              <div class="act-body">
+                <p class="act-title">Relief Rally</p>
+                <p class="act-text">Average consensus moved from -0.06 to -0.08. 7 assets positive, 14 negative at phase end. Key moves: EM Equities -0.26, Japan -0.24, BoJ (+=Hike) -0.23, RBA (+=Hike) -0.18.</p>
               </div>
             </div>
           </div>
@@ -563,19 +575,19 @@
     <div class="chart-section">
       <p class="chart-title">Consensus Shift Tracker — 30-Day Zoom</p>
       <p class="chart-subtitle">Mar 10 – Apr 9, 2026 · 8 Key Assets</p>
-      <img class="chart-img" src="img/chart_30d_zoom.png?v=1775784105" alt="30-Day Zoom chart" />
-      <p class="chart-caption">Tracks the consensus score trajectory for 8 key assets over the final 30 trading days. 3 regime phases detected: Bullish Consensus (2026-02-20 – 2026-03-19), Bearish Transition (2026-03-20 – 2026-04-02), Broad Sell-Off (2026-04-03 – 2026-04-09). Credit IG ended at -0.51, the sharpest decline. ECB (+=Hike) at +0.61 is the strongest positive. Gold at -0.04 is closest to the inflection point.</p>
+      <img class="chart-img" src="img/chart_30d_zoom.png?v=1775785498" alt="30-Day Zoom chart" />
+      <p class="chart-caption">Tracks the consensus score trajectory for 8 key assets over the final 30 trading days. 4 regime phases detected: Bullish Consensus (2026-02-20 – 2026-03-19), Bearish Transition (2026-03-20 – 2026-04-02), Broad Sell-Off (2026-04-03 – 2026-04-07), Relief Rally (2026-04-08 – 2026-04-09). Credit IG ended at -0.51, the sharpest decline. ECB (+=Hike) at +0.61 is the strongest positive. Gold at -0.04 is closest to the inflection point.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank Leadership by Macro Theme</p>
       <p class="chart-subtitle">★ = first to call/flip · ✓ = followed later · dates = first publication</p>
-      <img class="chart-img" src="img/chart_bank_leadership.png?v=1775784105" alt="Bank Leadership chart" />
+      <img class="chart-img" src="img/chart_bank_leadership.png?v=1775785498" alt="Bank Leadership chart" />
       <p class="chart-caption">Maps which banks led versus followed across 43 macro themes. Gold cells indicate leading calls (★); blue cells indicate supporting calls (✓); dark cells indicate absence. JPM, GS, BofA show the densest leading coverage. Late arrivals — Curvature, Barclays, RBC, Jefferies — are concentrated in the bottom rows.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank × Asset Conviction Map</p>
       <p class="chart-subtitle">Green = Bull · Red = Bear · Gold border = contrarian · ▲Bull ▼Bear · No data = dark</p>
-      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1775784105" alt="Bank Asset Conviction Heatmap" />
+      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1775785498" alt="Bank Asset Conviction Heatmap" />
       <p class="chart-caption">Shows each bank's current directional conviction score (−1.0 to +1.0) for every tracked asset. Gold borders highlight contrarian positions. S&P500: +0.14. Nasdaq: +0.09. EM Equities: -0.50. Fed (+=Hike): +0.54. USD: -0.19. ECB (+=Hike) at +0.61 is the strongest positive.</p>
     </div>
   </div>
