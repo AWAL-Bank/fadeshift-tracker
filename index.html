@@ -620,19 +620,19 @@
     <div class="chart-section">
       <p class="chart-title">Consensus Shift Tracker — 30-Day Zoom</p>
       <p class="chart-subtitle">Mar 20 – Apr 19, 2026 · 8 Key Assets</p>
-      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776684739" alt="30-Day Zoom chart" />
+      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776684930" alt="30-Day Zoom chart" />
       <p class="chart-caption">Tracks the consensus score trajectory for 8 key assets over the final 30 trading days. 4 regime phases detected: Bullish Consensus (2026-02-20 – 2026-03-19), Bearish Transition (2026-03-20 – 2026-04-02), Broad Sell-Off (2026-04-03 – 2026-04-10), Broad Sell-Off (2026-04-11 – 2026-04-19). USD ended at -0.62, the sharpest decline. BoJ (+=Hike) at +0.69 is the strongest positive. Copper at +0.03 is closest to the inflection point.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank Leadership by Macro Theme</p>
       <p class="chart-subtitle">★ = first to call/flip · ✓ = followed later · dates = first publication</p>
-      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776684739" alt="Bank Leadership chart" />
+      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776684930" alt="Bank Leadership chart" />
       <p class="chart-caption">Maps which banks led versus followed across 44 macro themes. Gold cells indicate leading calls (★); blue cells indicate supporting calls (✓); dark cells indicate absence. JPM, GS, BofA show the densest leading coverage. Late arrivals — Curvature, RBC, Jefferies, Barclays — are concentrated in the bottom rows.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank × Asset Conviction Map</p>
       <p class="chart-subtitle">Green = Bull · Red = Bear · Gold border = contrarian · ▲Bull ▼Bear · No data = dark</p>
-      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776684739" alt="Bank Asset Conviction Heatmap" />
+      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776684930" alt="Bank Asset Conviction Heatmap" />
       <p class="chart-caption">Shows each bank's current directional conviction score (−1.0 to +1.0) for every tracked asset. Gold borders highlight contrarian positions. S&P500: -0.27. Nasdaq: -0.42. EM Equities: -0.57. Fed (+=Hike): +0.16. USD: -0.62. BoJ (+=Hike) at +0.69 is the strongest positive.</p>
     </div>
   </div>
@@ -686,12 +686,20 @@
       <input type="text" id="chat-access-code" placeholder="your-access-code" style="width:100%;padding:10px 12px;background:var(--bg);border:1px solid var(--border);color:var(--fg);border-radius:8px;font-size:13px;font-family:'JetBrains Mono',monospace;margin-bottom:16px;outline:none;" />
       <button onclick="saveChatSettings()" style="background:var(--gold);color:var(--bg);border:none;padding:10px 24px;border-radius:8px;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;">Save</button>
     </div>
-    <div class="chat-container">
-      <div class="chat-messages" id="chat-messages">
-        <div class="chat-msg system">Connected to OpenClaw Bank Consensus Agent</div>
+    <div class="chat-container" id="chat-container">
+      <div class="chat-welcome" id="chat-welcome" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <p style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--fg);margin-bottom:8px;">Bank Consensus Agent</p>
+        <p style="font-size:14px;color:var(--fg-muted);margin-bottom:32px;">Ask anything about bank research and positioning</p>
+        <div style="max-width:600px;width:100%;padding:0 16px;">
+          <div class="chat-input-row">
+            <textarea class="chat-input" id="chat-input-center" rows="1" placeholder="What do banks think about..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"></textarea>
+            <button class="chat-send" onclick="sendChat()">↑</button>
+          </div>
+        </div>
       </div>
+      <div class="chat-messages" id="chat-messages" style="display:none;"></div>
     </div>
-    <div class="chat-input-area">
+    <div class="chat-input-area" id="chat-input-bottom" style="display:none;">
       <div class="chat-input-row" style="max-width:1000px;margin:0 auto;padding:0 16px;">
         <textarea class="chat-input" id="chat-input" rows="1" placeholder="Ask about bank consensus..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"></textarea>
         <button class="chat-send" id="chat-send-btn" onclick="sendChat()">↑</button>
@@ -2981,9 +2989,22 @@ function hideTyping() {
 }
 
 async function sendChat() {
-  const input = document.getElementById('chat-input');
+  // Get input from either center (welcome) or bottom (conversation) input
+  const centerInput = document.getElementById('chat-input-center');
+  const bottomInput = document.getElementById('chat-input');
+  const input = centerInput && centerInput.value.trim() ? centerInput : bottomInput;
   const msg = input.value.trim();
   if (!msg) return;
+  
+  // Transition from welcome to conversation mode
+  const welcome = document.getElementById('chat-welcome');
+  const messages = document.getElementById('chat-messages');
+  const bottomArea = document.getElementById('chat-input-bottom');
+  if (welcome && welcome.style.display !== 'none') {
+    welcome.style.display = 'none';
+    messages.style.display = 'flex';
+    bottomArea.style.display = '';
+  }
   
   const cfg = getChatConfig();
   if (!cfg.endpoint) {
@@ -2993,7 +3014,11 @@ async function sendChat() {
   
   input.value = '';
   input.style.height = 'auto';
-  document.getElementById('chat-send-btn').disabled = true;
+  // Also clear the other input
+  if (centerInput) centerInput.value = '';
+  if (bottomInput) bottomInput.value = '';
+  const sendBtn = document.getElementById('chat-send-btn');
+  if (sendBtn) sendBtn.disabled = true;
   
   addChatMsg('user', msg);
   showTyping();
@@ -3023,15 +3048,19 @@ async function sendChat() {
     hideTyping();
     addChatMsg('system', 'Connection failed. Is the bridge running? ' + e.message);
   } finally {
-    document.getElementById('chat-send-btn').disabled = false;
-    input.focus();
+    const sb = document.getElementById('chat-send-btn');
+    if (sb) sb.disabled = false;
+    const bi = document.getElementById('chat-input');
+    if (bi) bi.focus();
   }
 }
 
-// Auto-resize textarea
-document.getElementById('chat-input')?.addEventListener('input', function() {
-  this.style.height = 'auto';
-  this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+// Auto-resize textareas
+['chat-input', 'chat-input-center'].forEach(id => {
+  document.getElementById(id)?.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+  });
 });
 </script>
 </body>
