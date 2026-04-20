@@ -620,19 +620,19 @@
     <div class="chart-section">
       <p class="chart-title">Consensus Shift Tracker — 30-Day Zoom</p>
       <p class="chart-subtitle">Mar 20 – Apr 19, 2026 · 8 Key Assets</p>
-      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776684930" alt="30-Day Zoom chart" />
+      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776685103" alt="30-Day Zoom chart" />
       <p class="chart-caption">Tracks the consensus score trajectory for 8 key assets over the final 30 trading days. 4 regime phases detected: Bullish Consensus (2026-02-20 – 2026-03-19), Bearish Transition (2026-03-20 – 2026-04-02), Broad Sell-Off (2026-04-03 – 2026-04-10), Broad Sell-Off (2026-04-11 – 2026-04-19). USD ended at -0.62, the sharpest decline. BoJ (+=Hike) at +0.69 is the strongest positive. Copper at +0.03 is closest to the inflection point.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank Leadership by Macro Theme</p>
       <p class="chart-subtitle">★ = first to call/flip · ✓ = followed later · dates = first publication</p>
-      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776684930" alt="Bank Leadership chart" />
+      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776685103" alt="Bank Leadership chart" />
       <p class="chart-caption">Maps which banks led versus followed across 44 macro themes. Gold cells indicate leading calls (★); blue cells indicate supporting calls (✓); dark cells indicate absence. JPM, GS, BofA show the densest leading coverage. Late arrivals — Curvature, RBC, Jefferies, Barclays — are concentrated in the bottom rows.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank × Asset Conviction Map</p>
       <p class="chart-subtitle">Green = Bull · Red = Bear · Gold border = contrarian · ▲Bull ▼Bear · No data = dark</p>
-      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776684930" alt="Bank Asset Conviction Heatmap" />
+      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776685103" alt="Bank Asset Conviction Heatmap" />
       <p class="chart-caption">Shows each bank's current directional conviction score (−1.0 to +1.0) for every tracked asset. Gold borders highlight contrarian positions. S&P500: -0.27. Nasdaq: -0.42. EM Equities: -0.57. Fed (+=Hike): +0.16. USD: -0.62. BoJ (+=Hike) at +0.69 is the strongest positive.</p>
     </div>
   </div>
@@ -697,7 +697,7 @@
           </div>
         </div>
       </div>
-      <div class="chat-messages" id="chat-messages" style="display:none;"></div>
+      <div class="chat-messages" id="chat-messages" style="display:none;flex-direction:column;gap:12px;"></div>
     </div>
     <div class="chat-input-area" id="chat-input-bottom" style="display:none;">
       <div class="chat-input-row" style="max-width:1000px;margin:0 auto;padding:0 16px;">
@@ -2898,7 +2898,9 @@ async function saveChatSettings() {
   localStorage.setItem('chat_endpoint', endpoint);
   localStorage.setItem('chat_access_code', code);
   toggleChatSettings();
-  addChatMsg('system', 'Settings saved. Testing connection...');
+  // Update welcome subtitle with status
+  const subtitle = document.querySelector('#chat-welcome p:nth-child(2)');
+  if (subtitle) subtitle.textContent = 'Connecting...';
   // Test via a POST to /chat with a ping message
   try {
     const headers = { 'Content-Type': 'application/json' };
@@ -2911,16 +2913,18 @@ async function saveChatSettings() {
     if (res.ok) {
       const data = await res.json();
       const name = data.user_name || 'User';
-      addChatMsg('system', 'Connected as ' + name + '. Ready to chat.');
-      if (data.reply) addChatMsg('agent', data.reply);
+      if (subtitle) subtitle.textContent = 'Connected as ' + name + ' \u2014 ready to chat';
+      if (subtitle) subtitle.style.color = '#69F0AE';
     } else if (res.status === 403) {
-      addChatMsg('system', 'Access denied. Check your access code.');
+      if (subtitle) subtitle.textContent = 'Access denied \u2014 check your access code';
+      if (subtitle) subtitle.style.color = '#FF6B6B';
     } else {
-      const errText = await res.text().catch(() => '');
-      addChatMsg('system', 'Connection test failed (HTTP ' + res.status + '): ' + (errText.substring(0,100) || res.statusText || 'Unknown error'));
+      if (subtitle) subtitle.textContent = 'Connection failed (HTTP ' + res.status + ')';
+      if (subtitle) subtitle.style.color = '#FF6B6B';
     }
   } catch(e) {
-    addChatMsg('system', 'Could not reach bridge. URL: ' + endpoint + ' Error: ' + e.message);
+    if (subtitle) subtitle.textContent = 'Could not reach bridge \u2014 ' + e.message;
+    if (subtitle) subtitle.style.color = '#FF6B6B';
   }
 }
 
@@ -3003,6 +3007,7 @@ async function sendChat() {
   if (welcome && welcome.style.display !== 'none') {
     welcome.style.display = 'none';
     messages.style.display = 'flex';
+    messages.innerHTML = ''; // clear any system messages from connection test
     bottomArea.style.display = '';
   }
   
@@ -3054,6 +3059,15 @@ async function sendChat() {
     if (bi) bi.focus();
   }
 }
+
+// Check saved config on load
+(function() {
+  const cfg = getChatConfig();
+  if (cfg.endpoint) {
+    const subtitle = document.querySelector('#chat-welcome p:nth-child(2)');
+    if (subtitle) subtitle.textContent = 'Endpoint configured \u2014 type a question to start';
+  }
+})();
 
 // Auto-resize textareas
 ['chat-input', 'chat-input-center'].forEach(id => {
