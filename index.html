@@ -620,19 +620,19 @@
     <div class="chart-section">
       <p class="chart-title">Consensus Shift Tracker — 30-Day Zoom</p>
       <p class="chart-subtitle">Mar 20 – Apr 19, 2026 · 8 Key Assets</p>
-      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776685220" alt="30-Day Zoom chart" />
+      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776685564" alt="30-Day Zoom chart" />
       <p class="chart-caption">Tracks the consensus score trajectory for 8 key assets over the final 30 trading days. 4 regime phases detected: Bullish Consensus (2026-02-20 – 2026-03-19), Bearish Transition (2026-03-20 – 2026-04-02), Broad Sell-Off (2026-04-03 – 2026-04-10), Broad Sell-Off (2026-04-11 – 2026-04-19). USD ended at -0.62, the sharpest decline. BoJ (+=Hike) at +0.69 is the strongest positive. Copper at +0.03 is closest to the inflection point.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank Leadership by Macro Theme</p>
       <p class="chart-subtitle">★ = first to call/flip · ✓ = followed later · dates = first publication</p>
-      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776685220" alt="Bank Leadership chart" />
+      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776685564" alt="Bank Leadership chart" />
       <p class="chart-caption">Maps which banks led versus followed across 44 macro themes. Gold cells indicate leading calls (★); blue cells indicate supporting calls (✓); dark cells indicate absence. JPM, GS, BofA show the densest leading coverage. Late arrivals — Curvature, RBC, Jefferies, Barclays — are concentrated in the bottom rows.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank × Asset Conviction Map</p>
       <p class="chart-subtitle">Green = Bull · Red = Bear · Gold border = contrarian · ▲Bull ▼Bear · No data = dark</p>
-      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776685220" alt="Bank Asset Conviction Heatmap" />
+      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776685564" alt="Bank Asset Conviction Heatmap" />
       <p class="chart-caption">Shows each bank's current directional conviction score (−1.0 to +1.0) for every tracked asset. Gold borders highlight contrarian positions. S&P500: -0.27. Nasdaq: -0.42. EM Equities: -0.57. Fed (+=Hike): +0.16. USD: -0.62. BoJ (+=Hike) at +0.69 is the strongest positive.</p>
     </div>
   </div>
@@ -2967,6 +2967,15 @@ function hideTyping() {
   if (el) el.remove();
 }
 
+function updateTyping(text) {
+  const el = document.getElementById('chat-typing');
+  if (el) {
+    el.innerHTML = '<div class="chat-typing"><span></span><span></span><span></span></div>'
+      + '<p style="font-size:12px;color:var(--fg-muted);margin-top:6px;">' + text + '</p>';
+    el.closest('.chat-messages')?.scrollTo(0, el.closest('.chat-messages').scrollHeight);
+  }
+}
+
 async function sendChat() {
   // Get input from either center (welcome) or bottom (conversation) input
   const centerInput = document.getElementById('chat-input-center');
@@ -3003,6 +3012,15 @@ async function sendChat() {
   addChatMsg('user', msg);
   showTyping();
   
+  // Progress messages for long-running queries
+  const progressTimer1 = setTimeout(() => updateTyping('Analyzing bank reports...'), 10000);
+  const progressTimer2 = setTimeout(() => updateTyping('Synthesizing across multiple banks...'), 30000);
+  const progressTimer3 = setTimeout(() => updateTyping('Almost there — compiling results...'), 60000);
+  
+  // 120s timeout
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 120000);
+  
   try {
     const headers = { 'Content-Type': 'application/json' };
     if (cfg.accessCode) headers['X-Access-Code'] = cfg.accessCode;
@@ -3010,7 +3028,8 @@ async function sendChat() {
     const res = await fetch(cfg.endpoint, {
       method: 'POST',
       headers,
-      body: JSON.stringify({ message: msg, session_id: CHAT_SESSION_ID })
+      body: JSON.stringify({ message: msg, session_id: CHAT_SESSION_ID }),
+      signal: controller.signal
     });
     
     hideTyping();
@@ -3026,8 +3045,16 @@ async function sendChat() {
     addChatMsg('agent', data.reply || data.response || JSON.stringify(data));
   } catch (e) {
     hideTyping();
-    addChatMsg('system', 'Connection failed. Is the bridge running? ' + e.message);
+    if (e.name === 'AbortError') {
+      addChatMsg('system', 'Request timed out (120s). The agent may still be processing — try again in a moment.');
+    } else {
+      addChatMsg('system', 'Connection failed: ' + e.message);
+    }
   } finally {
+    clearTimeout(progressTimer1);
+    clearTimeout(progressTimer2);
+    clearTimeout(progressTimer3);
+    clearTimeout(timeoutId);
     const sb = document.getElementById('chat-send-btn');
     if (sb) sb.disabled = false;
     const bi = document.getElementById('chat-input');
