@@ -194,6 +194,14 @@
     .chat-msg.agent { align-self:flex-start; background:var(--surface); color:var(--fg); border:1px solid var(--border); border-bottom-left-radius:4px; }
     .chat-msg.agent pre { background:rgba(0,0,0,0.3); padding:8px 12px; border-radius:6px; overflow-x:auto; font-size:12px; margin:8px 0; }
     .chat-msg.agent code { font-family:'JetBrains Mono',monospace; font-size:12px; }
+    .chat-msg.agent h3 { font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700; color:var(--gold); margin:16px 0 8px; }
+    .chat-msg.agent hr { border:none; border-top:1px solid var(--border); margin:12px 0; }
+    .chat-msg.agent ul, .chat-msg.agent ol { margin:6px 0; padding-left:20px; }
+    .chat-msg.agent li { margin:4px 0; }
+    .chat-msg.agent table { width:100%; border-collapse:collapse; margin:12px 0; font-size:13px; }
+    .chat-msg.agent th { background:var(--bg); padding:10px 12px; text-align:left; font-weight:600; border-bottom:2px solid var(--border); color:var(--fg); }
+    .chat-msg.agent td { padding:8px 12px; border-bottom:1px solid var(--border); color:var(--fg-muted); }
+    .chat-msg.agent tr:nth-child(even) { background:rgba(255,255,255,0.02); }
     .chat-msg.system { align-self:center; color:var(--fg-muted); font-size:12px; font-style:italic; }
     .chat-input-area { padding:16px 0 24px; max-width:1000px; width:100%; margin:0 auto; flex-shrink:0; }
     .chat-input-row { display:flex; gap:8px; align-items:flex-end; }
@@ -612,19 +620,19 @@
     <div class="chart-section">
       <p class="chart-title">Consensus Shift Tracker — 30-Day Zoom</p>
       <p class="chart-subtitle">Mar 20 – Apr 19, 2026 · 8 Key Assets</p>
-      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776683915" alt="30-Day Zoom chart" />
+      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776684739" alt="30-Day Zoom chart" />
       <p class="chart-caption">Tracks the consensus score trajectory for 8 key assets over the final 30 trading days. 4 regime phases detected: Bullish Consensus (2026-02-20 – 2026-03-19), Bearish Transition (2026-03-20 – 2026-04-02), Broad Sell-Off (2026-04-03 – 2026-04-10), Broad Sell-Off (2026-04-11 – 2026-04-19). USD ended at -0.62, the sharpest decline. BoJ (+=Hike) at +0.69 is the strongest positive. Copper at +0.03 is closest to the inflection point.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank Leadership by Macro Theme</p>
       <p class="chart-subtitle">★ = first to call/flip · ✓ = followed later · dates = first publication</p>
-      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776683915" alt="Bank Leadership chart" />
+      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776684739" alt="Bank Leadership chart" />
       <p class="chart-caption">Maps which banks led versus followed across 44 macro themes. Gold cells indicate leading calls (★); blue cells indicate supporting calls (✓); dark cells indicate absence. JPM, GS, BofA show the densest leading coverage. Late arrivals — Curvature, RBC, Jefferies, Barclays — are concentrated in the bottom rows.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank × Asset Conviction Map</p>
       <p class="chart-subtitle">Green = Bull · Red = Bear · Gold border = contrarian · ▲Bull ▼Bear · No data = dark</p>
-      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776683915" alt="Bank Asset Conviction Heatmap" />
+      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776684739" alt="Bank Asset Conviction Heatmap" />
       <p class="chart-caption">Shows each bank's current directional conviction score (−1.0 to +1.0) for every tracked asset. Gold borders highlight contrarian positions. S&P500: -0.27. Nasdaq: -0.42. EM Equities: -0.57. Fed (+=Hike): +0.16. USD: -0.62. BoJ (+=Hike) at +0.69 is the strongest positive.</p>
     </div>
   </div>
@@ -2914,11 +2922,40 @@ function addChatMsg(type, text) {
   div.className = 'chat-msg ' + type;
   if (type === 'agent') {
     // Render markdown-like formatting
-    let html = text
-      .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
-      .replace(/`([^`]+)`/g, '<code>$1</code>')
-      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-      .replace(/\n/g, '<br>');
+    let html = text;
+    // Code blocks
+    html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+    // Tables: detect markdown table lines and convert
+    html = html.replace(/((?:^|\n)\|[^\n]+\|(?:\n\|[-| :]+\|)?(?:\n\|[^\n]+\|)+)/g, function(table) {
+      const rows = table.trim().split('\n').filter(r => r.trim().startsWith('|'));
+      if (rows.length < 2) return table;
+      let t = '<table>';
+      rows.forEach((row, i) => {
+        if (row.replace(/[|\-: ]/g, '').length === 0) return; // separator row
+        const cells = row.split('|').filter((c, ci) => ci > 0 && ci < row.split('|').length - 1);
+        const tag = i === 0 ? 'th' : 'td';
+        t += '<tr>' + cells.map(c => `<${tag}>${c.trim()}</${tag}>`).join('') + '</tr>';
+      });
+      t += '</table>';
+      return t;
+    });
+    // Headers
+    html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+    html = html.replace(/^## (.+)$/gm, '<h3>$1</h3>');
+    // Horizontal rules
+    html = html.replace(/^---$/gm, '<hr>');
+    // Bullet lists
+    html = html.replace(/^[•\-\*] (.+)$/gm, '<li>$1</li>');
+    html = html.replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>');
+    html = html.replace(/<\/ul>\s*<ul>/g, ''); // merge adjacent
+    // Inline formatting
+    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+    html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    // Line breaks (but not inside tags)
+    html = html.replace(/\n/g, '<br>');
+    // Clean up extra breaks after block elements
+    html = html.replace(/<\/(table|ul|ol|pre|h3|hr)><br>/g, '</$1>');
+    html = html.replace(/<br><(table|ul|ol|pre|h3|hr)/g, '<$1');
     div.innerHTML = html;
   } else {
     div.textContent = text;
