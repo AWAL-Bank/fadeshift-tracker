@@ -188,7 +188,12 @@
     /* ── Chat Panel ── */
     #panel-chat { display:none; height:calc(100vh - 80px); flex-direction:column; overflow:hidden; }
     .chat-container { flex:1; display:flex; flex-direction:column; max-width:1000px; width:100%; margin:0 auto; padding:24px 16px 0; min-height:0; }
-    .chat-messages { flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:12px; padding-bottom:24px; }
+    .chat-messages { flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:12px; padding-bottom:24px; padding-right:8px; }
+    .chat-messages::-webkit-scrollbar { width:6px; }
+    .chat-messages::-webkit-scrollbar-track { background:transparent; }
+    .chat-messages::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.1); border-radius:3px; }
+    .chat-messages::-webkit-scrollbar-thumb:hover { background:rgba(255,255,255,0.2); }
+    .chat-messages { scrollbar-width:thin; scrollbar-color:rgba(255,255,255,0.1) transparent; }
     .chat-msg { max-width:100%; padding:14px 20px; border-radius:12px; font-size:13px; line-height:1.5; word-wrap:break-word; }
     .chat-msg.user { max-width:75%; }
     .chat-msg.user { align-self:flex-end; background:linear-gradient(135deg,#D4A843,#B8922E); color:var(--bg); border-bottom-right-radius:4px; font-weight:500; box-shadow:0 2px 8px rgba(212,168,67,0.15); }
@@ -625,19 +630,19 @@
     <div class="chart-section">
       <p class="chart-title">Consensus Shift Tracker — 30-Day Zoom</p>
       <p class="chart-subtitle">Mar 20 – Apr 19, 2026 · 8 Key Assets</p>
-      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776688535" alt="30-Day Zoom chart" />
+      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776688753" alt="30-Day Zoom chart" />
       <p class="chart-caption">Tracks the consensus score trajectory for 8 key assets over the final 30 trading days. 4 regime phases detected: Bullish Consensus (2026-02-20 – 2026-03-19), Bearish Transition (2026-03-20 – 2026-04-02), Broad Sell-Off (2026-04-03 – 2026-04-10), Broad Sell-Off (2026-04-11 – 2026-04-19). USD ended at -0.62, the sharpest decline. BoJ (+=Hike) at +0.69 is the strongest positive. Copper at +0.03 is closest to the inflection point.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank Leadership by Macro Theme</p>
       <p class="chart-subtitle">★ = first to call/flip · ✓ = followed later · dates = first publication</p>
-      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776688535" alt="Bank Leadership chart" />
+      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776688753" alt="Bank Leadership chart" />
       <p class="chart-caption">Maps which banks led versus followed across 44 macro themes. Gold cells indicate leading calls (★); blue cells indicate supporting calls (✓); dark cells indicate absence. JPM, GS, BofA show the densest leading coverage. Late arrivals — Curvature, RBC, Jefferies, Barclays — are concentrated in the bottom rows.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank × Asset Conviction Map</p>
       <p class="chart-subtitle">Green = Bull · Red = Bear · Gold border = contrarian · ▲Bull ▼Bear · No data = dark</p>
-      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776688535" alt="Bank Asset Conviction Heatmap" />
+      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776688753" alt="Bank Asset Conviction Heatmap" />
       <p class="chart-caption">Shows each bank's current directional conviction score (−1.0 to +1.0) for every tracked asset. Gold borders highlight contrarian positions. S&P500: -0.27. Nasdaq: -0.42. EM Equities: -0.57. Fed (+=Hike): +0.16. USD: -0.62. BoJ (+=Hike) at +0.69 is the strongest positive.</p>
     </div>
   </div>
