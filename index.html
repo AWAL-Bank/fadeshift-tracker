@@ -185,6 +185,35 @@
     .dq-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; font-size: 13px; color: var(--fg-muted); }
     .dq-key { color: var(--fg); font-weight: 600; }
 
+    /* ── Chat Panel ── */
+    #panel-chat { display:none; height:calc(100vh - 80px); flex-direction:column; }
+    .chat-container { flex:1; display:flex; flex-direction:column; max-width:800px; width:100%; margin:0 auto; padding:24px 16px 0; }
+    .chat-messages { flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:12px; padding-bottom:24px; }
+    .chat-msg { max-width:85%; padding:12px 16px; border-radius:12px; font-size:14px; line-height:1.65; word-wrap:break-word; }
+    .chat-msg.user { align-self:flex-end; background:var(--gold); color:var(--bg); border-bottom-right-radius:4px; }
+    .chat-msg.agent { align-self:flex-start; background:var(--surface); color:var(--fg); border:1px solid var(--border); border-bottom-left-radius:4px; }
+    .chat-msg.agent pre { background:rgba(0,0,0,0.3); padding:8px 12px; border-radius:6px; overflow-x:auto; font-size:12px; margin:8px 0; }
+    .chat-msg.agent code { font-family:'JetBrains Mono',monospace; font-size:12px; }
+    .chat-msg.system { align-self:center; color:var(--fg-muted); font-size:12px; font-style:italic; }
+    .chat-input-area { padding:16px 0 24px; max-width:800px; width:100%; margin:0 auto; }
+    .chat-input-row { display:flex; gap:8px; align-items:flex-end; }
+    .chat-input { flex:1; background:var(--surface); border:1px solid var(--border); color:var(--fg); padding:12px 16px; border-radius:12px; font-size:14px; font-family:'Space Grotesk',sans-serif; resize:none; outline:none; max-height:120px; line-height:1.5; }
+    .chat-input:focus { border-color:var(--gold); }
+    .chat-input::placeholder { color:var(--fg-muted); }
+    .chat-send { background:var(--gold); color:var(--bg); border:none; width:42px; height:42px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; transition:opacity 0.15s; }
+    .chat-send:hover { opacity:0.85; }
+    .chat-send:disabled { opacity:0.4; cursor:not-allowed; }
+    .chat-settings { position:absolute; top:12px; right:16px; }
+    .chat-settings-btn { background:none; border:none; color:var(--fg-muted); cursor:pointer; font-size:16px; padding:4px 8px; }
+    .chat-settings-btn:hover { color:var(--fg); }
+    .chat-settings-modal { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:24px; z-index:1000; width:400px; }
+    .chat-settings-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:999; }
+    .chat-typing { display:inline-flex; gap:4px; padding:8px 16px; }
+    .chat-typing span { width:6px; height:6px; background:var(--fg-muted); border-radius:50%; animation:typing 1.2s infinite; }
+    .chat-typing span:nth-child(2) { animation-delay:0.2s; }
+    .chat-typing span:nth-child(3) { animation-delay:0.4s; }
+    @keyframes typing { 0%,60%,100%{opacity:0.3;transform:translateY(0)} 30%{opacity:1;transform:translateY(-4px)} }
+
     /* ── Consensus Summary (charts) ── */
     .chart-section { margin-bottom: 48px; }
     .chart-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; color: var(--fg); margin-bottom: 4px; }
@@ -341,6 +370,7 @@
       <button class="tab-btn active" onclick="switchTab('report',this)">Report</button>
       <button class="tab-btn" onclick="switchTab('consensus',this)">Consensus Summary</button>
       <button class="tab-btn" onclick="switchTab('weekly',this)">Weekly Summary</button>
+      <button class="tab-btn" onclick="switchTab('chat',this)">Chat</button>
     </div>
   </div>
 </header>
@@ -582,19 +612,19 @@
     <div class="chart-section">
       <p class="chart-title">Consensus Shift Tracker — 30-Day Zoom</p>
       <p class="chart-subtitle">Mar 20 – Apr 19, 2026 · 8 Key Assets</p>
-      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776672776" alt="30-Day Zoom chart" />
+      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776679322" alt="30-Day Zoom chart" />
       <p class="chart-caption">Tracks the consensus score trajectory for 8 key assets over the final 30 trading days. 4 regime phases detected: Bullish Consensus (2026-02-20 – 2026-03-19), Bearish Transition (2026-03-20 – 2026-04-02), Broad Sell-Off (2026-04-03 – 2026-04-10), Broad Sell-Off (2026-04-11 – 2026-04-19). USD ended at -0.62, the sharpest decline. BoJ (+=Hike) at +0.69 is the strongest positive. Copper at +0.03 is closest to the inflection point.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank Leadership by Macro Theme</p>
       <p class="chart-subtitle">★ = first to call/flip · ✓ = followed later · dates = first publication</p>
-      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776672776" alt="Bank Leadership chart" />
+      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776679322" alt="Bank Leadership chart" />
       <p class="chart-caption">Maps which banks led versus followed across 44 macro themes. Gold cells indicate leading calls (★); blue cells indicate supporting calls (✓); dark cells indicate absence. JPM, GS, BofA show the densest leading coverage. Late arrivals — Curvature, RBC, Jefferies, Barclays — are concentrated in the bottom rows.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank × Asset Conviction Map</p>
       <p class="chart-subtitle">Green = Bull · Red = Bear · Gold border = contrarian · ▲Bull ▼Bear · No data = dark</p>
-      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776672776" alt="Bank Asset Conviction Heatmap" />
+      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776679322" alt="Bank Asset Conviction Heatmap" />
       <p class="chart-caption">Shows each bank's current directional conviction score (−1.0 to +1.0) for every tracked asset. Gold borders highlight contrarian positions. S&P500: -0.27. Nasdaq: -0.42. EM Equities: -0.57. Fed (+=Hike): +0.16. USD: -0.62. BoJ (+=Hike) at +0.69 is the strongest positive.</p>
     </div>
   </div>
@@ -630,6 +660,35 @@
     <!-- Categorization -->
     <div id="sub-categorization" class="sub-panel"></div>
 
+  </div>
+</div>
+
+<!-- Chat Panel -->
+<div id="page-chat" class="page">
+  <div id="panel-chat" style="display:flex; height:calc(100vh - 80px); flex-direction:column; position:relative;">
+    <div class="chat-settings">
+      <button class="chat-settings-btn" onclick="toggleChatSettings()" title="Settings">⚙</button>
+    </div>
+    <div class="chat-settings-overlay" id="chat-overlay" onclick="toggleChatSettings()"></div>
+    <div class="chat-settings-modal" id="chat-modal">
+      <p style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--fg);margin-bottom:16px;">Chat Settings</p>
+      <label style="font-size:12px;color:var(--fg-muted);display:block;margin-bottom:6px;">API Endpoint</label>
+      <input type="text" id="chat-endpoint" placeholder="https://your-tunnel.trycloudflare.com/chat" style="width:100%;padding:10px 12px;background:var(--bg);border:1px solid var(--border);color:var(--fg);border-radius:8px;font-size:13px;font-family:'JetBrains Mono',monospace;margin-bottom:16px;outline:none;" />
+      <label style="font-size:12px;color:var(--fg-muted);display:block;margin-bottom:6px;">Access Code (optional)</label>
+      <input type="text" id="chat-access-code" placeholder="your-access-code" style="width:100%;padding:10px 12px;background:var(--bg);border:1px solid var(--border);color:var(--fg);border-radius:8px;font-size:13px;font-family:'JetBrains Mono',monospace;margin-bottom:16px;outline:none;" />
+      <button onclick="saveChatSettings()" style="background:var(--gold);color:var(--bg);border:none;padding:10px 24px;border-radius:8px;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;">Save</button>
+    </div>
+    <div class="chat-container">
+      <div class="chat-messages" id="chat-messages">
+        <div class="chat-msg system">Connected to OpenClaw Bank Consensus Agent</div>
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <div class="chat-input-row" style="max-width:800px;margin:0 auto;">
+        <textarea class="chat-input" id="chat-input" rows="1" placeholder="Ask about bank consensus..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"></textarea>
+        <button class="chat-send" id="chat-send-btn" onclick="sendChat()">↑</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -2787,6 +2846,124 @@ renderWeeklyConsensus();
 renderWeeklyDivergences();
 renderWeeklyModel();
 renderWeeklyCategorization();
+
+// ── Chat Functions ──────────────────────────────────────────────────────────
+const CHAT_SESSION_ID = 'fs-' + Math.random().toString(36).substring(2, 10);
+
+function getChatConfig() {
+  return {
+    endpoint: localStorage.getItem('chat_endpoint') || '',
+    accessCode: localStorage.getItem('chat_access_code') || ''
+  };
+}
+
+function toggleChatSettings() {
+  const modal = document.getElementById('chat-modal');
+  const overlay = document.getElementById('chat-overlay');
+  const isOpen = modal.style.display === 'block';
+  modal.style.display = isOpen ? 'none' : 'block';
+  overlay.style.display = isOpen ? 'none' : 'block';
+  if (!isOpen) {
+    const cfg = getChatConfig();
+    document.getElementById('chat-endpoint').value = cfg.endpoint;
+    document.getElementById('chat-access-code').value = cfg.accessCode;
+  }
+}
+
+function saveChatSettings() {
+  localStorage.setItem('chat_endpoint', document.getElementById('chat-endpoint').value.trim());
+  localStorage.setItem('chat_access_code', document.getElementById('chat-access-code').value.trim());
+  toggleChatSettings();
+  addChatMsg('system', 'Settings saved.');
+}
+
+function addChatMsg(type, text) {
+  const container = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg ' + type;
+  if (type === 'agent') {
+    // Render markdown-like formatting
+    let html = text
+      .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+      .replace(/`([^`]+)`/g, '<code>$1</code>')
+      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n/g, '<br>');
+    div.innerHTML = html;
+  } else {
+    div.textContent = text;
+  }
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+  return div;
+}
+
+function showTyping() {
+  const container = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg agent';
+  div.id = 'chat-typing';
+  div.innerHTML = '<div class="chat-typing"><span></span><span></span><span></span></div>';
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function hideTyping() {
+  const el = document.getElementById('chat-typing');
+  if (el) el.remove();
+}
+
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const msg = input.value.trim();
+  if (!msg) return;
+  
+  const cfg = getChatConfig();
+  if (!cfg.endpoint) {
+    addChatMsg('system', 'No API endpoint configured. Click \u2699 to set up.');
+    return;
+  }
+  
+  input.value = '';
+  input.style.height = 'auto';
+  document.getElementById('chat-send-btn').disabled = true;
+  
+  addChatMsg('user', msg);
+  showTyping();
+  
+  try {
+    const headers = { 'Content-Type': 'application/json' };
+    if (cfg.accessCode) headers['X-Access-Code'] = cfg.accessCode;
+    
+    const res = await fetch(cfg.endpoint, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ message: msg, session_id: CHAT_SESSION_ID })
+    });
+    
+    hideTyping();
+    
+    if (!res.ok) {
+      const err = await res.text();
+      addChatMsg('system', 'Error: ' + (res.status === 403 ? 'Access denied. Check your access code.' : res.statusText));
+      return;
+    }
+    
+    const data = await res.json();
+    addChatMsg('agent', data.reply || data.response || JSON.stringify(data));
+  } catch (e) {
+    hideTyping();
+    addChatMsg('system', 'Connection failed. Is the bridge running? ' + e.message);
+  } finally {
+    document.getElementById('chat-send-btn').disabled = false;
+    input.focus();
+  }
+}
+
+// Auto-resize textarea
+document.getElementById('chat-input')?.addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+});
 </script>
 </body>
 </html>
