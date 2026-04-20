@@ -211,9 +211,9 @@
     .chat-send { background:linear-gradient(135deg,#D4A843,#B8922E); color:var(--bg); border:none; width:42px; height:42px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; transition:all 0.15s; box-shadow:0 2px 8px rgba(212,168,67,0.2); }
     .chat-send:hover { opacity:0.9; transform:scale(1.04); }
     .chat-send:disabled { opacity:0.4; cursor:not-allowed; }
-    .chat-settings { position:absolute; top:16px; right:24px; z-index:10; }
-    .chat-settings-btn { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); color:var(--fg-muted); cursor:pointer; font-size:15px; padding:6px 10px; border-radius:8px; transition:all 0.15s; }
-    .chat-settings-btn:hover { color:var(--fg); background:rgba(255,255,255,0.08); }
+    .chat-settings { position:fixed; top:auto; bottom:24px; right:24px; z-index:10; }
+    .chat-settings-btn { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); color:var(--fg-muted); cursor:pointer; font-size:18px; padding:10px 14px; border-radius:12px; transition:all 0.15s; line-height:1; }
+    .chat-settings-btn:hover { color:var(--fg); background:rgba(255,255,255,0.12); border-color:rgba(255,255,255,0.15); }
     .chat-settings-modal { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:var(--surface); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:28px; z-index:1000; width:420px; box-shadow:0 16px 48px rgba(0,0,0,0.5); }
     .chat-settings-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:999; backdrop-filter:blur(4px); }
     .chat-typing { display:inline-flex; gap:4px; padding:8px 16px; }
@@ -620,19 +620,19 @@
     <div class="chart-section">
       <p class="chart-title">Consensus Shift Tracker — 30-Day Zoom</p>
       <p class="chart-subtitle">Mar 20 – Apr 19, 2026 · 8 Key Assets</p>
-      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776685753" alt="30-Day Zoom chart" />
+      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776686370" alt="30-Day Zoom chart" />
       <p class="chart-caption">Tracks the consensus score trajectory for 8 key assets over the final 30 trading days. 4 regime phases detected: Bullish Consensus (2026-02-20 – 2026-03-19), Bearish Transition (2026-03-20 – 2026-04-02), Broad Sell-Off (2026-04-03 – 2026-04-10), Broad Sell-Off (2026-04-11 – 2026-04-19). USD ended at -0.62, the sharpest decline. BoJ (+=Hike) at +0.69 is the strongest positive. Copper at +0.03 is closest to the inflection point.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank Leadership by Macro Theme</p>
       <p class="chart-subtitle">★ = first to call/flip · ✓ = followed later · dates = first publication</p>
-      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776685753" alt="Bank Leadership chart" />
+      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776686370" alt="Bank Leadership chart" />
       <p class="chart-caption">Maps which banks led versus followed across 44 macro themes. Gold cells indicate leading calls (★); blue cells indicate supporting calls (✓); dark cells indicate absence. JPM, GS, BofA show the densest leading coverage. Late arrivals — Curvature, RBC, Jefferies, Barclays — are concentrated in the bottom rows.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank × Asset Conviction Map</p>
       <p class="chart-subtitle">Green = Bull · Red = Bear · Gold border = contrarian · ▲Bull ▼Bear · No data = dark</p>
-      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776685753" alt="Bank Asset Conviction Heatmap" />
+      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776686370" alt="Bank Asset Conviction Heatmap" />
       <p class="chart-caption">Shows each bank's current directional conviction score (−1.0 to +1.0) for every tracked asset. Gold borders highlight contrarian positions. S&P500: -0.27. Nasdaq: -0.42. EM Equities: -0.57. Fed (+=Hike): +0.16. USD: -0.62. BoJ (+=Hike) at +0.69 is the strongest positive.</p>
     </div>
   </div>
@@ -691,18 +691,18 @@
         <div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#D4A843 0%,#8B7225 100%);display:flex;align-items:center;justify-content:center;margin-bottom:20px;box-shadow:0 4px 24px rgba(212,168,67,0.2);">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0f1117" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         </div>
-        <p style="font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--fg);margin-bottom:8px;letter-spacing:-0.5px;">Bank Consensus Agent</p>
-        <p style="font-size:14px;color:var(--fg-muted);margin-bottom:40px;line-height:1.5;">Ask anything about bank research, positioning, and macro views</p>
+        <p style="font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--fg);margin-bottom:8px;letter-spacing:-0.5px;">Hi! I am your Bank Consensus Agent</p>
+        <p id="chat-subtitle" style="font-size:14px;color:var(--fg-muted);margin-bottom:40px;line-height:1.5;">Ask anything about bank research, positioning, and macro views</p>
         <div style="max-width:680px;width:100%;padding:0 24px;">
           <div style="position:relative;">
             <textarea class="chat-input" id="chat-input-center" rows="1" placeholder="What do banks think about..." style="width:100%;padding:16px 56px 16px 20px;border-radius:16px;font-size:15px;background:var(--surface);border:1px solid rgba(255,255,255,0.08);box-shadow:0 2px 12px rgba(0,0,0,0.3);" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"></textarea>
             <button class="chat-send" onclick="sendChat()" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);width:38px;height:38px;font-size:16px;">↑</button>
           </div>
-          <div style="display:flex;gap:8px;margin-top:14px;justify-content:center;flex-wrap:wrap;">
-            <button onclick="document.getElementById('chat-input-center').value='What are banks saying about Oil?';sendChat()" style="background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--fg-muted);padding:8px 14px;border-radius:20px;font-size:12px;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:all 0.15s;">Oil outlook</button>
-            <button onclick="document.getElementById('chat-input-center').value='Summarize latest CTA positioning';sendChat()" style="background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--fg-muted);padding:8px 14px;border-radius:20px;font-size:12px;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:all 0.15s;">CTA positioning</button>
-            <button onclick="document.getElementById('chat-input-center').value='Which banks are most bullish right now?';sendChat()" style="background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--fg-muted);padding:8px 14px;border-radius:20px;font-size:12px;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:all 0.15s;">Most bullish banks</button>
-            <button onclick="document.getElementById('chat-input-center').value='What changed in Gold views this week?';sendChat()" style="background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--fg-muted);padding:8px 14px;border-radius:20px;font-size:12px;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:all 0.15s;">Gold views</button>
+          <div style="display:flex;gap:10px;margin-top:16px;justify-content:center;flex-wrap:wrap;">
+            <button onclick="document.getElementById('chat-input-center').value='Give me the previous day bank summary';sendChat()" style="background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--fg-muted);padding:9px 16px;border-radius:20px;font-size:13px;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:all 0.15s;">Previous day Bank Summary</button>
+            <button onclick="document.getElementById('chat-input-center').value='Give me the full fund flow report';sendChat()" style="background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--fg-muted);padding:9px 16px;border-radius:20px;font-size:13px;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:all 0.15s;">Full Fund Flow Report</button>
+            <button onclick="document.getElementById('chat-input-center').value='Summarize the latest CTA positioning across all banks';sendChat()" style="background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--fg-muted);padding:9px 16px;border-radius:20px;font-size:13px;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:all 0.15s;">Latest CTA Positioning</button>
+            <button onclick="document.getElementById('chat-input-center').value='What are the latest bank views on Oil?';sendChat()" style="background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--fg-muted);padding:9px 16px;border-radius:20px;font-size:13px;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:all 0.15s;">Latest Oil Views</button>
           </div>
         </div>
       </div>
@@ -2908,7 +2908,7 @@ async function saveChatSettings() {
   localStorage.setItem('chat_access_code', code);
   toggleChatSettings();
   // Update welcome subtitle with status
-  const subtitle = document.querySelector('#chat-welcome p:nth-child(2)');
+  const subtitle = document.getElementById('chat-subtitle');
   if (subtitle) { subtitle.textContent = 'Settings saved \u2714'; subtitle.style.color = '#69F0AE'; }
 }
 
@@ -3071,14 +3071,14 @@ async function sendChat() {
   }
 }
 
-// Check saved config on load
-(function() {
-  const cfg = getChatConfig();
-  if (cfg.endpoint) {
-    const subtitle = document.querySelector('#chat-welcome p:nth-child(2)');
-    if (subtitle) subtitle.textContent = 'Endpoint configured \u2014 type a question to start';
-  }
-})();
+// Show/hide gear icon only on chat tab
+const _origSwitchTab = switchTab;
+window.switchTab = function(tab, btn) {
+  _origSwitchTab(tab, btn);
+  const gear = document.querySelector('.chat-settings');
+  if (gear) gear.style.display = tab === 'chat' ? '' : 'none';
+};
+document.querySelector('.chat-settings').style.display = 'none';
 
 // Auto-resize textareas
 ['chat-input', 'chat-input-center'].forEach(id => {
