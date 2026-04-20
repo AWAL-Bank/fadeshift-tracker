@@ -612,19 +612,19 @@
     <div class="chart-section">
       <p class="chart-title">Consensus Shift Tracker — 30-Day Zoom</p>
       <p class="chart-subtitle">Mar 20 – Apr 19, 2026 · 8 Key Assets</p>
-      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776679322" alt="30-Day Zoom chart" />
+      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776680021" alt="30-Day Zoom chart" />
       <p class="chart-caption">Tracks the consensus score trajectory for 8 key assets over the final 30 trading days. 4 regime phases detected: Bullish Consensus (2026-02-20 – 2026-03-19), Bearish Transition (2026-03-20 – 2026-04-02), Broad Sell-Off (2026-04-03 – 2026-04-10), Broad Sell-Off (2026-04-11 – 2026-04-19). USD ended at -0.62, the sharpest decline. BoJ (+=Hike) at +0.69 is the strongest positive. Copper at +0.03 is closest to the inflection point.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank Leadership by Macro Theme</p>
       <p class="chart-subtitle">★ = first to call/flip · ✓ = followed later · dates = first publication</p>
-      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776679322" alt="Bank Leadership chart" />
+      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776680021" alt="Bank Leadership chart" />
       <p class="chart-caption">Maps which banks led versus followed across 44 macro themes. Gold cells indicate leading calls (★); blue cells indicate supporting calls (✓); dark cells indicate absence. JPM, GS, BofA show the densest leading coverage. Late arrivals — Curvature, RBC, Jefferies, Barclays — are concentrated in the bottom rows.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank × Asset Conviction Map</p>
       <p class="chart-subtitle">Green = Bull · Red = Bear · Gold border = contrarian · ▲Bull ▼Bear · No data = dark</p>
-      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776679322" alt="Bank Asset Conviction Heatmap" />
+      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776680021" alt="Bank Asset Conviction Heatmap" />
       <p class="chart-caption">Shows each bank's current directional conviction score (−1.0 to +1.0) for every tracked asset. Gold borders highlight contrarian positions. S&P500: -0.27. Nasdaq: -0.42. EM Equities: -0.57. Fed (+=Hike): +0.16. USD: -0.62. BoJ (+=Hike) at +0.69 is the strongest positive.</p>
     </div>
   </div>
@@ -2870,11 +2870,29 @@ function toggleChatSettings() {
   }
 }
 
-function saveChatSettings() {
-  localStorage.setItem('chat_endpoint', document.getElementById('chat-endpoint').value.trim());
-  localStorage.setItem('chat_access_code', document.getElementById('chat-access-code').value.trim());
+async function saveChatSettings() {
+  const endpoint = document.getElementById('chat-endpoint').value.trim();
+  const code = document.getElementById('chat-access-code').value.trim();
+  localStorage.setItem('chat_endpoint', endpoint);
+  localStorage.setItem('chat_access_code', code);
   toggleChatSettings();
-  addChatMsg('system', 'Settings saved.');
+  addChatMsg('system', 'Settings saved. Testing connection...');
+  // Test connection via /status
+  try {
+    const statusUrl = endpoint.replace(/\/chat$/, '/status');
+    const headers = {};
+    if (code) headers['X-Access-Code'] = code;
+    const res = await fetch(statusUrl, { headers });
+    if (res.ok) {
+      const data = await res.json();
+      const name = data.you || 'User';
+      addChatMsg('system', 'Connected as ' + name + '. Bridge is ' + data.bridge + ', OpenClaw ' + (data.openclaw_reachable ? 'reachable' : 'unreachable') + '.');
+    } else {
+      addChatMsg('system', 'Connection test failed: ' + res.statusText);
+    }
+  } catch(e) {
+    addChatMsg('system', 'Could not reach bridge: ' + e.message);
+  }
 }
 
 function addChatMsg(type, text) {
@@ -2949,6 +2967,7 @@ async function sendChat() {
     }
     
     const data = await res.json();
+    if (data.session_id) window._chatSessionId = data.session_id;
     addChatMsg('agent', data.reply || data.response || JSON.stringify(data));
   } catch (e) {
     hideTyping();
