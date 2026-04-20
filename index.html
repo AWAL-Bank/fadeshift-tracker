@@ -582,19 +582,19 @@
     <div class="chart-section">
       <p class="chart-title">Consensus Shift Tracker — 30-Day Zoom</p>
       <p class="chart-subtitle">Mar 20 – Apr 19, 2026 · 8 Key Assets</p>
-      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776672032" alt="30-Day Zoom chart" />
+      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776672506" alt="30-Day Zoom chart" />
       <p class="chart-caption">Tracks the consensus score trajectory for 8 key assets over the final 30 trading days. 4 regime phases detected: Bullish Consensus (2026-02-20 – 2026-03-19), Bearish Transition (2026-03-20 – 2026-04-02), Broad Sell-Off (2026-04-03 – 2026-04-10), Broad Sell-Off (2026-04-11 – 2026-04-19). USD ended at -0.62, the sharpest decline. BoJ (+=Hike) at +0.69 is the strongest positive. Copper at +0.03 is closest to the inflection point.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank Leadership by Macro Theme</p>
       <p class="chart-subtitle">★ = first to call/flip · ✓ = followed later · dates = first publication</p>
-      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776672032" alt="Bank Leadership chart" />
+      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776672506" alt="Bank Leadership chart" />
       <p class="chart-caption">Maps which banks led versus followed across 44 macro themes. Gold cells indicate leading calls (★); blue cells indicate supporting calls (✓); dark cells indicate absence. JPM, GS, BofA show the densest leading coverage. Late arrivals — Curvature, RBC, Jefferies, Barclays — are concentrated in the bottom rows.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank × Asset Conviction Map</p>
       <p class="chart-subtitle">Green = Bull · Red = Bear · Gold border = contrarian · ▲Bull ▼Bear · No data = dark</p>
-      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776672032" alt="Bank Asset Conviction Heatmap" />
+      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776672506" alt="Bank Asset Conviction Heatmap" />
       <p class="chart-caption">Shows each bank's current directional conviction score (−1.0 to +1.0) for every tracked asset. Gold borders highlight contrarian positions. S&P500: -0.27. Nasdaq: -0.42. EM Equities: -0.57. Fed (+=Hike): +0.16. USD: -0.62. BoJ (+=Hike) at +0.69 is the strongest positive.</p>
     </div>
   </div>
@@ -969,31 +969,96 @@ const WEEKLY_STORIES = [
     "n": 1,
     "title": "The Strait of Hormuz Blockade and Energy-Driven Stagflation Risks",
     "summary": "The escalation of US-Iran tensions and the threatened blockade of the Strait of Hormuz have triggered a severe global energy supply shock. With Brent crude spiking and physical markets tightening, the disruption extends beyond oil to jet fuel, diesel, and industrial metals. Although late-week ceasefire talks provided temporary relief, the persistent geopolitical risk premium threatens to reignite headline inflation and drag on global GDP. This dynamic creates acute stagflationary headwinds, disproportionately impacting energy-importing economies in Europe and Asia while straining lower-income consumers.",
-    "themes": []
+    "themes": [
+      {
+        "name": "Brent crude volatility and physical market scarcity due to transit disruptions and damaged infrastructure.",
+        "desc": ""
+      },
+      {
+        "name": "Supply chain bottlenecks impacting industrial metals (aluminum, copper), fertilizers, and global shipping costs.",
+        "desc": ""
+      },
+      {
+        "name": "K-shaped consumer strain as surging gasoline prices erode discretionary spending for lower-income households.",
+        "desc": ""
+      }
+    ]
   },
   {
     "n": 2,
     "title": "Central Bank Policy Divergence and the \"Higher for Longer\" Reality",
     "summary": "The energy-driven inflation spike has fundamentally derailed early 2026 rate cut expectations, forcing a hawkish recalibration across global central banks. The US Federal Reserve is pushing anticipated cuts deep into late 2026 or 2027 as headline CPI surges, despite cooling core goods. This creates a severe policy dilemma for the ECB and BoE, who must balance imported energy inflation against fragile domestic growth. Meanwhile, the Bank of Japan’s hesitation to hike rates amid geopolitical uncertainty has driven the Yen to multi-decade lows, exacerbating global FX volatility.",
-    "themes": []
+    "themes": [
+      {
+        "name": "Fed rate cut delays driven by sticky headline inflation and resilient US macro data.",
+        "desc": ""
+      },
+      {
+        "name": "ECB and BoE stagflation dilemma pitting energy inflation against recessionary risks.",
+        "desc": ""
+      },
+      {
+        "name": "BoJ policy paralysis driving severe JPY depreciation and intervention risks.",
+        "desc": ""
+      }
+    ]
   },
   {
     "n": 3,
     "title": "AI Infrastructure Supercycle Masks Broader Economic and Market Fragility",
     "summary": "Global equity markets are being propelled to all-time highs almost entirely by the structural AI infrastructure boom, masking underlying economic vulnerabilities. Massive hyperscaler capex commitments and blockbuster earnings from semiconductor giants like TSMC and ASML are driving a profound sector rotation from software to hardware. This \"Magnificent 7\" dominance is single-handedly sustaining S&P 500 earnings growth, obscuring weak market breadth, rising corporate default risks in private credit, and the macro headwinds of elevated interest rates and geopolitical instability.",
-    "themes": []
+    "themes": [
+      {
+        "name": "Semiconductor and hardware outperformance driven by massive hyperscaler capex.",
+        "desc": ""
+      },
+      {
+        "name": "Narrow market breadth with Mega-Cap tech masking earnings weakness in the S&P 493.",
+        "desc": ""
+      },
+      {
+        "name": "Emerging bottlenecks in power grid infrastructure and data center capacity.",
+        "desc": ""
+      }
+    ]
   },
   {
     "n": 4,
     "title": "Systematic Short Squeezes and the Flow-Driven Equity Melt-Up Disconnect",
     "summary": "Despite acute geopolitical risks and rising bond yields, equity markets are experiencing a powerful, flow-driven \"melt-up\" that has decoupled from fundamental macro fears. Record systematic buying by CTAs, massive short-covering by hedge funds, and robust corporate buybacks are overpowering the bearish narrative. This mechanical demand has compressed equity volatility (VIX) even as bond market volatility (MOVE) remains elevated. However, banks warn that this extreme, crowded positioning leaves markets highly vulnerable to sharp downside reversals once the forced buying exhausts itself.",
-    "themes": []
+    "themes": [
+      {
+        "name": "Record CTA equity purchases and aggressive hedge fund short-covering (particularly in software).",
+        "desc": ""
+      },
+      {
+        "name": "Divergence between compressed equity volatility (VIX) and elevated bond volatility (MOVE).",
+        "desc": ""
+      },
+      {
+        "name": "Extreme leverage and crowded positioning elevating the risk of sudden market drawdowns.",
+        "desc": ""
+      }
+    ]
   },
   {
     "n": 5,
     "title": "China's Two-Track Economy and the Fragmentation of Emerging Markets",
     "summary": "China's Q1 GDP beat expectations at 5.0%, but the growth reveals a starkly unbalanced, two-track economy: surging high-tech manufacturing and exports are offsetting a persistent slump in the property sector and weak domestic consumption. This dynamic, combined with the Middle East energy shock, is deeply fracturing Emerging Markets. Commodity-exporting nations in Latin America are capturing massive capital inflows and equity outperformance, while energy-importing Asian economies face severe currency depreciation, capital flight, and delayed monetary easing.",
-    "themes": []
+    "themes": [
+      {
+        "name": "China's export and tech-driven GDP beat contrasting with property and consumer weakness.",
+        "desc": ""
+      },
+      {
+        "name": "EM capital flow divergence favoring Latin American commodity exporters over Asian importers.",
+        "desc": ""
+      },
+      {
+        "name": "Hungary's political shift (Orbán's defeat) unlocking EU funds and boosting CEE assets.",
+        "desc": ""
+      }
+    ]
   }
 ];
 
@@ -2436,9 +2501,12 @@ function renderWeeklyStories() {
   c.innerHTML = WEEKLY_STORIES.map(s => {
     const themesHtml = s.themes.map(t => {
       if (typeof t === 'string') return `<span class="theme-tag">${t}</span>`;
-      return `<div style="margin-top:10px;padding:10px 12px;border:1px solid var(--border);background:var(--bg-secondary);">
+      if (t.desc) return `<div style="margin-top:10px;padding:10px 12px;border:1px solid var(--border);background:var(--bg-secondary);">
         <p style="font-size:12px;font-weight:700;color:var(--gold);margin-bottom:4px;">${t.name}</p>
         <p style="font-size:12px;color:var(--fg-muted);line-height:1.55;">${t.desc}</p>
+      </div>`;
+      return `<div style="margin-top:8px;padding:10px 14px;border:1px solid var(--border);background:var(--bg-secondary);border-radius:6px;">
+        <p style="font-size:13px;color:var(--fg-muted);line-height:1.6;">${t.name}</p>
       </div>`;
     }).join("");
     return `
@@ -2452,7 +2520,10 @@ function renderWeeklyStories() {
         <span class="ci-toggle" style="flex-shrink:0;margin-left:16px;align-self:flex-start;margin-top:4px;">+</span>
       </div>
       <div class="story-body">
-        <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--fg-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">Supporting Themes</p>
+        <div style="border-left:3px solid var(--gold);padding:16px 20px;background:rgba(255,255,255,0.03);margin-bottom:16px;">
+          <p style="font-size:14px;color:var(--fg);line-height:1.7;">${s.summary}</p>
+        </div>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">Supporting Themes &amp; Metrics</p>
         ${themesHtml}
       </div>
     </div>`;
