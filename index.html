@@ -638,19 +638,19 @@
     <div class="chart-section">
       <p class="chart-title">Consensus Shift Tracker — 30-Day Zoom</p>
       <p class="chart-subtitle">Mar 21 – Apr 20, 2026 · 8 Key Assets</p>
-      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776744839" alt="30-Day Zoom chart" />
+      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776750098" alt="30-Day Zoom chart" />
       <p class="chart-caption">Tracks the consensus score trajectory for 8 key assets over the final 30 trading days. 4 regime phases detected: Bullish Consensus (2026-02-20 – 2026-03-19), Bearish Transition (2026-03-20 – 2026-04-02), Broad Sell-Off (2026-04-03 – 2026-04-10), Broad Sell-Off (2026-04-11 – 2026-04-20). EM Equities ended at −0.58, the sharpest decline. BoJ (+=Hike) at +0.70 is the strongest positive. Gold at -0.01 is closest to the inflection point.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank Leadership by Macro Theme</p>
       <p class="chart-subtitle">★ = first to call/flip · ✓ = followed later · dates = first publication</p>
-      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776744839" alt="Bank Leadership chart" />
+      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776750098" alt="Bank Leadership chart" />
       <p class="chart-caption">Maps which banks led versus followed across 44 macro themes. Gold cells indicate leading calls (★); blue cells indicate supporting calls (✓); dark cells indicate absence. JPM, GS, BofA show the densest leading coverage. Late arrivals — RBC, Curvature, Barclays, Jefferies — are concentrated in the bottom rows.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank × Asset Conviction Map</p>
       <p class="chart-subtitle">Green = Bull · Red = Bear · Gold border = contrarian · ▲Bull ▼Bear · No data = dark</p>
-      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776744839" alt="Bank Asset Conviction Heatmap" />
+      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776750098" alt="Bank Asset Conviction Heatmap" />
       <p class="chart-caption">Shows each bank's current directional conviction score (−1.0 to +1.0) for every tracked asset. Gold borders highlight contrarian positions. S&P500: -0.18. Nasdaq: -0.22. EM Equities: -0.58. Fed (+=Hike): +0.43. USD: -0.57. BoJ (+=Hike) at +0.70 is the strongest positive.</p>
     </div>
   </div>
@@ -3047,14 +3047,16 @@ async function sendChat() {
   addChatMsg('user', msg);
   showTyping();
   
-  // Progress messages for long-running queries
+  // Progress messages for long-running queries (backend budget: 300s)
   const progressTimer1 = setTimeout(() => updateTyping('Analyzing bank reports...'), 10000);
   const progressTimer2 = setTimeout(() => updateTyping('Synthesizing across multiple banks...'), 30000);
-  const progressTimer3 = setTimeout(() => updateTyping('Almost there — compiling results...'), 60000);
+  const progressTimer3 = setTimeout(() => updateTyping('Compiling results...'), 60000);
+  const progressTimer4 = setTimeout(() => updateTyping('Running deeper analysis — this one is complex...'), 120000);
+  const progressTimer5 = setTimeout(() => updateTyping('Almost there — finalizing...'), 210000);
   
-  // 120s timeout
+  // 300s timeout (matches bridge backend budget)
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 120000);
+  const timeoutId = setTimeout(() => controller.abort(), 300000);
   
   try {
     const headers = { 'Content-Type': 'application/json' };
@@ -3081,7 +3083,7 @@ async function sendChat() {
   } catch (e) {
     hideTyping();
     if (e.name === 'AbortError') {
-      addChatMsg('system', 'Request timed out (120s). The agent may still be processing — try again in a moment.');
+      addChatMsg('system', 'Request timed out (300s). The agent may still be processing — try again in a moment.');
     } else {
       addChatMsg('system', 'Connection failed: ' + e.message);
     }
@@ -3089,6 +3091,8 @@ async function sendChat() {
     clearTimeout(progressTimer1);
     clearTimeout(progressTimer2);
     clearTimeout(progressTimer3);
+    clearTimeout(progressTimer4);
+    clearTimeout(progressTimer5);
     clearTimeout(timeoutId);
     const sb = document.getElementById('chat-send-btn');
     if (sb) sb.disabled = false;
