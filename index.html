@@ -638,19 +638,19 @@
     <div class="chart-section">
       <p class="chart-title">Consensus Shift Tracker — 30-Day Zoom</p>
       <p class="chart-subtitle">Mar 21 – Apr 20, 2026 · 8 Key Assets</p>
-      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776761931" alt="30-Day Zoom chart" />
+      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776762268" alt="30-Day Zoom chart" />
       <p class="chart-caption">Tracks the consensus score trajectory for 8 key assets over the final 30 trading days. 4 regime phases detected: Bullish Consensus (2026-02-20 – 2026-03-19), Bearish Transition (2026-03-20 – 2026-04-02), Broad Sell-Off (2026-04-03 – 2026-04-10), Broad Sell-Off (2026-04-11 – 2026-04-20). EM Equities ended at −0.58, the sharpest decline. BoJ (+=Hike) at +0.70 is the strongest positive. Gold at -0.01 is closest to the inflection point.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank Leadership by Macro Theme</p>
       <p class="chart-subtitle">★ = first to call/flip · ✓ = followed later · dates = first publication</p>
-      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776761931" alt="Bank Leadership chart" />
+      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776762268" alt="Bank Leadership chart" />
       <p class="chart-caption">Maps which banks led versus followed across 44 macro themes. Gold cells indicate leading calls (★); blue cells indicate supporting calls (✓); dark cells indicate absence. JPM, GS, BofA show the densest leading coverage. Late arrivals — RBC, Curvature, Barclays, Jefferies — are concentrated in the bottom rows.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank × Asset Conviction Map</p>
       <p class="chart-subtitle">Green = Bull · Red = Bear · Gold border = contrarian · ▲Bull ▼Bear · No data = dark</p>
-      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776761931" alt="Bank Asset Conviction Heatmap" />
+      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776762268" alt="Bank Asset Conviction Heatmap" />
       <p class="chart-caption">Shows each bank's current directional conviction score (−1.0 to +1.0) for every tracked asset. Gold borders highlight contrarian positions. S&P500: -0.18. Nasdaq: -0.22. EM Equities: -0.58. Fed (+=Hike): +0.43. USD: -0.57. BoJ (+=Hike) at +0.70 is the strongest positive.</p>
     </div>
   </div>
@@ -697,12 +697,19 @@
     </div>
     <div class="chat-settings-overlay" id="chat-overlay" onclick="toggleChatSettings()"></div>
     <div class="chat-settings-modal" id="chat-modal">
-      <p style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--fg);margin-bottom:16px;">Chat Settings</p>
-      <label style="font-size:12px;color:var(--fg-muted);display:block;margin-bottom:6px;">API Endpoint</label>
-      <input type="text" id="chat-endpoint" placeholder="https://chat.augmentwealth.co/chat" style="width:100%;padding:10px 12px;background:var(--bg);border:1px solid var(--border);color:var(--fg);border-radius:8px;font-size:13px;font-family:'JetBrains Mono',monospace;margin-bottom:16px;outline:none;" />
-      <label style="font-size:12px;color:var(--fg-muted);display:block;margin-bottom:6px;">Access Code (optional)</label>
-      <input type="text" id="chat-access-code" placeholder="your-access-code" style="width:100%;padding:10px 12px;background:var(--bg);border:1px solid var(--border);color:var(--fg);border-radius:8px;font-size:13px;font-family:'JetBrains Mono',monospace;margin-bottom:16px;outline:none;" />
-      <button onclick="saveChatSettings()" style="background:var(--gold);color:var(--bg);border:none;padding:10px 24px;border-radius:8px;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;">Save</button>
+      <p style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--fg);margin-bottom:6px;">Chat Settings</p>
+      <p style="font-size:12px;color:var(--fg-muted);margin-bottom:20px;line-height:1.5;">Your access code authorizes chat requests. Contact your admin if you don't have one.</p>
+      <label style="font-size:12px;color:var(--fg-muted);display:block;margin-bottom:6px;">Access Code</label>
+      <input type="text" id="chat-access-code" placeholder="e.g. amit-alpha" autocomplete="off" spellcheck="false" style="width:100%;padding:10px 12px;background:var(--bg);border:1px solid var(--border);color:var(--fg);border-radius:8px;font-size:13px;font-family:'JetBrains Mono',monospace;margin-bottom:8px;outline:none;" />
+      <p id="chat-settings-status" style="font-size:11px;color:var(--fg-muted);min-height:16px;margin-bottom:16px;"></p>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <button onclick="saveChatSettings()" style="background:var(--gold);color:var(--bg);border:none;padding:10px 24px;border-radius:8px;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;">Save</button>
+        <button onclick="resetChatSettings()" style="background:transparent;color:var(--fg-muted);border:1px solid rgba(255,255,255,0.1);padding:10px 18px;border-radius:8px;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:13px;">Reset to default</button>
+        <span style="flex:1;"></span>
+        <span style="font-size:10px;color:var(--fg-muted);font-family:'JetBrains Mono',monospace;">v2.1</span>
+      </div>
+      <!-- Hidden: endpoint is permanent, not user-editable. Kept for internal reference. -->
+      <input type="hidden" id="chat-endpoint" value="https://chat.augmentwealth.co/chat" />
     </div>
     <div class="chat-container" id="chat-container">
       <div class="chat-welcome" id="chat-welcome" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:80px;">
@@ -2928,9 +2935,22 @@ function toggleChatSettings() {
   }
 }
 
+function resetChatSettings() {
+  localStorage.removeItem('chat_access_code');
+  localStorage.removeItem('chat_endpoint');
+  document.getElementById('chat-access-code').value = DEFAULT_CHAT_ACCESS_CODE;
+  const s = document.getElementById('chat-settings-status');
+  if (s) { s.textContent = '✓ Reset to default.'; s.style.color = 'var(--gold)'; setTimeout(() => { s.textContent = ''; }, 2500); }
+}
+
 async function saveChatSettings() {
-  const endpoint = document.getElementById('chat-endpoint').value.trim();
+  const endpoint = (document.getElementById('chat-endpoint').value || DEFAULT_CHAT_ENDPOINT).trim();
   const code = document.getElementById('chat-access-code').value.trim();
+  const status = document.getElementById('chat-settings-status');
+  if (!code) {
+    if (status) { status.textContent = 'Access code cannot be empty.'; status.style.color = '#ff6b6b'; }
+    return;
+  }
   localStorage.setItem('chat_endpoint', endpoint);
   localStorage.setItem('chat_access_code', code);
   toggleChatSettings();
@@ -3106,32 +3126,22 @@ async function sendChat() {
   }
 }
 
-// Gear icon hidden by default (permanent endpoint is hardcoded).
-// Emergency override: triple-click the FadeShift logo to reveal.
+// Gear icon: visible only on the Chat tab so users can update their access code.
+// The endpoint is permanent (hardcoded) and hidden from the settings UI.
 (function() {
   const gear = document.querySelector('.chat-settings');
-  if (gear) gear.style.display = 'none';
-  let clicks = 0, clickTimer = null;
-  const logo = document.querySelector('.brand') || document.querySelector('header h1') || document.querySelector('.logo');
-  if (logo) {
-    logo.style.cursor = 'default';
-    logo.addEventListener('click', () => {
-      clicks++;
-      clearTimeout(clickTimer);
-      clickTimer = setTimeout(() => { clicks = 0; }, 800);
-      if (clicks >= 3) {
-        clicks = 0;
-        const isChat = document.querySelector('.tab-btn.active')?.textContent?.toLowerCase().includes('chat');
-        if (gear) gear.style.display = isChat ? '' : 'none';
-        // Also show on next chat-tab switch
-        const _orig = window.switchTab;
-        window.switchTab = function(tab, btn) {
-          _orig(tab, btn);
-          if (gear) gear.style.display = tab === 'chat' ? '' : 'none';
-        };
-      }
-    });
-  }
+  if (!gear) return;
+  const syncGearVisibility = () => {
+    const activeTab = document.querySelector('.tab-btn.active');
+    const isChat = activeTab && activeTab.textContent.toLowerCase().includes('chat');
+    gear.style.display = isChat ? '' : 'none';
+  };
+  syncGearVisibility();
+  const _orig = window.switchTab;
+  window.switchTab = function(tab, btn) {
+    _orig(tab, btn);
+    syncGearVisibility();
+  };
 })();
 
 // Auto-resize textareas
