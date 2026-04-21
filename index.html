@@ -638,19 +638,19 @@
     <div class="chart-section">
       <p class="chart-title">Consensus Shift Tracker — 30-Day Zoom</p>
       <p class="chart-subtitle">Mar 21 – Apr 20, 2026 · 8 Key Assets</p>
-      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776750531" alt="30-Day Zoom chart" />
+      <img class="chart-img" src="img/chart_30d_zoom.png?v=1776761931" alt="30-Day Zoom chart" />
       <p class="chart-caption">Tracks the consensus score trajectory for 8 key assets over the final 30 trading days. 4 regime phases detected: Bullish Consensus (2026-02-20 – 2026-03-19), Bearish Transition (2026-03-20 – 2026-04-02), Broad Sell-Off (2026-04-03 – 2026-04-10), Broad Sell-Off (2026-04-11 – 2026-04-20). EM Equities ended at −0.58, the sharpest decline. BoJ (+=Hike) at +0.70 is the strongest positive. Gold at -0.01 is closest to the inflection point.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank Leadership by Macro Theme</p>
       <p class="chart-subtitle">★ = first to call/flip · ✓ = followed later · dates = first publication</p>
-      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776750531" alt="Bank Leadership chart" />
+      <img class="chart-img" src="img/chart_bank_leadership.png?v=1776761931" alt="Bank Leadership chart" />
       <p class="chart-caption">Maps which banks led versus followed across 44 macro themes. Gold cells indicate leading calls (★); blue cells indicate supporting calls (✓); dark cells indicate absence. JPM, GS, BofA show the densest leading coverage. Late arrivals — RBC, Curvature, Barclays, Jefferies — are concentrated in the bottom rows.</p>
     </div>
     <div class="chart-section">
       <p class="chart-title">Bank × Asset Conviction Map</p>
       <p class="chart-subtitle">Green = Bull · Red = Bear · Gold border = contrarian · ▲Bull ▼Bear · No data = dark</p>
-      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776750531" alt="Bank Asset Conviction Heatmap" />
+      <img class="chart-img" src="img/chart_bank_asset_heatmap.png?v=1776761931" alt="Bank Asset Conviction Heatmap" />
       <p class="chart-caption">Shows each bank's current directional conviction score (−1.0 to +1.0) for every tracked asset. Gold borders highlight contrarian positions. S&P500: -0.18. Nasdaq: -0.22. EM Equities: -0.58. Fed (+=Hike): +0.43. USD: -0.57. BoJ (+=Hike) at +0.70 is the strongest positive.</p>
     </div>
   </div>
@@ -727,15 +727,9 @@
       <div class="chat-messages" id="chat-messages" style="display:none;flex-direction:column;gap:12px;"></div>
     </div>
     <div class="chat-input-area" id="chat-input-bottom" style="display:none;border-top:1px solid rgba(255,255,255,0.06);background:var(--bg);">
-      <div style="max-width:1000px;margin:0 auto;padding:8px 24px 20px;position:relative;">
-        <div style="display:flex;justify-content:flex-end;margin-bottom:6px;">
-          <button onclick="newConversation()" title="Start a new thread — the agent forgets previous messages" style="background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--fg-muted);padding:5px 12px;border-radius:16px;font-size:11px;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:all 0.15s;display:inline-flex;align-items:center;gap:6px;" onmouseover="this.style.borderColor='rgba(255,255,255,0.18)';this.style.color='var(--fg)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)';this.style.color='var(--fg-muted)'">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-            New conversation
-          </button>
-        </div>
+      <div style="max-width:1000px;margin:0 auto;padding:12px 24px 20px;position:relative;">
         <textarea class="chat-input" id="chat-input" rows="1" placeholder="Ask a follow-up..." style="width:100%;padding:14px 56px 14px 18px;border-radius:14px;font-size:14px;background:var(--surface);border:1px solid rgba(255,255,255,0.08);box-shadow:0 1px 8px rgba(0,0,0,0.2);" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"></textarea>
-        <button class="chat-send" id="chat-send-btn" onclick="sendChat()" style="position:absolute;right:32px;bottom:28px;width:36px;height:36px;font-size:15px;">↑</button>
+        <button class="chat-send" id="chat-send-btn" onclick="sendChat()" style="position:absolute;right:32px;top:50%;transform:translateY(-50%);width:36px;height:36px;font-size:15px;">↑</button>
       </div>
     </div>
   </div>
@@ -2903,29 +2897,12 @@ renderWeeklyModel();
 renderWeeklyCategorization();
 
 // ── Chat Functions ─────────────────────────────────────────────
+// Note: OpenClaw's webchat mode uses a single per-user session key
+// (`agent:<agent_id>:main`) regardless of the `session_id` we send. Multi-turn
+// memory persists across page reloads and tabs for the same user. A client-side
+// "New conversation" button would be misleading — omitted intentionally.
 function genSessionId() { return 'fs-' + Math.random().toString(36).substring(2, 10) + '-' + Date.now().toString(36); }
 let CHAT_SESSION_ID = genSessionId();
-
-function newConversation() {
-  // Fresh session ID → server-side agent context is reset on next message
-  CHAT_SESSION_ID = genSessionId();
-  window._chatSessionId = null;
-  // Reset UI back to welcome state
-  const welcome = document.getElementById('chat-welcome');
-  const messages = document.getElementById('chat-messages');
-  const bottomArea = document.getElementById('chat-input-bottom');
-  if (messages) { messages.innerHTML = ''; messages.style.display = 'none'; }
-  if (welcome) { welcome.style.display = 'flex'; }
-  if (bottomArea) { bottomArea.style.display = 'none'; }
-  // Clear both inputs
-  const centerInput = document.getElementById('chat-input-center');
-  const bottomInput = document.getElementById('chat-input');
-  if (centerInput) centerInput.value = '';
-  if (bottomInput) bottomInput.value = '';
-  // Restore subtitle if it was mutated
-  const subtitle = document.getElementById('chat-subtitle');
-  if (subtitle) { subtitle.textContent = 'Ask about bank consensus, flows, or positioning.'; subtitle.style.color = ''; }
-}
 
 // Permanent endpoint (augmentwealth.co / Cloudflare named tunnel → OpenClaw bridge on Amit's Mac)
 const DEFAULT_CHAT_ENDPOINT = 'https://chat.augmentwealth.co/chat';
