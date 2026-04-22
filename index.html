@@ -3076,12 +3076,38 @@ const REGIME_PHASES = [{"start": "2026-02-20", "end": "2026-03-12", "label": "Bu
       const { ctx, chartArea, scales } = chart;
       if (!chartArea || !scales.x) return;
       const xScale = scales.x;
+      const visibleLabels = chart.data.labels;
+      if (!visibleLabels || !visibleLabels.length) return;
+      const firstDate = visibleLabels[0];
+      const lastDate  = visibleLabels[visibleLabels.length - 1];
+
+      // Clamp each phase to the visible window. Because the x-axis is a
+      // category scale, getPixelForValue only works for labels that exist in
+      // the visible set — so we fall back to chartArea edges when a phase
+      // extends beyond one side of the window.
+      function clampToVisible(phase){
+        const startBeforeWindow = phase.start < firstDate;
+        const endAfterWindow    = phase.end   > lastDate;
+        // If the phase is entirely before or after the window, skip it.
+        if (phase.end < firstDate) return null;
+        if (phase.start > lastDate) return null;
+        const effStart = startBeforeWindow ? firstDate : phase.start;
+        const effEnd   = endAfterWindow    ? lastDate  : phase.end;
+        let xStart = xScale.getPixelForValue(effStart);
+        let xEnd   = xScale.getPixelForValue(effEnd);
+        if (isNaN(xStart) || isNaN(xEnd)) return null;
+        // If the phase started before the window, extend band to the left edge.
+        if (startBeforeWindow) xStart = chartArea.left;
+        if (endAfterWindow)    xEnd   = chartArea.right;
+        return { xStart, xEnd };
+      }
+
       // First pass: compute visible bands.
       const bands = [];
       REGIME_PHASES.forEach(p => {
-        const xStart = xScale.getPixelForValue(p.start);
-        const xEnd   = xScale.getPixelForValue(p.end);
-        if (isNaN(xStart) || isNaN(xEnd)) return;
+        const clamped = clampToVisible(p);
+        if (!clamped) return;
+        const { xStart, xEnd } = clamped;
         const left  = Math.max(chartArea.left,  Math.min(xStart, xEnd));
         const right = Math.min(chartArea.right, Math.max(xStart, xEnd));
         if (right <= chartArea.left + 2 || left >= chartArea.right - 2) return;
