@@ -2968,16 +2968,21 @@ async function sendChat() {
   addChatMsg('user', msg);
   showTyping();
   
-  // Progress messages for long-running queries (backend budget: 300s)
+  // Progress messages — extended timeline so user sees continuous activity
+  // while the agent thinks. Bridge/agent can take 90–300s on complex queries.
   const progressTimer1 = setTimeout(() => updateTyping('Analyzing bank reports...'), 10000);
   const progressTimer2 = setTimeout(() => updateTyping('Synthesizing across multiple banks...'), 30000);
   const progressTimer3 = setTimeout(() => updateTyping('Compiling results...'), 60000);
   const progressTimer4 = setTimeout(() => updateTyping('Running deeper analysis — this one is complex...'), 120000);
   const progressTimer5 = setTimeout(() => updateTyping('Almost there — finalizing...'), 210000);
-  
-  // 300s timeout (matches bridge backend budget)
+  const progressTimer6 = setTimeout(() => updateTyping('Still working — thank you for your patience...'), 330000);
+  const progressTimer7 = setTimeout(() => updateTyping('Agent is taking longer than usual — still active...'), 480000);
+
+  // 600s (10-minute) browser timeout. This is deliberately generous so the
+  // browser is never the bottleneck; any shorter wait means the network path
+  // (Cloudflare tunnel / bridge / agent) is the real cause.
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 300000);
+  const timeoutId = setTimeout(() => controller.abort(), 600000);
   
   try {
     const headers = { 'Content-Type': 'application/json' };
@@ -3004,7 +3009,7 @@ async function sendChat() {
   } catch (e) {
     hideTyping();
     if (e.name === 'AbortError') {
-      addChatMsg('system', 'Request timed out (300s). The agent may still be processing — try again in a moment.');
+      addChatMsg('system', 'Request timed out (10 min). The agent may still be processing — try again in a moment.');
     } else {
       addChatMsg('system', 'Connection failed: ' + e.message);
     }
@@ -3014,6 +3019,8 @@ async function sendChat() {
     clearTimeout(progressTimer3);
     clearTimeout(progressTimer4);
     clearTimeout(progressTimer5);
+    clearTimeout(progressTimer6);
+    clearTimeout(progressTimer7);
     clearTimeout(timeoutId);
     const sb = document.getElementById('chat-send-btn');
     if (sb) sb.disabled = false;
