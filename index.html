@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Consensus Shift Tracker · Apr 23, 2026</title>
+  <title>Consensus Shift Tracker · Apr 24, 2026</title>
   <link rel="canonical" href="https://augmentwealth.co/" />
   <meta name="description" content="FadeShift Consensus Tracker — daily NLP-scored fade signals from major sell-side bank research." />
   <meta property="og:type" content="website" />
@@ -411,8 +411,8 @@
         <span class="header-sub">— Consensus Summary</span>
       </div>
       <div class="header-meta">
-        <span>Apr 23, 2026</span>
-        <span>18 Assets · 26 Banks · 1,982 Calls · 61 Dates</span>
+        <span>Apr 24, 2026</span>
+        <span>18 Assets · 26 Banks · 2,027 Calls · 62 Dates</span>
       </div>
     </div>
     <div class="tab-bar">
@@ -477,18 +477,18 @@
             <div class="act-row bull-border">
               <div class="act-meta">
                 <span class="act-badge bull-badge">Phase 3</span>
-                <span class="act-dates">2026-04-10 – 2026-04-23</span>
+                <span class="act-dates">2026-04-10 – 2026-04-24</span>
               </div>
               <div class="act-body">
                 <p class="act-title">Bullish · Strengthening</p>
-                <p class="act-text">Average consensus moved from +0.12 to +0.28 (Δ +0.17). 13 assets positive, 3 negative at phase end. Key moves: Copper +1.19, Credit HY +0.93, Credit IG +0.87, Brent +0.66.</p>
+                <p class="act-text">Average consensus moved from +0.12 to +0.27 (Δ +0.15). 14 assets positive, 3 negative at phase end. Key moves: Copper +1.19, Credit HY +0.93, Credit IG +0.87, Brent +0.65.</p>
               </div>
             </div>
           </div>
         </section>
 
     <section class="section" style="margin-top:40px;">
-      <h2 class="section-heading">Consensus Scores — Current State (Apr 23, 2026)</h2>
+      <h2 class="section-heading">Consensus Scores — Current State (Apr 24, 2026)</h2>
       <div class="table-wrap">
         <table id="consensus-table">
           <thead>
@@ -598,8 +598,8 @@
 <footer>
   <div class="container">
     <div class="footer-inner">
-      <span>Consensus Shift Tracker — Fade Report · Apr 23, 2026</span>
-      <span>Coverage: Mar 24 – Apr 23, 2026 · 61 trading dates · 18 assets · 26 banks</span>
+      <span>Consensus Shift Tracker — Fade Report · Apr 24, 2026</span>
+      <span>Coverage: Mar 25 – Apr 24, 2026 · 62 trading dates · 18 assets · 26 banks</span>
     </div>
   </div>
 </footer>
@@ -608,15 +608,6 @@
 // ── Data ──────────────────────────────────────────────────────────────────────
 
 const CONSENSUS = [
-  {
-    "asset": "EUR/USD (+=Long EUR)",
-    "score": 0.66,
-    "bull": 6,
-    "bear": 0,
-    "signal": "Unanimous bullish (6 banks)",
-    "fresh": 4,
-    "carried": 3
-  },
   {
     "asset": "Credit HY",
     "score": 0.66,
@@ -627,15 +618,6 @@ const CONSENSUS = [
     "carried": 5
   },
   {
-    "asset": "AI Infra",
-    "score": 0.63,
-    "bull": 14,
-    "bear": 2,
-    "signal": "",
-    "fresh": 7,
-    "carried": 10
-  },
-  {
     "asset": "EM Equities",
     "score": 0.6,
     "bull": 4,
@@ -643,6 +625,24 @@ const CONSENSUS = [
     "signal": "",
     "fresh": 0,
     "carried": 5
+  },
+  {
+    "asset": "AI Infra",
+    "score": 0.56,
+    "bull": 13,
+    "bear": 2,
+    "signal": "",
+    "fresh": 6,
+    "carried": 11
+  },
+  {
+    "asset": "EUR/USD (+=Long EUR)",
+    "score": 0.55,
+    "bull": 5,
+    "bear": 1,
+    "signal": "",
+    "fresh": 1,
+    "carried": 6
   },
   {
     "asset": "Credit IG",
@@ -655,12 +655,12 @@ const CONSENSUS = [
   },
   {
     "asset": "Brent",
-    "score": 0.51,
-    "bull": 15,
+    "score": 0.49,
+    "bull": 12,
     "bear": 4,
     "signal": "",
-    "fresh": 6,
-    "carried": 13
+    "fresh": 7,
+    "carried": 10
   },
   {
     "asset": "Copper",
@@ -668,8 +668,8 @@ const CONSENSUS = [
     "bull": 3,
     "bear": 0,
     "signal": "Unanimous bullish (3 banks)",
-    "fresh": 1,
-    "carried": 2
+    "fresh": 0,
+    "carried": 3
   },
   {
     "asset": "Korea",
@@ -677,26 +677,17 @@ const CONSENSUS = [
     "bull": 4,
     "bear": 3,
     "signal": "Split — high disagreement",
-    "fresh": 2,
-    "carried": 5
+    "fresh": 0,
+    "carried": 7
   },
   {
     "asset": "China",
-    "score": 0.39,
-    "bull": 9,
-    "bear": 2,
+    "score": 0.38,
+    "bull": 10,
+    "bear": 3,
     "signal": "",
-    "fresh": 1,
-    "carried": 14
-  },
-  {
-    "asset": "S&P500",
-    "score": 0.37,
-    "bull": 12,
-    "bear": 4,
-    "signal": "",
-    "fresh": 5,
-    "carried": 11
+    "fresh": 3,
+    "carried": 13
   },
   {
     "asset": "Japan",
@@ -704,8 +695,8 @@ const CONSENSUS = [
     "bull": 4,
     "bear": 2,
     "signal": "Split — high disagreement",
-    "fresh": 1,
-    "carried": 5
+    "fresh": 0,
+    "carried": 6
   },
   {
     "asset": "Gold",
@@ -713,17 +704,35 @@ const CONSENSUS = [
     "bull": 12,
     "bear": 5,
     "signal": "Split — high disagreement",
+    "fresh": 0,
+    "carried": 17
+  },
+  {
+    "asset": "S&P500",
+    "score": 0.29,
+    "bull": 11,
+    "bear": 5,
+    "signal": "Split — high disagreement",
     "fresh": 5,
-    "carried": 12
+    "carried": 11
   },
   {
     "asset": "USD",
-    "score": 0.22,
+    "score": 0.19,
     "bull": 10,
     "bear": 6,
     "signal": "Split — high disagreement",
-    "fresh": 4,
-    "carried": 12
+    "fresh": 8,
+    "carried": 9
+  },
+  {
+    "asset": "Nasdaq",
+    "score": 0.1,
+    "bull": 3,
+    "bear": 2,
+    "signal": "Split — high disagreement",
+    "fresh": 1,
+    "carried": 4
   },
   {
     "asset": "India",
@@ -733,15 +742,6 @@ const CONSENSUS = [
     "signal": "Split — high disagreement",
     "fresh": 0,
     "carried": 6
-  },
-  {
-    "asset": "Nasdaq",
-    "score": 0.04,
-    "bull": 2,
-    "bear": 2,
-    "signal": "Split — high disagreement",
-    "fresh": 0,
-    "carried": 4
   },
   {
     "asset": "US 2Y (+=Bull Bond)",
@@ -763,7 +763,7 @@ const CONSENSUS = [
   },
   {
     "asset": "JPY (+=Strong JPY)",
-    "score": -0.65,
+    "score": -0.66,
     "bull": 0,
     "bear": 9,
     "signal": "Unanimous bearish (9 banks)",
@@ -777,8 +777,8 @@ const MOVERS = [
     "asset": "JPY (+=Strong JPY)",
     "peak": 0.87,
     "peakDate": "2026-03-11",
-    "current": -0.65,
-    "drop": -1.51,
+    "current": -0.66,
+    "drop": -1.53,
     "status": "Complete reversal"
   },
   {
@@ -793,8 +793,8 @@ const MOVERS = [
     "asset": "USD",
     "peak": 0.9,
     "peakDate": "2026-02-24",
-    "current": 0.22,
-    "drop": -0.68,
+    "current": 0.19,
+    "drop": -0.71,
     "status": "Weakened"
   },
   {
@@ -806,6 +806,14 @@ const MOVERS = [
     "status": "Weakened"
   },
   {
+    "asset": "S&P500",
+    "peak": 0.83,
+    "peakDate": "2026-02-26",
+    "current": 0.29,
+    "drop": -0.54,
+    "status": "Weakened"
+  },
+  {
     "asset": "Korea",
     "peak": 0.93,
     "peakDate": "2026-02-25",
@@ -814,35 +822,19 @@ const MOVERS = [
     "status": "Weakened"
   },
   {
-    "asset": "S&P500",
-    "peak": 0.83,
-    "peakDate": "2026-02-26",
-    "current": 0.37,
-    "drop": -0.47,
-    "status": "Weakened"
-  },
-  {
     "asset": "Brent",
     "peak": 0.9,
     "peakDate": "2026-03-13",
-    "current": 0.51,
-    "drop": -0.39,
+    "current": 0.49,
+    "drop": -0.41,
     "status": "Weakened"
   },
   {
     "asset": "China",
     "peak": 0.72,
     "peakDate": "2026-03-14",
-    "current": 0.39,
-    "drop": -0.33,
-    "status": "Weakened"
-  },
-  {
-    "asset": "Nasdaq",
-    "peak": 0.37,
-    "peakDate": "2026-04-16",
-    "current": 0.04,
-    "drop": -0.33,
+    "current": 0.38,
+    "drop": -0.34,
     "status": "Weakened"
   },
   {
@@ -858,14 +850,6 @@ const MOVERS = [
 const FADE_SIGNALS = [
   {
     "n": 1,
-    "asset": "Nasdaq",
-    "score": 0.04,
-    "bb": "2B vs 2Be",
-    "type": "disagreement",
-    "note": "High disagreement — 2 banks going against the prevailing direction. Watch for the minority to either capitulate or convert others."
-  },
-  {
-    "n": 2,
     "asset": "Korea",
     "score": 0.44,
     "bb": "4B vs 3Be",
@@ -873,9 +857,17 @@ const FADE_SIGNALS = [
     "note": "High disagreement — 3 banks going against the prevailing direction. Watch for the minority to either capitulate or convert others."
   },
   {
+    "n": 2,
+    "asset": "Nasdaq",
+    "score": 0.1,
+    "bb": "3B vs 2Be",
+    "type": "disagreement",
+    "note": "High disagreement — 2 banks going against the prevailing direction. Watch for the minority to either capitulate or convert others."
+  },
+  {
     "n": 3,
     "asset": "USD",
-    "score": 0.22,
+    "score": 0.19,
     "bb": "10B vs 6Be",
     "type": "disagreement",
     "note": "High disagreement — 6 banks going against the prevailing direction. Watch for the minority to either capitulate or convert others."
@@ -883,7 +875,7 @@ const FADE_SIGNALS = [
   {
     "n": 4,
     "asset": "JPY (+=Strong JPY)",
-    "score": -0.65,
+    "score": -0.66,
     "bb": "0B / 9Be",
     "type": "unanimous",
     "note": "Unanimous bearishness across 9 banks. Extreme readings historically precede reversals or capitulation. Watch for the first bank to flip bullish — that becomes the new thought leader."
@@ -892,28 +884,28 @@ const FADE_SIGNALS = [
 
 const INFLECTION = [
   {
-    "asset": "Nasdaq",
-    "score": 0.04,
-    "bb": "2B / 2Be",
-    "note": "Split 2B/2Be — genuinely contested, one flip tips the balance"
-  },
-  {
     "asset": "India",
     "score": 0.04,
     "bb": "4B / 2Be",
     "note": "2 bears hold the minority — watch for capitulation or conversion"
   },
   {
+    "asset": "Nasdaq",
+    "score": 0.1,
+    "bb": "3B / 2Be",
+    "note": "2 bears hold the minority — watch for capitulation or conversion"
+  },
+  {
+    "asset": "USD",
+    "score": 0.19,
+    "bb": "10B / 6Be",
+    "note": "6 bears hold the minority — watch for capitulation or conversion"
+  },
+  {
     "asset": "US 2Y (+=Bull Bond)",
     "score": -0.21,
     "bb": "0B / 1Be",
     "note": "Barely negative (0B/1Be) — vulnerable to a single bull call"
-  },
-  {
-    "asset": "USD",
-    "score": 0.22,
-    "bb": "10B / 6Be",
-    "note": "6 bears hold the minority — watch for capitulation or conversion"
   },
   {
     "asset": "US 10Y (+=Bull Bond)",
@@ -925,16 +917,16 @@ const INFLECTION = [
 
 const CATALYSTS = [
   {
-    "trigger": "Tech earnings season",
-    "target": "Nasdaq direction"
-  },
-  {
     "trigger": "India GDP and monsoon outlook",
     "target": "India direction"
   },
   {
-    "trigger": "Fed funds rate expectations",
-    "target": "US 2Y (+=Bull Bond) direction"
+    "trigger": "Tech earnings season",
+    "target": "Nasdaq direction"
+  },
+  {
+    "trigger": "DXY technicals and trade balance",
+    "target": "USD direction"
   },
   {
     "trigger": "Korean export data and semiconductor cycle",
@@ -3058,8 +3050,8 @@ async function sendChat() {
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
-const CHART_DATA = {"dates": ["2026-02-20", "2026-02-22", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-07", "2026-03-08", "2026-03-09", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-13", "2026-03-14", "2026-03-15", "2026-03-16", "2026-03-17", "2026-03-18", "2026-03-19", "2026-03-20", "2026-03-21", "2026-03-22", "2026-03-23", "2026-03-24", "2026-03-25", "2026-03-26", "2026-03-28", "2026-03-29", "2026-03-30", "2026-03-31", "2026-04-01", "2026-04-02", "2026-04-03", "2026-04-05", "2026-04-06", "2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", "2026-04-11", "2026-04-12", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17", "2026-04-18", "2026-04-19", "2026-04-20", "2026-04-21", "2026-04-22", "2026-04-23"], "series": {"AI Infra": [-0.1, -0.52, 0.2, -0.18, 0.2667, 0.4923, 0.56, 0.56, 0.56, 0.5333, 0.5333, 0.52, 0.52, 0.4933, 0.3867, 0.3867, 0.4714, 0.4714, 0.55, 0.4222, 0.16, -0.1143, -0.1143, -0.1143, 0.15, 0.1778, 0.4072, 0.5031, 0.599, 0.599, 0.5989, 0.6122, 0.5922, 0.622, 0.622, 0.622, 0.4414, 0.661, -0.1215, -0.0962, -0.0962, -0.2128, -0.1582, 0.1964, 0.1651, -0.0092, 0.0643, 0.2423, 0.2423, 0.4218, 0.0283, 0.2623, 0.4288, 0.3874, 0.3874, 0.3643, 0.5663, 0.739, 0.5716, 0.6345], "Brent": [0.8667, 0.8667, 0.7, 0.6667, 0.6923, 0.6923, 0.7692, 0.7692, 0.7714, 0.8118, 0.7176, 0.7176, 0.7176, 0.7059, 0.7222, 0.7333, 0.7667, 0.7778, 0.763, 0.773, 0.9, 0.8889, 0.8941, 0.72, 0.68, 0.8035, 0.6379, 0.4145, 0.3488, 0.3673, 0.4172, 0.5409, 0.769, -0.1688, -0.1688, -0.118, -0.0081, 0.0699, 0.2025, -0.1752, -0.3649, -0.3389, -0.101, 0.1224, 0.2072, 0.0397, -0.1533, -0.0935, -0.0375, 0.4398, 0.4886, -0.0825, 0.1854, 0.2291, 0.2452, 0.1775, 0.3517, 0.3517, 0.4118, 0.5094], "China": [0.0, -0.2667, -0.2667, -0.2667, -0.5714, -0.5714, 0.05, 0.05, 0.05, 0.2667, 0.2667, 0.2667, 0.36, 0.5091, 0.62, 0.62, 0.62, 0.62, 0.7081, 0.7081, 0.7081, 0.7212, 0.7212, 0.6364, 0.6222, 0.5586, 0.3157, 0.1076, 0.1076, 0.1076, 0.0995, 0.2769, 0.2655, 0.227, 0.227, 0.1884, 0.4401, 0.4614, 0.454, 0.3155, 0.3155, 0.2509, 0.2509, 0.2414, 0.3366, 0.2724, 0.5991, 0.4755, 0.4755, 0.4265, 0.4806, 0.1417, -0.0268, 0.2442, 0.1761, 0.2155, 0.3522, 0.3875, 0.3678, 0.3909], "Copper": [null, null, null, null, 0.8, 0.7667, 0.7667, 0.5667, 0.5667, 0.5667, 0.5667, 0.5667, 0.5667, 0.5667, 0.5667, 0.5667, 0.5667, 0.56, 0.56, 0.3333, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0.2576, 0.2576, 0.2576, 0.2576, 0.2576, 0.2308, 0.2308, 0.0, 0.0, -1.0, -1.0, -1.0, -0.7143, -0.7143, -0.5715, 0.35, 0.6, 0.6, 0.1455, 0.2155, 0.2155, 0.2155, 0.2155, 0.2155, 0.2155, 0.477], "Credit HY": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, -0.3335, -0.3335, -0.27, -0.27, 0.0475, -0.162, -0.162, -0.162, -0.162, -0.162, -0.162, -0.162, -0.0286, 0.45, 0.45, 0.6571, 0.6571], "Credit IG": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0.2363, -0.1072, -0.1072, -0.1, -0.1, -0.1, -0.1, -0.1, -0.325, -0.325, -0.325, -0.2625, -0.2625, -0.2625, -0.4167, 0.5415, 0.5415, 0.5415, 0.5415, 0.5415, 0.5415, 0.5415], "EM Equities": [0.9, 0.8333, 0.825, 0.8, 0.8, 0.5111, 0.58, 0.58, 0.56, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.4561, 0.4561, 0.7914, 0.7409, 0.7409, 0.7835, 0.7835, 0.4286, 0.2759, null, null, null, null, null, null, -0.5422, -0.5422, -0.5422, -0.6406, -0.6406, -0.6406, -0.6429, -0.6429, -0.7381, -0.7381, -0.7381, -0.8182, -0.8182, 0.0545, -0.0333, -0.0333, -0.0333, 0.4, 0.44, 0.44, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6], "EUR/USD": [null, null, 0.72, 0.72, 0.6667, 0.6667, 0.4667, 0.4667, 0.4667, 0.4667, 0.4667, 0.4667, 0.4667, 0.4667, 0.4667, 0.4667, 0.5111, 0.4667, 0.4667, 0.5143, 0.7556, 0.8286, 0.65, 0.675, 0.72, 0.5798, 0.566, 0.099, 0.128, 0.128, 0.128, 0.1782, 0.1782, 0.1782, 0.1782, 0.1782, 0.146, 0.4334, 0.3643, 0.2822, -0.0568, -0.1238, 0.0917, 0.1273, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.1619, 0.1619, 0.1619, 0.4667, 0.4375, 0.4375, 0.3571, 0.7167, 0.6611], "Gold": [0.8, 0.84, 0.8667, 0.82, 0.8167, 0.8308, 0.8286, 0.8286, 0.8286, 0.8143, 0.8143, 0.8286, 0.8143, 0.8143, 0.8143, 0.8143, 0.8143, 0.8, 0.8, 0.6909, 0.6833, 0.66, 0.5273, 0.4167, 0.4167, 0.4483, 0.3041, 0.0026, -0.1062, -0.1062, -0.0966, -0.0044, 0.2956, 0.4284, 0.4284, 0.4508, 0.5409, 0.6642, 0.5978, 0.6132, 0.6132, 0.6132, 0.5485, 0.4309, 0.3683, 0.4048, 0.5855, 0.5583, 0.5892, 0.5306, 0.4689, 0.4304, 0.6262, 0.4372, 0.4544, 0.4544, 0.533, 0.6261, 0.3502, 0.3043], "India": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, -0.0825, -0.1228, -0.4755, -0.4755, -0.4755, -0.4755, -0.4204, -0.4204, -0.3534, -0.2454, -0.2454, -0.2311, -0.2311, -0.2958, -0.2995, 0.1008, 0.013, -0.0121, -0.0121, 0.0659, 0.0659, 0.0659, -0.0509, -0.0106, -0.0106, -0.0106, -0.0106, -0.0106, -0.0106, 0.0432], "JPY": [null, null, null, -0.36, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.8667, null, null, null, null, null, null, 0.5758, 0.2444, null, null, null, -0.2222, -0.2109, -0.2937, -0.2937, -0.2937, -0.2937, -0.3359, -0.2306, -0.2121, -0.3396, -0.3733, -0.3066, -0.2411, -0.2828, -0.255, -0.0937, -0.0698, -0.1241, -0.1241, -0.4167, -0.4989, -0.4656, -0.5723, -0.4191, -0.4052, -0.4052, -0.5194, -0.4917, -0.5845, -0.6467], "Japan": [null, null, null, 0.6, 0.6, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.3289, -0.3289, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, -0.4636, -0.4636, 0.2031, 0.2702, 0.5504, 0.6421, 0.6421, 0.6421, 0.66, 0.6, 0.6, 0.6069, 0.6069, 0.6069, 0.6069, 0.6069, 0.5496, 0.5496, -0.1517, -0.2388, -0.2388, 0.3204, 0.3204, 0.3606], "Korea": [null, null, null, null, 0.9333, 0.525, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.4364, 0.3787, 0.6025, null, null, null, null, null, null, null, null, null, null, 0.0227, 0.0227, 0.0227, 0.0227, 0.0227, 0.0227, -0.0554, 0.0645, 0.026, 0.026, -0.0571, -0.0571, -0.0571, -0.0333, -0.0333, 0.5611, 0.4278, 0.4278, 0.3444, 0.3444, 0.3444, 0.2848, 0.08, 0.08, 0.08, 0.2, 0.4, 0.4364, 0.4364], "Nasdaq": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0.0835, 0.1987, 0.1987, 0.3653, 0.143, 0.143, 0.143, 0.2323, 0.274, 0.039, 0.039], "S&P500": [0.8, 0.8, 0.6, 0.6, 0.6, 0.8333, 0.1143, -0.0857, -0.0857, -0.0857, -0.0857, -0.0857, -0.0857, -0.0857, -0.0857, -0.0857, 0.075, 0.075, 0.137, 0.137, 0.4762, 0.7442, 0.7442, 0.7442, 0.7442, 0.814, 0.4846, 0.1888, 0.1747, 0.24, -0.0752, -0.205, -0.5658, -0.5196, -0.3861, -0.2002, -0.3774, -0.2211, -0.1681, -0.1979, -0.1383, 0.1109, 0.1616, 0.0297, -0.35, 0.0411, 0.0318, 0.1845, 0.2417, 0.3933, 0.4343, 0.5648, 0.0483, 0.1478, 0.117, 0.0645, 0.2458, 0.1135, 0.3282, 0.3675], "US 10Y": [null, null, 0.65, 0.68, 0.68, 0.68, 0.6667, 0.6667, 0.4857, 0.4857, 0.4857, 0.4857, 0.4857, 0.4857, 0.4667, 0.4667, 0.4667, 0.2667, 0.0559, 0.0559, 0.0559, null, null, null, 0.6346, 0.4481, 0.052, null, null, null, null, null, null, null, null, null, -0.272, -0.2436, -0.2436, -0.3163, -0.3163, -0.111, -0.111, -0.111, 0.0, 0.0, 0.111, -0.062, -0.062, -0.062, -0.062, 0.0058, -0.1085, -0.2557, -0.2557, -0.2557, -0.2557, -0.2557, -0.2557, -0.2557], "US 2Y": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, -0.2145, -0.2145, -0.2145, -0.2145, -0.2145, -0.2145, -0.2145, -0.2145, -0.2145, -0.2145, -0.2145, -0.2145, -0.2145], "USD": [null, null, null, 0.9, 0.9, 0.72, 0.72, 0.72, 0.72, 0.72, 0.72, 0.72, 0.72, 0.72, 0.72, 0.72, 0.72, 0.72, 0.4545, 0.4545, 0.85, 0.85, 0.85, 0.7778, 0.7778, 0.5152, 0.4286, 0.0789, 0.1053, 0.1053, 0.3788, 0.4943, 0.458, 0.2333, 0.2333, 0.2333, 0.4343, 0.4333, 0.273, 0.1604, -0.0189, -0.0499, -0.0053, 0.0198, 0.1468, 0.2422, 0.5723, 0.5723, 0.5497, 0.5857, 0.1923, -0.0066, -0.0385, -0.0755, -0.0097, -0.044, 0.0226, 0.0801, 0.0001, 0.2153]}, "defaultAssets": ["S&P500", "Gold", "Brent", "US 10Y", "USD"], "allAssets": ["AI Infra", "Brent", "China", "Copper", "Credit HY", "Credit IG", "EM Equities", "EUR/USD", "Gold", "India", "JPY", "Japan", "Korea", "Nasdaq", "S&P500", "US 10Y", "US 2Y", "USD"], "defaultWindow": 60, "windowOptions": [30, 60], "labels": {"Fed": "Fed (+=Hike)", "RBA": "RBA (+=Hike)", "ECB": "ECB (+=Hike)", "BoJ": "BoJ (+=Hike)", "US 10Y": "US 10Y (+=Bull Bond)", "US 2Y": "US 2Y (+=Bull Bond)", "JPY": "JPY (+=Strong JPY)", "EUR/USD": "EUR/USD (+=Long EUR)"}, "latestDate": "2026-04-23"};
-const REGIME_PHASES = [{"start": "2026-02-20", "end": "2026-03-12", "label": "Bullish · Fading", "color": "#69F0AE", "level": "Bullish", "direction": "Fading", "avgStart": 0.544, "avgEnd": 0.383, "delta": -0.162}, {"start": "2026-03-13", "end": "2026-04-09", "label": "Choppy · Deteriorating", "color": "#CE93D8", "level": "Choppy", "direction": "Deteriorating", "avgStart": 0.598, "avgEnd": -0.026, "delta": -0.625}, {"start": "2026-04-10", "end": "2026-04-23", "label": "Bullish · Strengthening", "color": "#69F0AE", "level": "Bullish", "direction": "Strengthening", "avgStart": 0.116, "avgEnd": 0.284, "delta": 0.168}];
+const CHART_DATA = {"dates": ["2026-02-20", "2026-02-22", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-07", "2026-03-08", "2026-03-09", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-13", "2026-03-14", "2026-03-15", "2026-03-16", "2026-03-17", "2026-03-18", "2026-03-19", "2026-03-20", "2026-03-21", "2026-03-22", "2026-03-23", "2026-03-24", "2026-03-25", "2026-03-26", "2026-03-28", "2026-03-29", "2026-03-30", "2026-03-31", "2026-04-01", "2026-04-02", "2026-04-03", "2026-04-05", "2026-04-06", "2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", "2026-04-11", "2026-04-12", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17", "2026-04-18", "2026-04-19", "2026-04-20", "2026-04-21", "2026-04-22", "2026-04-23", "2026-04-24"], "series": {"AI Infra": [-0.1, -0.52, 0.2, -0.18, 0.2667, 0.4923, 0.56, 0.56, 0.56, 0.5333, 0.5333, 0.52, 0.52, 0.4933, 0.3867, 0.3867, 0.4714, 0.4714, 0.55, 0.4222, 0.16, -0.1143, -0.1143, -0.1143, 0.15, 0.1778, 0.4072, 0.5031, 0.599, 0.599, 0.5989, 0.6122, 0.5922, 0.622, 0.622, 0.622, 0.4414, 0.661, -0.1215, -0.0962, -0.0962, -0.2128, -0.1582, 0.1964, 0.1651, -0.0092, 0.0643, 0.2423, 0.2423, 0.4218, 0.0283, 0.2623, 0.4288, 0.3874, 0.3874, 0.3643, 0.5663, 0.739, 0.5716, 0.6345, 0.5586], "Brent": [0.8667, 0.8667, 0.7, 0.6667, 0.6923, 0.6923, 0.7692, 0.7692, 0.7714, 0.8118, 0.7176, 0.7176, 0.7176, 0.7059, 0.7222, 0.7333, 0.7667, 0.7778, 0.763, 0.773, 0.9, 0.8889, 0.8941, 0.72, 0.68, 0.8035, 0.6379, 0.4145, 0.3488, 0.3673, 0.4172, 0.5409, 0.769, -0.1688, -0.1688, -0.118, -0.0081, 0.0699, 0.2025, -0.1752, -0.3649, -0.3389, -0.101, 0.1224, 0.2072, 0.0397, -0.1533, -0.0935, -0.0375, 0.4398, 0.4886, -0.0825, 0.1854, 0.2291, 0.2452, 0.1775, 0.3517, 0.3517, 0.4118, 0.5094, 0.4921], "China": [0.0, -0.2667, -0.2667, -0.2667, -0.5714, -0.5714, 0.05, 0.05, 0.05, 0.2667, 0.2667, 0.2667, 0.36, 0.5091, 0.62, 0.62, 0.62, 0.62, 0.7081, 0.7081, 0.7081, 0.7212, 0.7212, 0.6364, 0.6222, 0.5586, 0.3157, 0.1076, 0.1076, 0.1076, 0.0995, 0.2769, 0.2655, 0.227, 0.227, 0.1884, 0.4401, 0.4614, 0.454, 0.3155, 0.3155, 0.2509, 0.2509, 0.2414, 0.3366, 0.2724, 0.5991, 0.4755, 0.4755, 0.4265, 0.4806, 0.1417, -0.0268, 0.2442, 0.1761, 0.2155, 0.3522, 0.3875, 0.3678, 0.3909, 0.3839], "Copper": [null, null, null, null, 0.8, 0.7667, 0.7667, 0.5667, 0.5667, 0.5667, 0.5667, 0.5667, 0.5667, 0.5667, 0.5667, 0.5667, 0.5667, 0.56, 0.56, 0.3333, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0.2576, 0.2576, 0.2576, 0.2576, 0.2576, 0.2308, 0.2308, 0.0, 0.0, -1.0, -1.0, -1.0, -0.7143, -0.7143, -0.5715, 0.35, 0.6, 0.6, 0.1455, 0.2155, 0.2155, 0.2155, 0.2155, 0.2155, 0.2155, 0.477, 0.477], "Credit HY": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, -0.3335, -0.3335, -0.27, -0.27, 0.0475, -0.162, -0.162, -0.162, -0.162, -0.162, -0.162, -0.162, -0.0286, 0.45, 0.45, 0.6571, 0.6571, 0.6571], "Credit IG": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0.2363, -0.1071, -0.1071, -0.1, -0.1, -0.1, -0.1, -0.1, -0.325, -0.325, -0.325, -0.2625, -0.2625, -0.2625, -0.4167, 0.5415, 0.5415, 0.5415, 0.5415, 0.5415, 0.5415, 0.5415, 0.5415], "EM Equities": [0.9, 0.8333, 0.825, 0.8, 0.8, 0.5111, 0.58, 0.58, 0.56, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.4561, 0.4561, 0.7914, 0.7409, 0.7409, 0.7835, 0.7835, 0.4286, 0.2759, null, null, null, null, null, null, -0.5422, -0.5422, -0.5422, -0.6406, -0.6406, -0.6406, -0.6429, -0.6429, -0.7381, -0.7381, -0.7381, -0.8182, -0.8182, 0.0545, -0.0333, -0.0333, -0.0333, 0.4, 0.44, 0.44, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6], "EUR/USD": [null, null, 0.72, 0.72, 0.6667, 0.6667, 0.4667, 0.4667, 0.4667, 0.4667, 0.4667, 0.4667, 0.4667, 0.4667, 0.4667, 0.4667, 0.5111, 0.4667, 0.4667, 0.5143, 0.7556, 0.8286, 0.65, 0.675, 0.72, 0.5798, 0.566, 0.099, 0.128, 0.128, 0.128, 0.1782, 0.1782, 0.1782, 0.1782, 0.1782, 0.146, 0.4334, 0.3643, 0.2822, -0.0568, -0.1238, 0.0917, 0.1273, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.1619, 0.1619, 0.1619, 0.4667, 0.4375, 0.4375, 0.3571, 0.7167, 0.6611, 0.5515], "Gold": [0.8, 0.84, 0.8667, 0.82, 0.8167, 0.8308, 0.8286, 0.8286, 0.8286, 0.8143, 0.8143, 0.8286, 0.8143, 0.8143, 0.8143, 0.8143, 0.8143, 0.8, 0.8, 0.6909, 0.6833, 0.66, 0.5273, 0.4167, 0.4167, 0.4483, 0.3041, 0.0026, -0.1062, -0.1062, -0.0966, -0.0044, 0.2956, 0.4284, 0.4284, 0.4508, 0.5409, 0.6642, 0.5978, 0.6132, 0.6132, 0.6132, 0.5485, 0.4309, 0.3683, 0.4048, 0.5855, 0.5583, 0.5892, 0.5306, 0.4689, 0.4304, 0.6262, 0.4372, 0.4544, 0.4544, 0.533, 0.6261, 0.3502, 0.3043, 0.3043], "India": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, -0.0825, -0.1228, -0.4755, -0.4755, -0.4755, -0.4755, -0.4204, -0.4204, -0.3534, -0.2454, -0.2454, -0.2311, -0.2311, -0.2958, -0.2995, 0.1008, 0.013, -0.0121, -0.0121, 0.0659, 0.0659, 0.0659, -0.0509, -0.0106, -0.0106, -0.0106, -0.0106, -0.0106, -0.0106, 0.0432, 0.0432], "JPY": [null, null, null, -0.36, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.8667, null, null, null, null, null, null, 0.5758, 0.2444, null, null, null, -0.2222, -0.2109, -0.2937, -0.2937, -0.2937, -0.2937, -0.3359, -0.2306, -0.2121, -0.3396, -0.3733, -0.3066, -0.2411, -0.2828, -0.255, -0.0937, -0.0698, -0.1241, -0.1241, -0.4167, -0.4989, -0.4656, -0.5723, -0.4191, -0.4052, -0.4052, -0.5194, -0.4917, -0.5845, -0.6467, -0.6645], "Japan": [null, null, null, 0.6, 0.6, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.3289, -0.3289, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, -0.4636, -0.4636, 0.2031, 0.2702, 0.5504, 0.6421, 0.6421, 0.6421, 0.66, 0.6, 0.6, 0.6069, 0.6069, 0.6069, 0.6069, 0.6069, 0.5496, 0.5496, -0.1517, -0.2388, -0.2388, 0.3204, 0.3204, 0.3606, 0.3606], "Korea": [null, null, null, null, 0.9333, 0.525, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.4364, 0.3787, 0.6025, null, null, null, null, null, null, null, null, null, null, 0.0227, 0.0227, 0.0227, 0.0227, 0.0227, 0.0227, -0.0554, 0.0645, 0.026, 0.026, -0.0571, -0.0571, -0.0571, -0.0333, -0.0333, 0.5611, 0.4278, 0.4278, 0.3444, 0.3444, 0.3444, 0.2848, 0.08, 0.08, 0.08, 0.2, 0.4, 0.4364, 0.4364, 0.4364], "Nasdaq": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0.0835, 0.1987, 0.1987, 0.3653, 0.143, 0.143, 0.143, 0.2323, 0.274, 0.039, 0.039, 0.0978], "S&P500": [0.8, 0.8, 0.6, 0.6, 0.6, 0.8333, 0.1143, -0.0857, -0.0857, -0.0857, -0.0857, -0.0857, -0.0857, -0.0857, -0.0857, -0.0857, 0.075, 0.075, 0.137, 0.137, 0.4762, 0.7442, 0.7442, 0.7442, 0.7442, 0.814, 0.4846, 0.1888, 0.1747, 0.24, -0.0752, -0.205, -0.5658, -0.5196, -0.3861, -0.2002, -0.3774, -0.2211, -0.1681, -0.1979, -0.1383, 0.1109, 0.1616, 0.0297, -0.35, 0.0411, 0.0318, 0.1845, 0.2417, 0.3933, 0.4343, 0.5648, 0.0483, 0.1478, 0.117, 0.0645, 0.2458, 0.1135, 0.3282, 0.3675, 0.2906], "US 10Y": [null, null, 0.65, 0.68, 0.68, 0.68, 0.6667, 0.6667, 0.4857, 0.4857, 0.4857, 0.4857, 0.4857, 0.4857, 0.4667, 0.4667, 0.4667, 0.2667, 0.0559, 0.0559, 0.0559, null, null, null, 0.6346, 0.4481, 0.052, null, null, null, null, null, null, null, null, null, -0.272, -0.2436, -0.2436, -0.3163, -0.3163, -0.111, -0.111, -0.111, 0.0, 0.0, 0.111, -0.062, -0.062, -0.062, -0.062, 0.0058, -0.1085, -0.2557, -0.2557, -0.2557, -0.2557, -0.2557, -0.2557, -0.2557, -0.2557], "US 2Y": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, -0.2145, -0.2145, -0.2145, -0.2145, -0.2145, -0.2145, -0.2145, -0.2145, -0.2145, -0.2145, -0.2145, -0.2145, -0.2145, -0.2145], "USD": [null, null, null, 0.9, 0.9, 0.72, 0.72, 0.72, 0.72, 0.72, 0.72, 0.72, 0.72, 0.72, 0.72, 0.72, 0.72, 0.72, 0.4545, 0.4545, 0.85, 0.85, 0.85, 0.7778, 0.7778, 0.5152, 0.4286, 0.0789, 0.1053, 0.1053, 0.3788, 0.4943, 0.458, 0.2333, 0.2333, 0.2333, 0.4343, 0.4333, 0.273, 0.1604, -0.0189, -0.0499, -0.0053, 0.0198, 0.1468, 0.2422, 0.5723, 0.5723, 0.5497, 0.5857, 0.1923, -0.0066, -0.0385, -0.0755, -0.0097, -0.044, 0.0226, 0.0801, 0.0001, 0.2153, 0.1917]}, "defaultAssets": ["S&P500", "Gold", "Brent", "US 10Y", "USD"], "allAssets": ["AI Infra", "Brent", "China", "Copper", "Credit HY", "Credit IG", "EM Equities", "EUR/USD", "Gold", "India", "JPY", "Japan", "Korea", "Nasdaq", "S&P500", "US 10Y", "US 2Y", "USD"], "defaultWindow": 60, "windowOptions": [30, 60], "labels": {"Fed": "Fed (+=Hike)", "RBA": "RBA (+=Hike)", "ECB": "ECB (+=Hike)", "BoJ": "BoJ (+=Hike)", "US 10Y": "US 10Y (+=Bull Bond)", "US 2Y": "US 2Y (+=Bull Bond)", "JPY": "JPY (+=Strong JPY)", "EUR/USD": "EUR/USD (+=Long EUR)"}, "latestDate": "2026-04-24"};
+const REGIME_PHASES = [{"start": "2026-02-20", "end": "2026-03-12", "label": "Bullish · Fading", "color": "#69F0AE", "level": "Bullish", "direction": "Fading", "avgStart": 0.544, "avgEnd": 0.383, "delta": -0.162}, {"start": "2026-03-13", "end": "2026-04-09", "label": "Choppy · Deteriorating", "color": "#CE93D8", "level": "Choppy", "direction": "Deteriorating", "avgStart": 0.598, "avgEnd": -0.026, "delta": -0.625}, {"start": "2026-04-10", "end": "2026-04-24", "label": "Bullish · Strengthening", "color": "#69F0AE", "level": "Bullish", "direction": "Strengthening", "avgStart": 0.116, "avgEnd": 0.27, "delta": 0.153}];
 </script>
 <script>
 (function(){
