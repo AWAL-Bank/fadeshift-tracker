@@ -141,11 +141,14 @@
     tbody tr:last-child { border-bottom: none; }
     tbody tr.even { background: var(--bg-card); }
     tbody tr.odd { background: var(--bg); }
-    tbody tr.unani { background: rgba(224,82,82,0.07); }
+    tbody tr.unani-bear { background: rgba(224,82,82,0.07); }
+    tbody tr.unani-bull { background: rgba(105,240,174,0.07); }
     td { padding: 12px 16px; }
     td.right { text-align: right; }
     td.mono-sm { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-muted); }
-    .unani-badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: var(--bear); border: 1px solid var(--bear); padding: 1px 4px; margin-left: 8px; }
+    .unani-badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; padding: 1px 4px; margin-left: 8px; }
+    .unani-badge.bear { color: var(--bear); border: 1px solid var(--bear); }
+    .unani-badge.bull { color: var(--bull); border: 1px solid var(--bull); }
     .freshness-active { color: var(--bull); font-size: 11px; font-family: 'JetBrains Mono', monospace; }
     .freshness-partial { color: #d4a843; font-size: 11px; font-family: 'JetBrains Mono', monospace; }
     .freshness-stale { color: var(--fg-muted); font-size: 11px; font-family: 'JetBrains Mono', monospace; opacity: 0.6; }
@@ -2347,7 +2350,10 @@ function renderConsensusTable() {
   const tbody = document.getElementById("consensus-tbody");
   if (!tbody) return;
   tbody.innerHTML = CONSENSUS.map((r, i) => {
-    const unani = r.signal.toLowerCase().includes("unanimous");
+    const sigLower = r.signal.toLowerCase();
+    const unaniBear = sigLower.includes("unanimous bearish");
+    const unaniBull = sigLower.includes("unanimous bullish");
+    const unani = unaniBear || unaniBull;
     const scoreClass = r.score >= 0 ? "text-bull" : "text-bear";
     // Fresh / carried badge: green dot if >=1 bank spoke today, muted dot otherwise
     const fresh = r.fresh || 0, carried = r.carried || 0;
@@ -2359,8 +2365,9 @@ function renderConsensusTable() {
       const tooltip = `${fresh} bank${fresh===1?'':'s'} re-confirmed today, ${carried} carried from earlier (14-day window)`;
       freshness = `<span class="${freshClass}" title="${tooltip}">● ${fresh}/${total}</span>`;
     }
-    return `<tr class="${unani ? "unani" : i%2===0 ? "even" : "odd"}">
-      <td style="font-weight:600;">${r.asset}${unani ? `<span class="unani-badge">UNANI</span>` : ""}</td>
+    const rowClass = unaniBear ? "unani-bear" : unaniBull ? "unani-bull" : (i%2===0 ? "even" : "odd");
+    return `<tr class="${rowClass}">
+      <td style="font-weight:600;">${r.asset}${unani ? `<span class="unani-badge ${unaniBear ? 'bear' : 'bull'}">UNANI</span>` : ""}</td>
       <td class="right mono ${scoreClass}" style="font-weight:700;">${fmt(r.score)}</td>
       <td class="right mono-sm">${r.bull}B / ${r.bear}Be</td>
       <td class="right mono-sm">${freshness}</td>
